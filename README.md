@@ -1,4 +1,4 @@
-# summer_pro_vue
+# summ_vue
 
 > A Vue.js project
 
