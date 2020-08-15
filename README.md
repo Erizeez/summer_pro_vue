@@ -1,4 +1,4 @@
-# summ_vue
+# summ_vuehahahaha
 
 > A Vue.js project
 
