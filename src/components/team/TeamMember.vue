@@ -1,28 +1,118 @@
 <template>
-  <el-container style="height:1000px;">
-  <div class="teamMember">
-    <el-card class="box-card">
-      创建者&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;文档管理员
+  <el-container style="height: 700px">
+    <div class="teamMember">
+      <el-card class="box-card">
+        创建者&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;文档管理员
 
 
 
         <el-button style="float: right" @click="dialogFormVisible = true" >添加成员</el-button>
 
 
-      <el-dialog title="添加成员" :visible.sync="dialogFormVisible">
-        <el-form :model="add">
-          <el-form-item label="搜索" style="margin-left: 10%" >
-            <el-input v-model="add.addname" autocomplete="off" style="width: 480px;">
-              <el-button slot="append" icon="el-icon-search" @click="AddMember()"></el-button>
-            </el-input>
+        <el-dialog title="添加成员" :visible.sync="dialogFormVisible">
+          <el-form :model="add">
+            <el-form-item label="搜索" style="margin-left: 10%" >
+              <el-input v-model="add.addname" autocomplete="off" style="width: 480px;">
+                <el-button slot="append" icon="el-icon-search" @click="AddMember()"></el-button>
+              </el-input>
+            </el-form-item>
+
+            <el-table :data="addname" v-if="existName">
+
+                <el-table-column prop="id" label="用户" width="450"></el-table-column>
+                <el-table-column prop="name" label="用户" width="450"></el-table-column>
+                <el-table-column label="操作" width="250">
+                  <template slot-scope="scope">
+                    <el-button @click="send_msg(scope.row.id)">发送邀请</el-button>
+                  </template>
+                </el-table-column>
+
+            </el-table>
+
+          </el-form>
+        </el-dialog>
+
+
+
+
+        <el-row :gutter="12" style="margin-top: 30px; margin-left: 30px">
+
+          <el-col :span="4" v-for="item in TeamCreator" :key="item.id">
+            <el-card shadow="hover" >
+              <el-avatar :src="item.photo" style="margin-left: 33%"></el-avatar>
+              <br>
+              <div style="text-align: center; margin-top: 5px">{{item.name}}</div>
+              <el-button @click="editMember(item)" type="primary" icon="el-icon-edit" circle style="margin-left: 15%; margin-top: 20px" size="mini" v-if="onlyCreator"></el-button>
+              <el-button type="danger" icon="el-icon-delete" circle size="mini" v-if="onlyCreator"></el-button>
+            </el-card>
+          </el-col>
+
+          <el-col :span="1">
+            <el-divider class="el-divider--vertical" direction="vertical" ></el-divider>
+          </el-col>
+
+          <el-col :span="3" >&#8197; </el-col>
+          <el-col :span="4" v-for="item in TeamAdmin" :key="item.id">
+            <el-card shadow="hover" >
+              <el-avatar :src="item.photo" style="margin-left: 33%"></el-avatar>
+              <br>
+              <div style="text-align: center; margin-top: 5px">{{item.name}}</div>
+              <el-button @click="editMember(item)" type="primary" icon="el-icon-edit" circle style="margin-left: 15%; margin-top: 20px" size="mini" v-if="onlyCreator || Admin"></el-button>
+              <el-button type="danger" icon="el-icon-delete" circle size="mini" v-if="onlyCreator || Admin"></el-button>
+            </el-card>
+          </el-col>
+        </el-row>
+
+
+
+
+
+
+        <el-divider></el-divider>
+        团队成员
+        <el-row :gutter="12" style="margin-top: 30px; margin-left: 30px" >
+          <el-col :span="4" v-for="item in TeamCommon" :key="item.id">
+            <el-card shadow="hover" >
+              <el-avatar :src="item.photo" style="margin-left: 33%"></el-avatar>
+              <br>
+              <div style="text-align: center; margin-top: 5px">{{item.name}}</div>
+              <el-button @click="editMember(item)" type="primary" icon="el-icon-edit" circle style="margin-left: 15%; margin-top: 20px" size="mini"  v-if="onlyCreator || Admin"></el-button>
+              <el-button type="danger" icon="el-icon-delete" circle size="mini"  v-if="onlyCreator || Admin"></el-button>
+            </el-card>
+          </el-col>
+        </el-row>
+      </el-card>
+
+      <el-dialog class="editdialog" title="编辑团队成员权限" :visible.sync="dialogFormVisible1" >
+        <el-form :model="thisMember">
+          <el-avatar style="margin-left: 40%;" :src="thisMember.photo" :size="50"></el-avatar>
+          <br>
+          <el-form-item label="用户名:" style="margin-left: 10%;margin-top: 30px" >
+            {{thisMember.name}}
+          </el-form-item>
+          <el-form-item label="邮  箱:" style="margin-left: 10%;margin-top: 30px" >
+            {{thisMember.email}}
+          </el-form-item>
+          <el-form-item label="手机号码:" style="margin-left: 10%;margin-top: 30px" >
+            {{thisMember.mobile}}
           </el-form-item>
 
-          <el-table :data="addname" v-if="existName">
-            <el-table-column prop="name" label="用户" width="450"></el-table-column>
-            <el-table-column label="操作" width="250">
-              <el-button @click="send_msg">发送邀请</el-button>
-            </el-table-column>
-          </el-table>
+          <el-form-item label="权限设置: " style="margin-left: 10%;margin-top: 30px">
+            <br>
+
+            <!--          <el-checkbox-group v-model="rights.type">-->
+            <!--            <el-checkbox v-for="item in rights.type" :label="item.name" :key="item.id" :checked="item.checkedflag=true" :disabled="item.checkedflag=false"></el-checkbox>-->
+            <!--          </el-checkbox-group>-->
+
+
+            <el-checkbox-group v-model="rights.type">
+              <el-checkbox v-for="(item,index) in rights.type" :key="item.id" :label="item.name" @click="addAuthority(index)"></el-checkbox>
+              <!--            <el-checkbox label="可分享" name="type" @click="addShare"></el-checkbox>-->
+              <!--            <br>-->
+              <!--            <el-checkbox label="可编辑" name="type" @click="addEdit"></el-checkbox>-->
+              <!--            <el-checkbox label="可评论" name="type" @click="addComment"></el-checkbox>-->
+            </el-checkbox-group>
+          </el-form-item>
 
         </el-form>
       </el-dialog>
@@ -30,93 +120,10 @@
 
 
 
-      <el-row :gutter="12" style="margin-top: 30px; margin-left: 30px">
+    </div>
 
-        <el-col :span="4" v-for="item in TeamCreator" :key="item.id">
-          <el-card shadow="hover" >
-            <el-avatar :src="item.photo" style="margin-left: 33%"></el-avatar>
-            <br>
-            <div style="text-align: center; margin-top: 5px">{{item.name}}</div>
-            <el-button @click="editMember(item)" type="primary" icon="el-icon-edit" circle style="margin-left: 15%; margin-top: 20px" size="mini" v-if="onlyCreator"></el-button>
-            <el-button type="danger" icon="el-icon-delete" circle size="mini" v-if="onlyCreator"></el-button>
-          </el-card>
-        </el-col>
-
-        <el-col :span="1">
-          <el-divider class="el-divider--vertical" direction="vertical" ></el-divider>
-        </el-col>
-
-        <el-col :span="3" >&#8197; </el-col>
-        <el-col :span="4" v-for="item in TeamAdmin" :key="item.id">
-          <el-card shadow="hover" >
-            <el-avatar :src="item.photo" style="margin-left: 33%"></el-avatar>
-            <br>
-            <div style="text-align: center; margin-top: 5px">{{item.name}}</div>
-            <el-button @click="editMember(item)" type="primary" icon="el-icon-edit" circle style="margin-left: 15%; margin-top: 20px" size="mini" v-if="onlyCreator || Admin"></el-button>
-            <el-button type="danger" icon="el-icon-delete" circle size="mini" v-if="onlyCreator || Admin"></el-button>
-          </el-card>
-        </el-col>
-      </el-row>
-
-
-
-
-
-
-      <el-divider></el-divider>
-      团队成员
-      <el-row :gutter="12" style="margin-top: 30px; margin-left: 30px" >
-        <el-col :span="4" v-for="item in TeamCommon" :key="item.id">
-          <el-card shadow="hover" >
-            <el-avatar :src="item.photo" style="margin-left: 33%"></el-avatar>
-            <br>
-            <div style="text-align: center; margin-top: 5px">{{item.name}}</div>
-            <el-button @click="editMember(item)" type="primary" icon="el-icon-edit" circle style="margin-left: 15%; margin-top: 20px" size="mini"  v-if="onlyCreator || Admin"></el-button>
-            <el-button type="danger" icon="el-icon-delete" circle size="mini"  v-if="onlyCreator || Admin"></el-button>
-          </el-card>
-        </el-col>
-      </el-row>
-    </el-card>
-
-    <el-dialog class="editdialog" title="编辑团队成员权限" :visible.sync="dialogFormVisible1" >
-      <el-form :model="thisMember">
-        <el-avatar style="margin-left: 40%;" :src="thisMember.photo" :size="50"></el-avatar>
-        <br>
-        <el-form-item label="用户名:" style="margin-left: 10%;margin-top: 30px" >
-          {{thisMember.name}}
-        </el-form-item>
-        <el-form-item label="邮  箱:" style="margin-left: 10%;margin-top: 30px" >
-          {{thisMember.email}}
-        </el-form-item>
-        <el-form-item label="手机号码:" style="margin-left: 10%;margin-top: 30px" >
-          {{thisMember.mobile}}
-        </el-form-item>
-
-        <el-form-item label="权限设置: " style="margin-left: 10%;margin-top: 30px">
-          <br>
-
-<!--          <el-checkbox-group v-model="rights.type">-->
-<!--            <el-checkbox v-for="item in rights.type" :label="item.name" :key="item.id" :checked="item.checkedflag=true" :disabled="item.checkedflag=false"></el-checkbox>-->
-<!--          </el-checkbox-group>-->
-
-
-          <el-checkbox-group v-model="rights.type">
-            <el-checkbox v-for="(item,index) in rights.type" :key="item.id" :label="item.name" @click="addAuthority(index)"></el-checkbox>
-<!--            <el-checkbox label="可分享" name="type" @click="addShare"></el-checkbox>-->
-<!--            <br>-->
-<!--            <el-checkbox label="可编辑" name="type" @click="addEdit"></el-checkbox>-->
-<!--            <el-checkbox label="可评论" name="type" @click="addComment"></el-checkbox>-->
-          </el-checkbox-group>
-        </el-form-item>
-
-      </el-form>
-    </el-dialog>
-
-
-
-
-  </div>
   </el-container>
+
 </template>
 
 <script>
@@ -145,9 +152,7 @@
         },
         dialogFormVisible:false,
         existName:false,
-        addname:[{
-          name:''
-        }],
+        addname:[],
         receiverid:'',
         dialogFormVisible1:false,
         rights:{
@@ -221,30 +226,38 @@
       },
       async AddMember(){
         await this.$http.get('/account/searchbyname?name='+this.add.addname).then(res =>{
+          console.log(res);
           if(res.data===""){
             return this.$message.error('不存在用户！')
           }
           this.existName = true;
-          this.addname[0].name = res.data.name;
-          this.receiverid = res.data.id;
+          this.addname = res.data;
+          console.log(this.addname);
+         // this.receiverid = res.data.id;
         })
       },
-      send_msg(){
+      send_msg(id){
+        console.log(this.receiverid);
         var userid = window.localStorage.getItem('userid');
-        this.$http.get('/msg/invite?teamId='+this.TeamId+'&senderId='+userid+'&receiverId='+this.receiverid).then(res =>{
+        this.$http.get('/msg/invite?teamId='+this.TeamId+'&senderId='+userid+'&receiverId='+id).then(async res =>{
+          console.log(res);
           if(res.data === "success"){
-            location.reload(true);
-            return this.$message.success('发送邀请成功！')
+            this.$message.success('发送邀请成功！')
+            this.dialogFormVisible=false;
           }
           else if(res.data === "Record exists."){
-            return this.$message.info('成员已存在！')
+            this.$message.info('成员已存在！')
+            this.dialogFormVisible=false;
           }
           else if(res.data === 'Please wait for the reply.') {
-            return this.$message.info('请等待用户回应');
+            this.$message.info('请等待用户回应');
+            this.dialogFormVisible=false;
           }
           else{
-            return this.$message.error('添加失败，请重新发送邀请');
+            this.$message.error('添加失败，请重新发送邀请');
+            this.dialogFormVisible=false;
           }
+
         })
       },
       editMember(item){
@@ -272,7 +285,7 @@
 <style scoped>
 .box-card{
   width: 90%;
-  height: 100%;
+  height: auto;
   position: absolute;
   left:5%;
   top:5%;
