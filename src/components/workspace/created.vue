@@ -179,4 +179,7 @@
     .el-main-1{
         padding: 20px 0px 100px 0px;
     }
+    .delete-btn{
+        
+    }
 </style>
