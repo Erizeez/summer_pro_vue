@@ -53,12 +53,12 @@
         </el-submenu>
 
         <el-tooltip class="item" effect="dark" content="退出登录" placement="bottom-end">
-          <el-button type="danger" @click="logout" style="float:right; margin-right: 10px; margin-top: 10px" icon="el-icon-right" circle></el-button>
+          <el-button type="danger" @click="logout" style="float:right; margin-right: 50px; margin-top: 10px" icon="el-icon-right" circle></el-button>
         </el-tooltip>
         
         <a @click="toPersonalInfo">
         <el-tooltip class="item" effect="dark" :content="this.username" placement="bottom">
-          <el-avatar class="header-img" :size="42" :src="photo" style="float:right; margin-right: 10px; margin-top: 8px"></el-avatar>
+          <el-avatar class="header-img" :size="42" :src="photo" style="float:right; margin-right: 20px; margin-top: 8px"></el-avatar>
         </el-tooltip>
         </a>
         

@@ -2,9 +2,9 @@
     <el-container>
         <el-main class="el-main-1">
             <el-row class="delete-btn" v-if="brouseMode==false">
-                <el-button type="danger" @click="deleteMode" v-if="!isDelete" style="float:right">批量删除</el-button>
-                <el-button @click="deleteMode" v-if="isDelete" style="float:right">取消</el-button>
-                <el-button type="danger" @click="deleteAll" v-if="isDelete" style="float:right;margin-right: 5px;">确认删除
+                <el-button class="delete-btn-part" circle type="danger" @click="deleteMode" v-if="!isDelete" icon="el-icon-delete" style="float:right"></el-button>
+                <el-button class="delete-btn-part" round @click="deleteMode" v-if="isDelete" style="float:right">取消</el-button>
+                <el-button class="delete-btn-part" round type="danger" @click="deleteAll" v-if="isDelete" style="float:right;margin-right: 5px;">确认删除
                 </el-button>
             </el-row>
 
@@ -23,11 +23,50 @@
             </el-row>
             <el-row class="el-row-2">
                 <div class="info_box">
+                    <el-row :gutter="50" style="margin-top: 20px;" class="boxes">
+                        <el-col :span="16" :offset="2" v-if="brouseMode==true">
+                            <el-table :data="createdlist" stripe style="width: 100%">
+                                <el-table-column type="index" width="50">
+                                </el-table-column>
+                                <el-table-column prop="title" label="文档名" width="500">
+                                </el-table-column>
+                                <el-table-column prop="createTime" label="创建日期" width="240">
+                                </el-table-column>
+                                <el-table-column prop="lastTime" label="最后修改日期">
+                                </el-table-column>
+                                <el-table-column fixed="right" label="操作" width="100">
+                                    <template slot-scope="scope">
+                                        <el-button @click="todoc(scope.row.id)" type="text" size="small">查看</el-button>
+                                        <el-button type="text" size="small" style="color: red;" @click="deleteFile(scope.$index)">删除</el-button>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                        </el-col>
+                        <el-col style="width: 18%; margin: 0px 0px 20px 0px;" :span="5" v-if="brouseMode==false" v-for="(item,index) in createdlist" :key="item.id">
+                            <el-card :span="5" :body-style="{ padding: '0px' }" shadow="hover" class="card-box-s">
+                                <img src="../../assets/home/card-bg.jpg" class="image"
+                                    style="width: 100%; height:200px; display: block">
+                                <div style="padding: 14px;">
+                                    <div style="text-align: center; margin-bottom: 5%;">{{item.title}} </div>
+                                    <div class="bottom clearfix">
+                                        <div v-if="!isDelete" style="">
+                                            <el-button size="small" type="primary" style="float: left;  margin-bottom: 5%;" round plain class="button" @click="todoc(item.id)">进入文档
+                                            </el-button>
 
+                                            <el-button size="small" type="danger" style="float: right;" round plain class="button" icon="el-icon-delete"
+                                                @click="deleteFile(index)">删除
+                                            </el-button>
+                                        </div>
+                                        <el-button type="danger" icon="el-icon-delete" circle
+                                            v-if="isDelete&&deleteIndex[index].show" @click="deleteMark(index)"></el-button>
+                                        <el-button icon="el-icon-delete" circle v-if="isDelete && !deleteIndex[index].show"
+                                            @click="deleteMark(index)"></el-button>
+                                    </div>
+                                </div>
 
-
-
-
+                            </el-card>
+                        </el-col>
+                    </el-row>
                 </div>
             </el-row>
         </el-main>
@@ -123,9 +162,6 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
-    .box {
-        margin-top: 30px;
-    }
     .boxes {
         position: relative;
         left: 7%;
@@ -180,6 +216,17 @@
         padding: 20px 0px 100px 0px;
     }
     .delete-btn{
-        
+        position: fixed;
+        right: 10%;
+        bottom: 8%;
+        z-index: 99;
+    }
+    .delete-btn-part{
+        box-shadow: 2px 2px 20px 3px rgba(0, 0, 0, 0.4);
+    }
+    .card-box-s{
+        margin-top: 30px;
+        border-radius: 15px;
+        box-shadow: 2px 2px 20px 3px rgba(0, 0, 0, 0.4);
     }
 </style>
