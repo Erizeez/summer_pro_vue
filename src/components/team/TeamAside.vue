@@ -1,0 +1,71 @@
+<template>
+    <el-row>
+        <el-col :span="4">
+            <el-menu default-active="2" class="el-menu-vertical-demo"
+                background-color="#E06994" text-color="#fff" active-text-color="#ffd04b">
+                <el-submenu index="1">
+                    <template slot="title">
+                        <span>我创建的团队</span>
+                    </template>
+                    <el-menu-item-group>
+
+                        <el-menu-item :key="index" v-for="(item,index) in createdTeams" @click="toTeamInfo(item.id)">
+                            {{item.name}}
+                        </el-menu-item>
+                    </el-menu-item-group>
+                </el-submenu>
+                <el-submenu index="2">
+                    <template slot="title">
+                        <span>我加入的团队</span>
+                    </template>
+                    <el-menu-item-group>
+                        <el-menu-item :key="index" v-for="(item,index) in joinedTeams" @click="toTeamInfo(item.id)">
+                            {{item.name}}
+                        </el-menu-item>
+                    </el-menu-item-group>
+                </el-submenu>
+            </el-menu>
+        </el-col>
+        <el-col :span="18" :offset="1" style="margin-left: 50px">
+            <router-view></router-view>
+        </el-col>
+    </el-row>
+</template>
+
+<script>
+    export default {
+        data() {
+            return {
+                createdTeams: [],
+                joinedTeams: [],
+                userID: ""
+            }
+        },
+        created() {
+            this.getTeams();
+        },
+        methods: {
+            getTeams() {
+                this.userID = window.localStorage.getItem('userid');
+                this.$http.get('/team/findTeam?accountId=' + this.userID).then(res => {
+                    for (var i = 0; i < res.data.length; i++) {
+                        if (res.data[i].creatorId == this.userID) {
+                            this.createdTeams.push(res.data[i]);
+                        }
+                        else {
+                            this.joinedTeams.push(res.data[i]);
+                        }
+                    }
+                })
+            },
+            toTeamInfo(id){
+                this.$router.push({
+                    path:'/TeamInfo',
+                    query:{
+                        teamid:id
+                    }
+                })
+            }
+        }
+    }
+</script>
