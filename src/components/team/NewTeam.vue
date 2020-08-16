@@ -78,5 +78,8 @@
   left: 50%;
   top:30%;
   transform: translate(-50%, -50%);
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0px 0px 6px 4px rgba(0, 0, 0, 0.1), inset 0px -2px 10px 2px rgba(255, 255, 255, 1);
 }
 </style>

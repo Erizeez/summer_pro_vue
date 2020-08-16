@@ -311,13 +311,11 @@ export default {
         box-shadow: 0px 0px 6px 4px rgba(0, 0, 0, 0.1), inset 0px -2px 10px 2px rgba(255, 255, 255, 1);
         text-align: center;
         color: #666;
-        transition-duration: 0.2s;
     }
     .btn-div-1:active{
         background-color: rgba(255, 255, 255, 0.8);
         box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1), inset 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
         color: #666;
-        transition-duration: 0.2s;
     }
     .btn-div-2{
         width: 20%;
@@ -329,13 +327,11 @@ export default {
         box-shadow: 0px 0px 6px 4px rgba(0, 0, 0, 0.1), inset 0px -2px 10px 2px rgba(255, 255, 255, 1);
         text-align: center;
         color: #666;
-        transition-duration: 0.2s;
     }
     .btn-div-2:active{
         background-color: rgba(255, 255, 255, 0.8);
         box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1), inset 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
         color: #666;
-        transition-duration: 0.2s;
     }
     .titleB{
         font-size: 18px;
