@@ -88,8 +88,8 @@
                             </el-col>
                             <el-col :span="3">
                                 <div>
-                                    <el-button type="primary" icon="el-icon-search" circle @click="editComment(i)"></el-button>
-                                    <el-button type="danger" icon="el-icon-delete" circle @click="deleteComment(i)"></el-button>
+                                    <el-button type="primary" icon="el-icon-search" circle @click="todoc(item.id)"></el-button>
+                                    <el-button type="danger" icon="el-icon-delete" circle @click="deleteFile(i)"></el-button>
                                 </div>
                             </el-col>
                             </el-row>
