@@ -45,7 +45,7 @@
                     </el-table-column>
                 </el-table>
             </el-col>
-            <el-col :span="5" v-for="item in TeamDocsList" :key="item.id" v-if="brouseMode==false">
+            <el-col :span="5"  v-for="item in TeamDocsList" :key="item.id" v-if="brouseMode==false">
                 <el-card :span="5" :body-style="{ padding: '0px' }" shadow="hover" class="box">
                     <img src="../../assets/home/card-bg2.jpg" class="image"
                         style="width: 100%; height:200px; display: block">
@@ -177,12 +177,18 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+    .el-card{
+        width:160px;
+        height: 330px;
+    }
     .box {
+       left: 50px;
         margin-top: 30px;
+        border-radius: 15px;
+        box-shadow: 2px 2px 20px 3px rgba(0, 0, 0, 0.4);
     }
 
     .boxes {
-        position: relative;
         left: 7%;
     }
 
