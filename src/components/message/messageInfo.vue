@@ -161,6 +161,7 @@
     left: 50%;
     top: 100px;
     transform :translate(-50%, 0%);
+    margin-bottom: 50px;
   }
   /* .info_box{
         width: 90%;
