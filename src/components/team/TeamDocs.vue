@@ -16,7 +16,7 @@
                 <div style="margin: 5px">
                     <el-button @click="createFromModel">基于模板创建</el-button>
                 </div>
-                <el-button class="Teamdoc_btns" slot="reference" icon="el-icon-plus">创建新文档</el-button>
+                <el-button class="Teamdoc_btns" slot="reference" icon="el-icon-plus" :disabled="!canEdit">创建新文档</el-button>
             </el-popover>
 
         </el-row>
@@ -84,7 +84,7 @@
                     <div style="padding: 14px;">
                         <div style="text-align: center; margin-bottom: 5%;">{{item.title}} </div>
                         <div class="bottom clearfix">
-                            <div v-if="!isDelete" style="">
+                            <div v-if="!isTeamTrash" style="">
                                 <el-button v-if="!isTeamTrash" type="primary" style="float: left;  margin-bottom: 5%;" circle plain class="button" icon="el-icon-search" @click="todoc(item.id)">
                                 </el-button>
                                 <el-button v-if="isTeamTrash" type="success" style="float: left;  margin-bottom: 5%;" circle plain class="button" icon="el-icon-refresh-left" @click="recoverdoc(item)">
@@ -112,12 +112,14 @@
                 brouseMode: false,
                 teamid: "",
                 visible: false,
-                isTeamTrash: false
+                isTeamTrash: false,
+                canEdit:false
             }
         },
         created() {
             this.teamid = this.$route.query.teamid;
             this.getTeamDocs();
+            this.getAuth();
         },
         watch: {
             $route() {
@@ -204,6 +206,16 @@
                     }
                     else {
                         this.$message.error("永久删除失败！");
+                    }
+                })
+            },
+            getAuth(){
+                this.$http.get('/team/findbelong?accountId='+window.localStorage.getItem('userid')+'&teamId='+this.teamid).then(res=>{
+                    if(res.data.authority>=8){
+                        this.canEdit=true;
+                    }
+                    else{
+                        this.canEdit=false;
                     }
                 })
             }
