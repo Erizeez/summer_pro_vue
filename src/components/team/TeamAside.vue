@@ -1,6 +1,6 @@
 <template>
-    <el-row>
-        <el-col :span="4">
+<el-container class="home">
+        <el-aside width="18%">
             <el-menu default-active="2" class="el-menu-vertical-demo"
                 background-color="#fff" text-color="#666" active-text-color="#ffd04b">
                 <el-submenu index="1">
@@ -25,11 +25,14 @@
                     </el-menu-item-group>
                 </el-submenu>
             </el-menu>
-        </el-col>
-        <el-col :span="18" :offset="1" class="Teams_layer">
+        </el-aside>
+   
+        <el-main class="Teams_layer">
             <router-view @getTeams="getTeams"></router-view>
-        </el-col>
-    </el-row>
+        </el-main>
+        
+    
+</el-container>
 </template>
 
 <script>
@@ -73,5 +76,15 @@
 <style>
 .Teams_layer{
     margin-left: 50px
+}
+.el-container{
+    height: 100%;
+    
+}
+.el-aside{
+    background-color: white;
+}
+.el-row{
+    width: 100%;
 }
 </style>
