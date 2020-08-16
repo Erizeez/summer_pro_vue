@@ -107,7 +107,15 @@
                     if (res.status !== 200) {
                         return this.$message.error('获取失败');
                     }
-                    this.collectlist = res.data;
+                    this.TeamDocsList = res.data;
+                })
+            },
+            getTrashDocs() {
+                this.$http.get('/teamtrash/getlist?teamId=' + this.teamid).then(res => {
+                    if (res.status !== 200) {
+                        return this.$message.error('获取失败');
+                    }
+                    this.TeamDocsList = res.data;
                 })
             },
             todoc(id) {
