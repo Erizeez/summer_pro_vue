@@ -11,7 +11,7 @@
                                 <span class="tableTitle">序号</span>
                             </div>
                         </el-col>
-                        <el-col :span="14">
+                        <el-col :span="13">
                             <div class="talk-box">
                                 <span class="tableTitle">模板名</span>
                             </div>
@@ -22,6 +22,7 @@
                             </div>
                         </el-col>
                     </el-row>
+                    <el-divider></el-divider>
 
                     <el-col :span="24" style="width: 95%; margin: 0px 0px 20px 0px;">
                         <div style="overflow: hidden;" v-for="(item,i) in systemModels" :key="i" class="author-title">
@@ -31,16 +32,16 @@
                                         <span class="tablePart">{{i+1}}</span>
                                     </div>
                                 </el-col>
-                                <el-col :span="13">
+                                <el-col :span="12">
                                     <div>
                                         <span class="tablePart">{{item.name}}</span>
                                     </div>
                                 </el-col>
                                 <el-col :span="6">
                                     <div>
-                                        <el-button type="info" style="margin:0 auto" @click="showSystemModel(scope.row)" icon="el-icon-view">预览
+                                        <el-button type="info" style="margin:0 auto" @click="showSystemModel(item)" icon="el-icon-view">预览
                                         </el-button>
-                                        <el-button type="primary" style="margin:0 auto" @click="useModel(scope.row)">使用模板创建文档
+                                        <el-button type="primary" style="margin:0 auto" @click="useModel(item)">使用模板创建文档
                                         </el-button>
                                     </div>
                                 </el-col>
@@ -69,29 +70,58 @@
                     </el-table> -->
                 </el-tab-pane>
 
-                <el-tab-pane style="height: 100px;">
+                <el-tab-pane style="min-height: 100px;">
                     <span slot="label" class="paneTitle">我的模板</span>
+                    
+
+                    <el-row :gutter="20">
+                        <el-col :offset="3" :span="2">
+                            <div>
+                                <span class="tableTitle">序号</span>
+                            </div>
+                        </el-col>
+                        <el-col :span="13">
+                            <div class="talk-box">
+                                <span class="tableTitle">模板名</span>
+                            </div>
+                        </el-col>
+                        <el-col :span="2">
+                            <div>
+                                <span class="tableTitle">操作</span>
+                            </div>
+                        </el-col>
+                    </el-row>
+                    <el-divider></el-divider>
                     <div v-if="MyModels.length==0" style="text-align: center;position: relative; top: 50%;">
                         <span style="font-size: 30px; color: #888;">还没有自定义模板，快将觉得满意的文件添加为模板吧！</span>
                     </div>
-                    <el-table :data="MyModels" stripe style="width: 1050px; left: 6%" v-if="MyModels.length>0">
-                        <el-table-column type="index" label="序号"></el-table-column>
-                        <el-table-column prop="name" label="模板名" width="600" style="text-align: center">
-                        </el-table-column>
-                        <el-table-column prop="content" label="操作" width="400px">
-
-                            <template slot-scope="scope">
-                                <el-button type="info" style="margin:0 auto"  @click="showMyModel(scope.row)"
-                                    icon="el-icon-view">预览
-                                </el-button>
-                                <el-button type="primary" style="margin:0 auto" @click="useModel(scope.row)">使用模板创建文档
-                                </el-button>
-                                <el-button type="danger" style="margin:0 auto" @click="deleteModel(scope.$index)">删除模板
-                                </el-button>
-                            </template>
-                        </el-table-column>
-
-                    </el-table>
+                    <el-col :span="24" style="width: 95%; margin: 0px 0px 20px 0px;">
+                        <div style="overflow: hidden;" v-for="(item,i) in MyModels" :key="i" class="author-title">
+                            <el-row :gutter="20">
+                                <el-col :offset="3" :span="2">
+                                    <div>
+                                        <span class="tablePart">{{i+1}}</span>
+                                    </div>
+                                </el-col>
+                                <el-col :span="11">
+                                    <div>
+                                        <span class="tablePart">{{item.name}}</span>
+                                    </div>
+                                </el-col>
+                                <el-col :span="8">
+                                    <div>
+                                        <el-button type="info" style="margin:0 auto" @click="showSystemModel(item)" icon="el-icon-view">预览
+                                        </el-button>
+                                        <el-button type="primary" style="margin:0 auto" @click="useModel(item)">使用模板创建文档
+                                        </el-button>
+                                        <el-button type="danger" style="margin:0 auto" @click="deleteModel(i)">删除模板
+                                        </el-button>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                            <el-divider></el-divider>
+                        </div>
+                    </el-col>
                 </el-tab-pane>
             </el-tabs>
         </el-card>
