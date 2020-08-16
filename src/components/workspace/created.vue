@@ -23,26 +23,80 @@
             </el-row>
             <el-row class="el-row-2">
                 <div class="info_box">
-                    <el-row :gutter="50" style="margin-top: 20px;" class="boxes">
-                        <el-col :span="16" :offset="2" v-if="brouseMode==true">
-                            <el-table :data="createdlist" stripe style="width: 100%">
-                                <el-table-column type="index" width="50">
-                                </el-table-column>
-                                <el-table-column prop="title" label="文档名" width="500">
-                                </el-table-column>
-                                <el-table-column prop="createTime" label="创建日期" width="240">
-                                </el-table-column>
-                                <el-table-column prop="lastTime" label="最后修改日期">
-                                </el-table-column>
-                                <el-table-column fixed="right" label="操作" width="100">
-                                    <template slot-scope="scope">
-                                        <el-button @click="todoc(scope.row.id)" type="text" size="small">查看</el-button>
-                                        <el-button type="text" size="small" style="color: red;" @click="deleteFile(scope.$index)">删除</el-button>
-                                    </template>
-                                </el-table-column>
-                            </el-table>
+                    
+
+                    <el-row :gutter="50" style="padding-left: 50px; margin-top: 20px; overflow: hidden;position: relative;">
+                        <el-col :span="24" style="width: 95%; margin: 0px 0px 20px 0px;">
+                        <div style="overflow: hidden;" v-if="brouseMode==true" class="author-title">
+                            <el-row :gutter="20">
+                            <el-col :span="4">
+                                <div>
+                                    <span class="author-name">序号</span>
+                                </div>
+                            </el-col>
+                            <el-col :span="5">
+                                <div class="talk-box">
+                                    <span class="reply">文档名</span>
+                                </div>
+                            </el-col>
+                            <el-col :span="6">
+                                <div>
+                                    <span class="reply">创建时间</span>
+                                </div>
+                            </el-col>
+                            <el-col :span="6">
+                                <div>
+                                    <span class="reply">修改时间</span>
+                                </div>
+                            </el-col>
+                            <el-col :span="1">
+                                <div>
+                                    <span class="reply">查看</span>
+                                </div>
+                            </el-col>
+                            <el-col :span="2">
+                                <div>
+                                    <span class="reply">删除</span>
+                                </div>
+                            </el-col>
+                            </el-row>
+                            <el-divider></el-divider>
+                        </div>
                         </el-col>
-                        <el-col style="width: 18%; margin: 0px 0px 20px 0px;" :span="5" v-if="brouseMode==false" v-for="(item,index) in createdlist" :key="item.id">
+                        <el-col :span="24" style="width: 95%; margin: 0px 0px 20px 0px;">
+                        <div style="overflow: hidden;" v-for="(item,i) in createdlist" :key="i" v-if="brouseMode==true" class="author-title">
+                            <el-row :gutter="20">
+                            <el-col :span="4">
+                                <div>
+                                    <span class="author-name">{{i+1}}</span>
+                                </div>
+                            </el-col>
+                            <el-col :span="5">
+                                <div class="talk-box">
+                                    <span class="reply">{{item.title}}</span>
+                                </div>
+                            </el-col>
+                            <el-col :span="6">
+                                <div>
+                                    <span class="reply">{{item.createTime}}</span>
+                                </div>
+                            </el-col>
+                            <el-col :span="6">
+                                <div>
+                                    <span class="reply">{{item.lastTime}}</span>
+                                </div>
+                            </el-col>
+                            <el-col :span="3">
+                                <div>
+                                    <el-button type="primary" icon="el-icon-search" circle @click="editComment(i)"></el-button>
+                                    <el-button type="danger" icon="el-icon-delete" circle @click="deleteComment(i)"></el-button>
+                                </div>
+                            </el-col>
+                            </el-row>
+                            <el-divider></el-divider>
+                        </div>
+                        </el-col>
+                        <el-col style="width: 18%; margin: 0px 0px 20px 0px;left:0px;" :span="5" v-if="brouseMode==false" v-for="(item,index) in createdlist" :key="item.id">
                             <el-card :span="5" :body-style="{ padding: '0px' }" shadow="hover" class="card-box-s">
                                 <img src="../../assets/home/card-bg.jpg" class="image"
                                     style="width: 100%; height:200px; display: block">
@@ -78,7 +132,6 @@
         data() {
             return {
                 createdlist: [
-
                 ],
                 isDelete: false,
                 deleteIndex: [],
@@ -116,7 +169,6 @@
                         return this.$message.success('删除成功，你仍能在回收站找到它们');
                     }
                     else {
-
                     }
                 })
             },
@@ -162,10 +214,6 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
-    .boxes {
-        position: relative;
-        left: 7%;
-    }
     .el-container{
         height: 100%;
     }
@@ -184,7 +232,6 @@
         width: 100%;
         left: 50%;
         transform: translate(-50%, 0%);
-
     }
     .titleP{
         font-size: 30px;
@@ -225,6 +272,7 @@
         box-shadow: 2px 2px 20px 3px rgba(0, 0, 0, 0.4);
     }
     .card-box-s{
+        left: 50px;
         margin-top: 30px;
         border-radius: 15px;
         box-shadow: 2px 2px 20px 3px rgba(0, 0, 0, 0.4);
