@@ -18,44 +18,102 @@
                 <el-button type="danger" @click="deleteAll" v-if="isDelete" style="float:right;margin-right: 5px;">确认删除
                 </el-button>
             </el-row>
-            <el-row :gutter="50" style="margin-top: 20px;" class="boxes">
-                <el-col :span="16" :offset="2" v-if="brouseMode==true">
-                    <el-table :data="createdlist" stripe style="width: 100%">
-                        <el-table-column type="index" width="50">
-                        </el-table-column>
-                        <el-table-column prop="title" label="文档名" width="500">
-                        </el-table-column>
-                        <el-table-column prop="createTime" label="创建日期" width="240">
-                        </el-table-column>
-                        <el-table-column prop="lastTime" label="最后修改日期">
-                        </el-table-column>
-                        <el-table-column fixed="right" label="操作" width="100">
-                            <template slot-scope="scope">
-                                <el-button @click="todoc(scope.row.id)" type="text" size="small">查看</el-button>
-                                <el-button type="text" size="small" style="color: red;" @click="deleteFile(scope.$index)">删除</el-button>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </el-col>
-                <el-col :span="5" v-if="brouseMode==false" v-for="(item,index) in createdlist" :key="item.id">
-                    <el-card :span="5" :body-style="{ padding: '0px' }" shadow="hover" class="box">
-                        <img src="../../assets/home/card-bg.jpg" class="image"
-                            style="width: 100%; height:200px; display: block">
-                        <div style="padding: 14px;">
-                            <span>{{item.title}} </span>
-                            <div class="bottom clearfix">
-                                <el-button-group v-if="!isDelete">
-                                    <el-button type="primary" plain class="button" @click="todoc(item.id)">进入文档
-                                    </el-button>
-                                    <el-button type="danger" plain class="button" icon="el-icon-delete"
-                                        @click="deleteFile(index)">删除</el-button>
-                                </el-button-group>
-                                <el-button type="danger" icon="el-icon-delete" circle
-                                    v-if="isDelete&&deleteIndex[index].show" @click="deleteMark(index)"></el-button>
-                                <el-button icon="el-icon-delete" circle v-if="isDelete && !deleteIndex[index].show"
-                                    @click="deleteMark(index)"></el-button>
-                            </div>
+            <el-row class="el-row-2">
+                <div class="info_box">
+                    
+
+                    <el-row :gutter="50" style="padding-left: 50px; margin-top: 20px; overflow: hidden;position: relative;">
+                        <el-col :span="24" style="width: 95%; margin: 0px 0px 20px 0px;">
+                        <div style="overflow: hidden;" v-if="brouseMode==true" class="author-title">
+                            <el-row :gutter="20">
+                            <el-col :span="4">
+                                <div>
+                                    <span class="author-name">序号</span>
+                                </div>
+                            </el-col>
+                            <el-col :span="5">
+                                <div class="talk-box">
+                                    <span class="reply">文档名</span>
+                                </div>
+                            </el-col>
+                            <el-col :span="6">
+                                <div>
+                                    <span class="reply">创建时间</span>
+                                </div>
+                            </el-col>
+                            <el-col :span="6">
+                                <div>
+                                    <span class="reply">修改时间</span>
+                                </div>
+                            </el-col>
+                            <el-col :span="1">
+                                <div>
+                                    <span class="reply">查看</span>
+                                </div>
+                            </el-col>
+                            <el-col :span="2">
+                                <div>
+                                    <span class="reply">删除</span>
+                                </div>
+                            </el-col>
+                            </el-row>
+                            <el-divider></el-divider>
                         </div>
+                        </el-col>
+                        <el-col :span="24" style="width: 95%; margin: 0px 0px 20px 0px;">
+                        <div style="overflow: hidden;" v-for="(item,i) in createdlist" :key="i" v-if="brouseMode==true" class="author-title">
+                            <el-row :gutter="20">
+                            <el-col :span="4">
+                                <div>
+                                    <span class="author-name">{{i+1}}</span>
+                                </div>
+                            </el-col>
+                            <el-col :span="5">
+                                <div class="talk-box">
+                                    <span class="reply">{{item.title}}</span>
+                                </div>
+                            </el-col>
+                            <el-col :span="6">
+                                <div>
+                                    <span class="reply">{{item.createTime}}</span>
+                                </div>
+                            </el-col>
+                            <el-col :span="6">
+                                <div>
+                                    <span class="reply">{{item.lastTime}}</span>
+                                </div>
+                            </el-col>
+                            <el-col :span="3">
+                                <div>
+                                    <el-button type="primary" icon="el-icon-search" circle @click="editComment(i)"></el-button>
+                                    <el-button type="danger" icon="el-icon-delete" circle @click="deleteComment(i)"></el-button>
+                                </div>
+                            </el-col>
+                            </el-row>
+                            <el-divider></el-divider>
+                        </div>
+                        </el-col>
+                        <el-col style="width: 18%; margin: 0px 0px 20px 0px;left:0px;" :span="5" v-if="brouseMode==false" v-for="(item,index) in createdlist" :key="item.id">
+                            <el-card :span="5" :body-style="{ padding: '0px' }" shadow="hover" class="card-box-s">
+                                <img src="../../assets/home/card-bg.jpg" class="image"
+                                    style="width: 100%; height:200px; display: block">
+                                <div style="padding: 14px;">
+                                    <div style="text-align: center; margin-bottom: 5%;">{{item.title}} </div>
+                                    <div class="bottom clearfix">
+                                        <div v-if="!isDelete" style="">
+                                            <el-button size="small" type="primary" style="float: left;  margin-bottom: 5%;" round plain class="button" @click="todoc(item.id)">进入文档
+                                            </el-button>
+
+                                            <el-button size="small" type="danger" style="float: right;" round plain class="button" icon="el-icon-delete"
+                                                @click="deleteFile(index)">删除
+                                            </el-button>
+                                        </div>
+                                        <el-button type="danger" icon="el-icon-delete" circle
+                                            v-if="isDelete&&deleteIndex[index].show" @click="deleteMark(index)"></el-button>
+                                        <el-button icon="el-icon-delete" circle v-if="isDelete && !deleteIndex[index].show"
+                                            @click="deleteMark(index)"></el-button>
+                                    </div>
+                                </div>
 
                     </el-card>
                 </el-col>
@@ -152,13 +210,69 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-    .box {
-        margin-top: 30px;
+<style lang="less" scoped>
+    .el-container{
+        height: 100%;
     }
+    .el-row-1{
+        top: -5%;
+        height: 15%;
+        width: 80%;
+        left: 50%;
+        transform: translate(-50%, 0%);
+        margin: 10px 0px 0px 0px;
+    }
+    .el-row-2{
+        top: -5%;
+        min-height: 85%;
+        height: auto;
+        width: 100%;
+        left: 50%;
+        transform: translate(-50%, 0%);
 
-    .boxes {
-        position: relative;
-        left: 7%;
+    }
+    .titleP{
+        font-size: 30px;
+        color: #555;
+    }
+    .title-col{
+        height: 100%;
+    }
+    .btn-change{
+        position:absolute;
+        top: 50%;
+        transform: translate(0%, -30%);
+        right: 0;
+    }
+    .info_box{
+        width: 90%;
+        height: auto;
+        min-height: 800px;
+        background-color: #fff;
+        border-radius: 30px;
+        position: absolute;
+        left: 50%;
+        top: 0px;
+        transform :translate(-50%, 0%);
+        box-shadow: 0px 3px 20px 8px rgba(0, 0, 0, 0.3);
+        margin: 10px 0px 50px 0px;
+    }
+    .el-main-1{
+        padding: 20px 0px 100px 0px;
+    }
+    .delete-btn{
+        position: fixed;
+        right: 10%;
+        bottom: 8%;
+        z-index: 99;
+    }
+    .delete-btn-part{
+        box-shadow: 2px 2px 20px 3px rgba(0, 0, 0, 0.4);
+    }
+    .card-box-s{
+        left: 50px;
+        margin-top: 30px;
+        border-radius: 15px;
+        box-shadow: 2px 2px 20px 3px rgba(0, 0, 0, 0.4);
     }
 </style>
