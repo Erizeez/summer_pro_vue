@@ -3,7 +3,7 @@
     <el-header class="el-header">
 
       <el-menu class="el-menu-demo" mode="horizontal" text-color="#777" background-color="#fff"
-        active-text-color="#222">
+        active-text-color="#222" :default-active="activeIndex">
         <el-menu-item index="0">
           <img class="img-title" src="../assets/j-logo.png" @click="goindex">
         </el-menu-item>
@@ -106,7 +106,8 @@
         photo: '',
         username: '',
         haveNewMessage: false,
-        src: require("../assets/home/team1.png")
+        src: require("../assets/home/team1.png"),
+        activeIndex:''
       }
     },
     created() {
@@ -160,6 +161,7 @@
         this.$router.push('/created');
       },
       toPersonalInfo() {
+        this.activeIndex=3;
         this.$router.push('/PersonalInfo');
       },
       tomessageInfo() {
