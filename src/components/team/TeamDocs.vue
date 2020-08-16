@@ -217,6 +217,9 @@
         width: 160px;
         height: 330px;
     }
+    .boxes{
+        padding-left: 10px;
+    }
     .box {
         left: 50px;
         margin-top: 30px;

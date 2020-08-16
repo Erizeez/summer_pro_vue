@@ -146,7 +146,7 @@
           this.teamdocData.title = res.data.title;
           this.teamdocData.intro = res.data.intro;
           this.teamdocData.teamId = res.data.teamId;
-          this.$http.get('/account/search?id=' + res.data.id).then(res =>{
+          this.$http.get('/account/search?id=' + res.data.createId).then(res =>{
           console.log(res);
           this.userName = res.data.name;
           console.log(this.userName);
