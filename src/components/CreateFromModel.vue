@@ -27,14 +27,14 @@
                     <div v-if="MyModels.length==0">
                         <span>还没有自定义模板，快将觉得满意的文件添加为模板吧！</span>
                     </div>
-                    <el-table :data="MyModels" stripe style="width: 1050px; left: 10%" v-if="MyModels.length>0">
+                    <el-table :data="MyModels" stripe style="width: 1050px; left: 6%" v-if="MyModels.length>0">
                         <el-table-column type="index" label="序号"></el-table-column>
                         <el-table-column prop="name" label="模板名" width="600" style="text-align: center">
                         </el-table-column>
                         <el-table-column prop="content" label="操作" width="400px">
 
                             <template slot-scope="scope">
-                                <el-button type="info" style="margin:0 auto" @click="" @click="showMyModel(scope.row)"
+                                <el-button type="info" style="margin:0 auto"  @click="showMyModel(scope.row)"
                                     icon="el-icon-view">预览
                                 </el-button>
                                 <el-button type="primary" style="margin:0 auto" @click="useModel(scope.row)">使用模板创建文档
@@ -149,5 +149,16 @@
         width: 100%;
         height: 100%;
         //overflow-y: hidden;
+    }
+    .box-card{
+        width: 90%;
+    min-height: 600px;
+    box-shadow: 0px 0px 6px 4px rgba(0, 0, 0, 0.1), inset 0px -2px 10px 2px rgba(255, 255, 255, 1);
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 30px;
+    position: absolute;
+    left: 50%;
+    top: 100px;
+    transform :translate(-50%, 0%);
     }
 </style>
