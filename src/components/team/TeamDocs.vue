@@ -21,30 +21,61 @@
 
         </el-row>
         <el-row :gutter="0" style="margin-top: 20px;" class="boxes">
-            <el-col :span="20" :offset="1" v-if="brouseMode==true">
-                
-                <el-table :data="TeamDocsList" stripe style="width: 100%">
-                    <el-table-column type="index" width="50">
-                    </el-table-column>
-                    <el-table-column prop="title" label="文档名" width="300">
-                    </el-table-column>
-                    <el-table-column prop="createTime" label="创建日期" width="240">
-                    </el-table-column>
-                    <el-table-column prop="lastTime" label="最后修改日期" v-if="!isTeamTrash">
-                    </el-table-column>
-                    <el-table-column fixed="right" label="操作" width="100" v-if="!isTeamTrash">
-                        <template slot-scope="scope">
-                            <el-button @click="todoc(scope.row.id)" type="text" size="small">查看</el-button>
-                            <el-button @click="deletedoc(scope.row)" type="text" size="small">删除</el-button>
-                        </template>
-                    </el-table-column>
-                    <el-table-column fixed="right" label="操作" width="160" v-if="isTeamTrash">
-                        <template slot-scope="scope">
-                            <el-button @click="recoverdoc(scope.row)" type="text" size="small">恢复</el-button>
-                            <el-button @click="removedoc(scope.row)" type="text" size="small">永久删除</el-button>
-                        </template>
-                    </el-table-column>
-                </el-table>
+            <el-col :span="24" :offset="1" v-if="brouseMode==true">
+                <el-row :gutter="20">
+                    <el-col :span="5">
+                        <div class="talk-box">
+                            <span class="reply">文档名</span>
+                        </div>
+                    </el-col>
+                    <el-col :span="7">
+                        <div>
+                            <span class="reply">创建时间</span>
+                        </div>
+                    </el-col>
+                    <el-col :span="8">
+                        <div>
+                            <span class="reply">修改时间</span>
+                        </div>
+                    </el-col>
+                    <el-col :span="3">
+                        <div>
+                            <span class="reply">操作</span>
+                        </div>
+                    </el-col>
+                </el-row>
+                <el-divider></el-divider>
+            </el-col>
+            <el-col :span="24" :offset="1">
+                <div style="overflow: hidden;" v-for="(item,i) in TeamDocsList" :key="i" v-if="brouseMode==true" class="author-title">
+                    <el-row :gutter="20">
+                    <el-col :span="5">
+                        <div class="talk-box">
+                            <span class="reply">{{item.title}}</span>
+                        </div>
+                    </el-col>
+                    <el-col :span="7">
+                        <div>
+                            <span class="reply">{{item.createTime}}</span>
+                        </div>
+                    </el-col>
+                    <el-col :span="7">
+                        <div>
+                            <span class="reply">{{item.lastTime}}</span>
+                        </div>
+                    </el-col>
+                    <el-col :span="5">
+                        <div>
+                            <el-button v-if="!isTeamTrash" size="small" type="primary" icon="el-icon-search" circle @click="todoc(item.id)"></el-button>
+                            <el-button v-if="!isTeamTrash" size="small" type="danger" icon="el-icon-delete" circle @click="deletedoc(i)"></el-button>
+
+                            <el-button v-if="isTeamTrash" size="small" type="success" icon="el-icon-refresh-left" circle @click="recoverdoc(item)"></el-button>
+                            <el-button v-if="isTeamTrash" size="small" type="danger" icon="el-icon-delete" circle @click="removedoc(item)"></el-button>
+                        </div>
+                    </el-col>
+                    </el-row>
+                    <el-divider></el-divider>
+                </div>
             </el-col>
             <el-col style="width: 25%; margin: 0px 0px 25px 0px;left:0px;" :span="5" v-if="brouseMode==false" v-for="(item,index) in TeamDocsList" :key="item.id">
                 <el-card :span="5" :body-style="{ padding: '0px' }" shadow="hover" class="card-box-s">
@@ -58,8 +89,11 @@
                                 </el-button>
                                 <el-button v-if="isTeamTrash" type="success" style="float: left;  margin-bottom: 5%;" circle plain class="button" icon="el-icon-refresh-left" @click="recoverdoc(item)">
                                 </el-button>
-                                <el-button type="danger" style="float: right;" circle plain class="button" icon="el-icon-delete"
+                                <el-button v-if="!isTeamTrash" type="danger" style="float: right;" circle plain class="button" icon="el-icon-delete"
                                     @click="deletedoc(item)">
+                                </el-button>
+                                <el-button v-if="isTeamTrash" type="danger" style="float: right;" circle plain class="button" icon="el-icon-delete"
+                                    @click="removedoc(item)">
                                 </el-button>
                             </div>
                         </div>
@@ -188,9 +222,6 @@
         margin-top: 30px;
         border-radius: 15px;
         box-shadow: 2px 2px 20px 3px rgba(0, 0, 0, 0.4);
-    }
-    .boxes {
-        left: 7%;
     }
     .Teamdoc_btns {
         margin-bottom: 20px;
