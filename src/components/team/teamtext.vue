@@ -126,9 +126,9 @@
     },
     methods:{
       addRecent(){
-        this.$http.get('/doc/addlatest?DocId='+this.textid+'&accountId='+localStorage.getItem('userid')).then(res =>{
-          console.log(res);
-        })
+      this.$http.get('/team/addlatest?DocId='+this.textid+'&accountId='+localStorage.getItem('userid')).then(res =>{
+        console.log(res);
+      })
       },
       goBack(){
         this.$router.go(-1);
