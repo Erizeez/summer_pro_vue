@@ -18,8 +18,6 @@
             </el-form-item>
 
             <el-table :data="addname" v-if="existName">
-
-              <el-table-column prop="id" label="用户" width="450"></el-table-column>
               <el-table-column prop="name" label="用户" width="450"></el-table-column>
               <el-table-column label="操作" width="250">
                 <template slot-scope="scope">
