@@ -9,7 +9,7 @@
         <el-button style="float: right" @click="dialogFormVisible = true">添加成员</el-button>
 
 
-        <el-dialog title="添加成员" :visible.sync="dialogFormVisible">
+        <el-dialog :append-to-body="true" title="添加成员" :visible.sync="dialogFormVisible">
           <el-form :model="add">
             <el-form-item label="搜索" style="margin-left: 10%">
               <el-input v-model="add.addname" autocomplete="off" style="width: 480px;">
