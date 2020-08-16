@@ -33,31 +33,51 @@
                         </el-col>
                     </el-row>
 
-                    <el-button type="warning" slot="reference">分享</el-button>
+                    <el-button type="warning" slot="reference" @click="showshare">分享</el-button>
                 </el-popover>
                 <el-button type="primary" @click="goBack">返回</el-button>
                 <el-button type="primary" @click="goDetail">详情页面</el-button>
                 <el-button type="primary" @click="goEdit">编辑</el-button>
             </el-footer>
+
+
+
+    <el-dialog class="editdialog" title="编辑团队成员权限" :visible.sync="showShare" @close="closeDialog">
+        <el-form style="height:300px">
+          <el-form-item label="权限设置:" style="margin-left: 10%;">
+            <br>
+            <el-checkbox-group v-model="rights.select">
+              <el-checkbox v-for="(item,index) in rights.type" :key="index" :label="item.name"></el-checkbox>
+            </el-checkbox-group>
+            <el-button type="primary" @click="editAuth" style="margin-top:25px">确认分享</el-button>
+          </el-form-item>
+
+
+            <el-col >
+                请复制分享链接:
+                <el-card shadow="hover" style="margin-bottom:30px; margin-top:20px" v-if="showlink">
+               {{this.sharelink}}
+                </el-card>
+            </el-col>
+
+        </el-form>
+      </el-dialog>
+
+
+
+
+
+
         </el-container>
     </div>
+
+    
 </template>
 
 <script>
     import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document'
 	import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/zh-cn.js'
 	import QRCode from 'qrcodejs2';
-
-const htmlString = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Document</title>
-</head>
-<body>
-  <figure class="image"><img src="http://localhost:8080/summer_pro_ssm/resources/upload/1597308266601.png"></figure><figure class="image"><img src="http://localhost:8080/summer_pro_ssm/resources/upload/1597308270489.jpeg"></figure><blockquote><p>sadasdas<span style="font-size:48px;">dasd<strong>dd</strong><i><strong>dddd<u>ddddd</u></strong><s><strong><u>ddd</u></strong></s></i></span><span style="color:hsl(60, 75%, 60%);font-size:48px;"><i><s><strong><u>ddd</u></strong></s></i></span><span style="background-color:hsl(0, 0%, 60%);color:hsl(60, 75%, 60%);font-size:48px;"><i><s><strong><u>dddd</u></strong></s></i></span></p></blockquote>
-</body>
-</html>`
 
 export default {
         name: 'app',
@@ -88,7 +108,25 @@ export default {
                     status: '',
                     title: '',
                     intro: ''
-                }
+                },
+                rights: {
+                    type: [
+                        {
+                        name: '可分享'
+                        },
+                        {
+                        name: '可评论'
+                        },
+                        {
+                        name: '可编辑'
+                        }
+                    ],
+                    select: []
+                },
+                showShare:false,
+                authority:1,
+                showlink:false,
+                sharelink:"http://localhost:8081/#/text"
                 // ...
             };
         },
@@ -169,7 +207,39 @@ export default {
                     //释放内存
                     window.URL.revokeObjectURL(link.href);
                 })
-            }
+            },
+            showshare(){
+                this.showShare = true;
+            },
+            editAuth(){
+                this.sharelink = "http://localhost:8081/#/text";
+                this.authority = 1;
+                for(var i = 0; i < this.rights.select.length; i ++){
+                    if(this.rights.select[i]==="可分享"){
+                        this.authority += 2
+                    }
+                    if(this.rights.select[i] === "可评论"){
+                        this.authority += 4;
+                    }
+                    if(this.rights.select[i] === "可编辑"){
+                        this.authority += 8;
+                    }
+                }
+                this.rights.select=[];
+                console.log(this.authority);
+                this.showlink=true;
+                this.$http.get('/share/getlink?docId='+this.$route.params.id+'&auth='+this.authority).then(res =>{
+                    console.log(res);
+                    this.$http.get('/share/sharedoc?uuid='+res.data+'&accountId='+localStorage.getItem('userid')).then(res1 =>{
+                        console.log(res1);
+                        this.sharelink = this.sharelink + "?textid=" + this.$route.params.id + "&uuid=" + res.data;
+                        console.log(this.sharelink);
+                    })
+                })
+            },
+            closeDialog(){
+                this.showlink = false;//清空数据
+            },
         }
     }
 </script>
