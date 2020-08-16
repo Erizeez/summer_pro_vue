@@ -2,7 +2,7 @@
 <el-container class="home">
         <el-aside width="18%">
             <el-menu default-active="2" class="el-menu-vertical-demo"
-                background-color="#fff" text-color="#666" active-text-color="#ffd04b">
+                background-color="#fff" text-color="#666" active-text-color="#000">
                 <el-submenu index="1">
                     <template slot="title">
                         <span>我创建的团队</span>
