@@ -219,10 +219,10 @@
         box-shadow: 2px 2px 20px 3px rgba(0, 0, 0, 0.4);
     }
     .title-div{
-      width: 50%;
+      width: 60%;
       border-radius: 10px;
       background-color: rgba(255, 255, 255, 0.7);
-      box-shadow: -1px -1px 8px 4px rgba(0, 0, 0, 0.25), inset 0px -2px 5px 2px rgba(0, 0, 0, 0.1);
+      box-shadow: -1px -1px 8px 4px rgba(0, 0, 0, 0.25), inset 0px -2px 5px 2px rgba(255, 255, 255, 0.8);
       text-align: center;
       color: #666;
       transition-duration: 0.15s;
