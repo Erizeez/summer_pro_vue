@@ -84,7 +84,7 @@
                     <div style="padding: 14px;">
                         <div style="text-align: center; margin-bottom: 5%;">{{item.title}} </div>
                         <div class="bottom clearfix">
-                            <div v-if="!isTeamTrash" style="">
+                            <div style="">
                                 <el-button v-if="!isTeamTrash" type="primary" style="float: left;  margin-bottom: 5%;" circle plain class="button" icon="el-icon-search" @click="todoc(item.id)">
                                 </el-button>
                                 <el-button v-if="isTeamTrash" type="success" style="float: left;  margin-bottom: 5%;" circle plain class="button" icon="el-icon-refresh-left" @click="recoverdoc(item)">
