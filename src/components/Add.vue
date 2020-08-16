@@ -63,13 +63,20 @@
                         </el-col>
                     </el-row>
                 </div>
-            </el-row>
-        </el-main>
-    </el-container>
+            </el-header>
+            <el-main class="mainConfig">
+                <el-input v-model="docData.intro" class="inputConfig">
+                    <template slot="prepend">简介</template>
+                </el-input>
+                <ckeditor :editor="editor" v-model="docData.text" :config="editorConfig" @ready="onReady" class="editorStyle">{{this.$route.params.id}}</ckeditor>
+            </el-main>
+            <el-footer class="footerConfig">
+                <el-button type="primary" @click="cancelAdd">取消</el-button>
+                <el-button type="primary" @click="saveAdd">保存</el-button>
+            </el-footer>
+        </el-container>
+    </div>
 </template>
-
-
-
 
 <script>
     import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document'
@@ -84,15 +91,15 @@ export default {
                     // The configuration of the editor.
                     language: "zh-cn",
                     fontSize: {
-                    	options: [8,10,12,14,16,18,20,22,24,26,28,36,48,64],
+                    	options: [5,5.5,6.5,7.5,8,9,10,10.5,11,12,14,16,18,20,22,24,26,28,36,48,72],
                     	supportAllValues: true
                     },
                   ckfinder: {
                     uploadUrl: '/apis/doc/upload_file',
                     name: 'file',
-                  },
+                  }
 
-                	toolbar: ['heading', 'fontFamily', 'fontSize', '|', 'bold', 'italic', 'underline', 'strikeThrough', '|', 'alignment', '|', 'numberedList', 'bulletedList', '|', 'indent', 'outdent', '|', 'link', 'blockQuote', 'image', 'imageUpload', 'insertTable', '|', 'undo', 'redo'],
+                	//toolbar: ['exportWord', heading', 'fontFamily', 'fontSize', 'fontColor', 'bold', 'italic', 'underline', 'strikeThrough', 'alignment', 'numberedList', 'bulletedList', 'increaseIndent', 'decreaseIndent', 'link', 'blockQuote', 'image', 'insertTable', 'undo', 'redo'],
 
 
                 },
@@ -105,8 +112,7 @@ export default {
                     status: '',
                     title: '',
                     intro: ''
-                },
-                value: false,
+                }
                 // ...
             };
         },
@@ -115,20 +121,7 @@ export default {
           this.getParams();
         },
         watch:{
-          '$router':'getParams',
-            value(val, oldVal){
-                if(val == false){
-                    var contentDiv = document.getElementById("contentDiv");
-                    var infoDiv = document.getElementById("infoDiv");
-                    contentDiv.style["left"] = "50%";
-                    infoDiv.style["left"] = "150%";
-                }else{
-                    var contentDiv = document.getElementById("contentDiv");
-                    var infoDiv = document.getElementById("infoDiv");
-                    contentDiv.style["left"] = "-50%";
-                    infoDiv.style["left"] = "50%";
-                }
-            }
+          '$router':'getParams'
         },
         methods: {
             onReady( editor )  {
@@ -183,111 +176,50 @@ export default {
 </script>
 
 <style scoped>
-    .el-container{
-        height: 100%;
-    }
-    .editorStyle{
-        height: 78%;
-    }
-    .el-row-1{
-        top: -5%;
-        height: 15%;
-        width: 80%;
-        left: 50%;
-        transform: translate(-50%, 0%);
-        margin: 10px 0px 0px 0px;
-    }
-    .el-row-2{
-        top: -5%;
-        min-height: 85%;
-        height: auto;
+    .divConfig1 {
         width: 100%;
-        left: 50%;
-        transform: translate(-50%, 0%);
-    }
-    .titleP{
-        font-size: 30px;
-        //color: #555;
-    }
-    .title-col{
         height: 100%;
+        overflow-y: hidden;
     }
-    .btn-change{
-        position:absolute;
-        top: 50%;
-        transform: translate(0%, -30%);
-        right: 0;
+    .divConfig2 {
+        width: 100%;
+        height: 100%;
+        //overflow-y: hidden;
+        padding: 5px 0px 0px 0px;
     }
-    .info_box{
-        width: 90%;
-        height: 135%;
-        background-color: rgba(255, 255, 255, 0.8);
-        border-radius: 30px;
-        position: absolute;
-        left: 50%;
-        top: 0px;
-        transform :translate(-50%, 0%);
-        box-shadow: 0px 6px 20px 8px rgba(0, 0, 0, 0.3);
-        margin: 10px 0px 10px 0px;
-        transition-duration: 0.5s;
+    .inputConfig {
+        padding: -10px 0px 5px 0px;
     }
-    .info_box:hover{
-      box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.3);
-      transition-duration: 0.5s;
+    .el-container {
+        height: 100%;
+        margin-bottom: 40px;
+        background-image: url("../assets/login/login_bg.jpg");
     }
-    .info_box1{
-        width: 90%;
-        height: 135%;
-        background-color: rgba(255, 255, 255, 0.8);
-        border-radius: 30px;
-        position: absolute;
-        left: 150%;
-        top: 0px;
-        transform :translate(-50%, 0%);
-        box-shadow: 0px 6px 20px 8px rgba(0, 0, 0, 0.3);
-        margin: 10px 0px 10px 0px;
-        transition-duration: 0.5s;
+	.editorStyle{
+		width: 100%;
+		height: 100%;
+        //overflow-y: hidden;
+	}
+    .headConfig{
+        padding: 0px 10px 10px 15px;
+        font-family: "Microsoft YaHei";
+        font-size: 30px;
+        color: #333;
+        text-align: left;
+        top: 100px;
+        width: 100%;
+        margin: 0 auto;
+        height: 30%;
+        box-sizing: border-box;
     }
-    .info_box1:hover{
-      box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.3);
-      transition-duration: 0.5s;
+    .mainConfig{
+        width: 100%;
+        height: 70%;
+        background-color: #fff;
+        overflow-x: hidden;
+     //   overflow-y: hidden;
     }
-    .el-main-1{
-        padding: 20px 0px 100px 0px;
-    }
-    .delete-btn{
-        position: fixed;
-        right: 10%;
-        bottom: 8%;
-        z-index: 99;
-    }
-    .delete-btn-part{
-        box-shadow: 2px 2px 20px 3px rgba(0, 0, 0, 0.4);
-    }
-    .card-box-s{
-        left: 50px;
-        margin-top: 30px;
-        border-radius: 15px;
-        box-shadow: 2px 2px 20px 3px rgba(0, 0, 0, 0.4);
-    }
-    .title-div{
-      width: 50%;
-      border-radius: 10px;
-      background-color: rgba(255, 255, 255, 0.7);
-      box-shadow: -1px -1px 8px 4px rgba(0, 0, 0, 0.25), inset 0px -2px 5px 2px rgba(255, 255, 255, 0.8);
-      text-align: center;
-      color: #666;
-      transition-duration: 0.15s;
-    }
-    .title-div:hover{
-      background-color: rgba(240, 240, 240, 0.9);
-      box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2), inset 0px -2px 8px 2px rgba(255, 255, 255, 0.7);
-      opacity: 1;
-      color: #888;
-      transition-duration: 0.15s;
-    }
-    .seBtn{
-        position: absolute;
+    .footerConfig{
         right: 0px;
         top: 50%;
     }
