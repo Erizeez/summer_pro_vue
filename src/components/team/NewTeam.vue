@@ -76,7 +76,8 @@
   width: 60%;
   position: absolute;
   left: 50%;
-  top:30%;
+  top:240px;
+  height: 240px;
   transform: translate(-50%, -50%);
   border-radius: 15px;
   background-color: rgba(255, 255, 255, 0.6);
