@@ -54,6 +54,6 @@ export default {
     	filter: blur(400px);
   	}
     .el-main{
-      background-image: url("./assets/login/login_bg.jpg");
+	  background-image: url("./assets/login/login_bg.jpg");
     }
 </style>
