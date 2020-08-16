@@ -23,9 +23,9 @@
                     </el-table>
                 </el-tab-pane>
 
-                <el-tab-pane label="我的模板">
-                    <div v-if="MyModels.length==0">
-                        <span>还没有自定义模板，快将觉得满意的文件添加为模板吧！</span>
+                <el-tab-pane label="我的模板" style="height: 100px;">
+                    <div v-if="MyModels.length==0" style="text-align: center;position: relative; top: 50%;">
+                        <span style="font-size: 30px; color: #888;">还没有自定义模板，快将觉得满意的文件添加为模板吧！</span>
                     </div>
                     <el-table :data="MyModels" stripe style="width: 1050px; left: 6%" v-if="MyModels.length>0">
                         <el-table-column type="index" label="序号"></el-table-column>
