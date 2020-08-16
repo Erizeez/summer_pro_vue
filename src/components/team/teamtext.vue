@@ -13,7 +13,7 @@
           <span class="non-favor" v-else-if="nonfavor">
             <el-button type="warning" icon="el-icon-star-off" style="float: right" round @click="like">收藏</el-button>
           </span>
-          <el-button type="primary" style="float: right; margin-right: 10px" round @click="goEdit">编辑文本</el-button>
+          <el-button type="primary" style="float: right; margin-right: 10px" round @click="goEdit" :disabled="!canEdit">编辑文本</el-button>
           <el-button type="primary" style="float: right; margin-right: 10px" round  @click="goAccess">预览文本</el-button>
         </div>
       </div>
@@ -111,7 +111,8 @@
           teamdocId:''
         },
         favor:true,
-        nonfavor:false
+        nonfavor:false,
+        canEdit:false
       }
     },
     created() {
@@ -135,6 +136,7 @@
       },
       getParams(){
         this.textid=this.$route.query.textid;
+        /* this.$http */
         this.$http.get('/team/getteamdoc?DocId='+this.textid).then(res =>{
           console.log(res);
           this.teamdocData.id = res.data.id;
