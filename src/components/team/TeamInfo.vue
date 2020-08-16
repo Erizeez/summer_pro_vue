@@ -1,9 +1,9 @@
 <template>
     <el-container class="TeamInfo_container">
-        <el-aside width="80%">
+        <div style="width: 70%;">
             <router-view></router-view>
-        </el-aside>
-        <el-main class="TeamInfo_main">
+        </div>
+        <div style="width: 20%;" class="TeamInfo_main">
             <h3>团队信息
                 <el-button type="text" icon="el-icon-edit" class="TeamInfo_main_title_btn"
                     v-if="!changeMode&& isCreator" @click="toEdit">修改团队信息
@@ -40,7 +40,7 @@
                     <el-button slot="reference" type="danger" v-if="isCreator">解散团队</el-button>
                 </el-popconfirm>
             </div>
-        </el-main>
+        </div>
     </el-container>
 </template>
 
@@ -169,11 +169,11 @@
 <style>
     .TeamInfo_container {
         height: 700px;
-        border: 1px solid #eee
+        border: 1px solid #eee;
     }
 
     .TeamInfo_main {
-        background-color: rgb(238, 241, 246)
+        
     }
 
     .TeamInfo_main_title_btn {

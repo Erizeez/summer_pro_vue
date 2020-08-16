@@ -74,12 +74,8 @@
 </script>
 
 <style>
-.Teams_layer{
-    margin-left: 50px
-}
 .el-container{
-    height: 100%;
-    
+    height: 100%;  
 }
 .el-aside{
     background-color: white;

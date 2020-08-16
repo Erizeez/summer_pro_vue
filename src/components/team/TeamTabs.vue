@@ -1,5 +1,5 @@
 <template>
-    <el-card shadow="always" class="el-card1">
+    <el-card class="info_box">
         <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane v-for="(item, index) in tabs" :key="item.id" :label="item.name" :name="item.id">
                 <router-view></router-view>
@@ -62,15 +62,23 @@
     }
 </script>
 
-<style scope>
-.el-card1{
-    width:75%;
-    position:absolute;
-    top:80px;
-    min-height: 700px;
-    box-shadow: 0px 0px 6px 4px rgba(0, 0, 0, 0.1), inset 0px -2px 10px 2px rgba(255, 255, 255, 1);
-    background-color: rgba(255, 255, 255, 0.6);
-    border-radius: 30px;
-
-}
+<style>
+    .info_box{
+        width: 90%;
+        height: auto;
+        min-height: 800px;
+        background-color: rgba(255, 255, 255, 0.6);
+        border-radius: 30px;
+        position: relative;
+        left: 50%;
+        top: 5%;
+        transform :translate(-50%, 0%);
+        box-shadow: 0px 0px 6px 4px rgba(0, 0, 0, 0.1), inset 0px -2px 10px 2px rgba(255, 255, 255, 1);
+        margin: 10px 0px 50px 0px;
+        transition-duration: 0.5s;
+    }
+    .info_box:hover{
+      box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.3);
+      transition-duration: 0.5s;
+    }
 </style>
