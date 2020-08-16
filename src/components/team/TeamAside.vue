@@ -2,7 +2,7 @@
     <el-row>
         <el-col :span="4">
             <el-menu default-active="2" class="el-menu-vertical-demo"
-                background-color="#E06994" text-color="#fff" active-text-color="#ffd04b">
+                background-color="#fff" text-color="#666" active-text-color="#ffd04b">
                 <el-submenu index="1">
                     <template slot="title">
                         <span>我创建的团队</span>
