@@ -24,6 +24,7 @@ import TeamDocAdd from '@/components/TeamDocAdd'
 import HelloWorld from '@/components/HelloWorld'
 import NewTeam from "../components/team/NewTeam";
 import TeamMember from "../components/team/TeamMember";
+import teamRecent from "../components/workspace/teamRecent";
 
 import TeamAside from "../components/team/TeamAside"
 import Myteams from "../components/team/Myteams"
@@ -54,6 +55,7 @@ const router =  new Router({
       children:[
         {path: '/index', name:index, component: index},
         {path: '/recentdoc', name:recentdoc, component: recentdoc},
+        {path:'/teamRecent', name:teamRecent, component:teamRecent},
         {path: '/text', name:text, component:text},
         {path: '/collect', name:collect, component:collect},
         {path: '/trash', name:trash, component:trash},
