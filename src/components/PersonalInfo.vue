@@ -56,7 +56,7 @@
                           <el-button type="primary" size="small" style="float: right;" @click=jumpToChange plain>完善与修改信息</el-button>
 
                         </div>
-                        <el-form label-width="100px">
+                        <el-form label-width="90px">
                             <el-form-item label="用户名">
                                 {{info.name}}
                             </el-form-item>
@@ -367,6 +367,18 @@
     }
 
     .box-card {
+        
+        box-shadow: 0px 0px 6px 4px rgba(0, 0, 0, 0.1), inset 0px -2px 10px 2px rgba(255, 255, 255, 1);
+        background-color: rgba(255, 255, 255, 0.6);
+
+        border-radius: 30px;
+        min-height: 300px;
+        position: absolute;
+        left: 50%;
+        top: 100px;
+        transform :translate(-50%, 0%);
+        
+        transition-duration: 0.5s;
         width: 1000px;
     }
 
