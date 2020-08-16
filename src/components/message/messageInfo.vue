@@ -110,7 +110,7 @@
         console.log(this.dialogcontent+'hhhh');
         item.haveread=1;
         this.$http.post('/msg/haveread', item).then(res =>{
-          console.log(res);
+          this.$emit('ifMessage');
         })
       },
       showcontent1(item){
@@ -120,7 +120,7 @@
         item.haveread=1;
         this.teamdia = item;
         this.$http.post('/msg/haveread', item).then(res =>{
-          console.log(res);
+          this.$emit('ifMessage');
         })
       },
       accept(item){

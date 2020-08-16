@@ -121,6 +121,7 @@
               this.haveNewMessage = true;
               break;
             }
+            this.haveNewMessage=false;
           }
         })
       },
