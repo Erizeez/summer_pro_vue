@@ -50,8 +50,11 @@
                     <el-card class="box-card" v-else>
                         <div slot="header" class="clearfix">
                             <span>个人信息</span>
-                            <el-button style="float: right; padding: 3px 0" type="text" @click=jumpToChange>完善与修改信息
-                            </el-button>
+                          <el-button style="float:right; margin-left: 25px;" size="small" type="warning" plain @click="openPassword">修改密码</el-button>
+<!--                            <el-button style="float: right; padding: 3px 0" type="text" @click=jumpToChange>完善与修改信息-->
+<!--                            </el-button>-->
+                          <el-button type="primary" size="small" style="float: right;" @click=jumpToChange plain>完善与修改信息</el-button>
+
                         </div>
                         <el-form label-width="100px">
                             <el-form-item label="用户名">
@@ -79,6 +82,28 @@
                     </el-card>
                 </el-main>
         </el-container>
+
+
+      <el-dialog title="修改密码"  :visible.sync="dialogFormVisible" style="width: 70%; position: absolute; left:15%; top:5%">
+        <el-form :model="passwordform" :rules="pwdRule" ref="pwdformRef">
+          <el-form-item label="原密码" prop="old">
+            <el-input type="password" v-model="passwordform.old" autocomplete="off" style="width: 400px"></el-input>
+          </el-form-item>
+          <el-form-item label="新密码" prop="new">
+            <el-input type="password" v-model="passwordform.new" autocomplete="off" style="width: 400px"></el-input>
+          </el-form-item>
+          <el-form-item label="再次输入新密码" prop="newAgain">
+            <el-input type="password" v-model="passwordform.newAgain" autocomplete="off" style="width: 345px"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="submitPassword">确 定</el-button>
+        </div>
+      </el-dialog>
+
+
+
     </div>
 </template>
 <script>
@@ -147,10 +172,30 @@
                         { required: true, validator: checkPhone, trigger: 'blur' }
                     ]
                 },
+              passwordform:{
+                old:'',
+                new:'',
+                newAgain:''
+              },
+              pwdRule:{
+                  old:[
+                    { required: true, message: "请输入原密码", trigger: "blur"},
+                  ],
+                  new:[
+                    { required: true, message: "请输入新密码", trigger: "blur"},
+                    { min: 8, max: 25, message: "长度在8到25个字符之间", trigger: "blur"}
+                  ],
+                newAgain:[
+                  { required: true, message: "请再次输入密码", trigger: "blur"},
+                  { min: 8, max: 25, message: "长度在8到25个字符之间", trigger: "blur"}
+                ]
+              },
                 doChange: false,
                 imgData: {
                     accept: 'image/gif, image/jpeg, image/png, image/jpg',
-                }
+                },
+                dialogFormVisible:false,
+
             };
         },
         created() {
@@ -182,7 +227,6 @@
                                 this.info.company = this.ruleForm.company;
                                 this.info.photo = this.ruleForm.photo;
                                 this.toChange();
-                                location.reload(true);
                             }
                             else {
 
@@ -244,6 +288,43 @@
                     console.log(err);
                 });
             } */
+            submitPassword(){
+              this.$refs.pwdformRef.validate(valid => {
+                if(!valid) {
+                  this.dialogFormVisible = false;
+                  return this.$message.error("请输入正确格式");
+                }
+                this.dialogFormVisible = false;
+                var oldpassword;
+                console.log(this.passwordform.old);
+                console.log(typeof this.passwordform.old)
+                this.$http.get('/account/search?id=' + this.info.id).then(res => {
+                  //console.log(res);
+                  oldpassword = res.data.password;
+                  console.log(typeof oldpassword);
+
+                  if (this.passwordform.old !== oldpassword) {
+                    return this.$message.error("原密码不正确")
+                  }
+                  if (this.passwordform.new !== this.passwordform.newAgain) {
+                    return this.$message.error("两次输入密码不一致")
+                  } else {
+                    this.$http.get('/account/modifypwd?id=' + this.info.id + '&oldPwd=' + this.passwordform.old + '&newPwd=' + this.passwordform.new).then(res => {
+                      console.log(res);
+                      if (res.data === "success") {
+                        return this.$message.success("修改密码成功");
+                      } else {
+                        return this.$message.error("修改密码失败");
+                      }
+                    })
+                  }
+
+                })
+              })
+            },
+            openPassword(){
+              this.dialogFormVisible = true;
+            },
             handleAvatarSuccess(res) {
                 var tmp=res.filepath;
                 console.log(tmp);
