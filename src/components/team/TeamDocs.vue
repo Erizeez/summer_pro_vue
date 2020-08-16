@@ -5,7 +5,7 @@
                 <el-radio-button :label="false">平铺</el-radio-button>
                 <el-radio-button :label="true">列表</el-radio-button>
             </el-radio-group>
-            <el-button class="Teamdoc_btns" icon="el-icon-delete" @click="isTeamTrash=true" v-if="!isTeamTrash">团队回收站
+            <el-button class="Teamdoc_btns" icon="el-icon-delete" @click="isTeamTrash=true" v-if="!isTeamTrash" :disabled="!canEdit">团队回收站
             </el-button>
             <el-button class="Teamdoc_btns" @click="isTeamTrash=false" v-if="isTeamTrash">返回</el-button>
             <el-popover placement="bottom" width="150" v-model="visible" v-if="!isTeamTrash">
