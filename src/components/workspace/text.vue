@@ -135,7 +135,8 @@
         canSee: false,
         canEdit: false,
         canComment: false,
-        uuid: ''
+        uuid: '',
+        authority:1,
       }
     },
     created() {
@@ -157,12 +158,15 @@
         this.$router.go(-1);
       },
       getParams() {
+       
         this.textid = this.$route.query.textid;
+        // this.uuid=this.$route.query.uuid;
+        
         if (this.$route.query.uuid != null) {
           this.uuid = this.$route.query.uuid;
         }
+        
         this.$http.get('/doc/read?id=' + this.$route.query.textid).then(res => {
-          console.log(res);
           this.docData.id = res.data.id;
           this.docData.createId = res.data.createId;
           this.docData.createTime = res.data.createTime;
@@ -175,6 +179,34 @@
           this.$http.get('/account/search?id=' + res.data.createId).then(res => {
             this.userName = res.data.name;
           })
+        })
+        this.$http.get('/share/sharedoc?uuid='+this.uuid+'&accountId='+localStorage.getItem('userid')).then(res =>{
+          console.log(res);
+          console.log('hh');
+          this.canSee= false,
+          this.canEdit=false,
+          this.canComment=false,
+          this.authority = res.data.auth;
+          if(this.authority===1){
+            canSee = true;
+            return;
+          }
+          if(this.authority-8 > 0){
+            this.authority -= 8;
+            this.canEdit = true;
+          }
+          if(this.authority-4 > 0){
+            this.authority -= 4;
+            this.canComment = true;
+          }
+          if(this.authority-2 > 0){
+            this.authority -=2;
+            // this.canSee = true;
+          }
+          if(this.authority === 1){
+            this.canSee = true;
+          }
+          console.log(this.authority);
         })
       },
       addComment() {
