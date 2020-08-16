@@ -163,13 +163,13 @@ export default {
                     if(res.data == "success"){
                         _this.$message({
                             type: 'success',
-                            message: '保存成功'
+                            message: '创建成功'
                         });
                         _this.$router.push("/created");
                     } else{
                         _this.$message({
                             type: 'error',
-                            message: '保存失败'
+                            message: '创建失败'
                         });
                     }
                 });
