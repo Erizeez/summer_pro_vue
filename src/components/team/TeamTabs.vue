@@ -21,15 +21,21 @@
             }
         },
         created() {
-            this.getParams();
+            this.teamid = this.$route.query.teamid;
         },
         watch: {
-            '$router': 'getParams'
-        },
-        methods: {
-            getParams() {
+            $route() {
                 this.teamid = this.$route.query.teamid;
             },
+            teamid() {
+                this.activeName = "1";
+
+                if (this.$route.path == '/TeamMember') {
+                    this.activeName = "2";
+                }
+            }
+        },
+        methods: {
             handleClick(index) {
                 console.log(this.activeName);
                 if (this.activeName == "1") {
