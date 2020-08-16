@@ -85,7 +85,7 @@
 
 
         <el-dialog title="修改密码" :visible.sync="dialogFormVisible"
-            style="width: 70%; position: absolute; left:15%; top:5%">
+            style="width: 70%; position: absolute; left:15%; top:5%;">
             <el-form :model="passwordform" :rules="pwdRule" ref="pwdformRef">
                 <el-form-item label="原密码" prop="old">
                     <el-input type="password" v-model="passwordform.old" autocomplete="off" style="width: 400px">

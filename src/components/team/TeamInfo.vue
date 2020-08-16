@@ -168,7 +168,8 @@
 
 <style>
     .TeamInfo_container {
-        height: 700px;
+        height: auto;
+        min-height: 500px;
         border: 1px solid #eee;
     }
 

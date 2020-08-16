@@ -22,6 +22,7 @@
         </el-row>
         <el-row :gutter="0" style="margin-top: 20px;" class="boxes">
             <el-col :span="20" :offset="1" v-if="brouseMode==true">
+                
                 <el-table :data="TeamDocsList" stripe style="width: 100%">
                     <el-table-column type="index" width="50">
                     </el-table-column>
@@ -45,19 +46,22 @@
                     </el-table-column>
                 </el-table>
             </el-col>
-            <el-col :span="5"  v-for="item in TeamDocsList" :key="item.id" v-if="brouseMode==false">
-                <el-card :span="5" :body-style="{ padding: '0px' }" shadow="hover" class="box">
-                    <img src="../../assets/home/card-bg2.jpg" class="image"
-                        style="width: 100%; height:200px; display: block">
+            <el-col style="width: 25%; margin: 0px 0px 25px 0px;left:0px;" :span="5" v-if="brouseMode==false" v-for="(item,index) in TeamDocsList" :key="item.id">
+                <el-card :span="5" :body-style="{ padding: '0px' }" shadow="hover" class="card-box-s">
+                    <img src="../../assets/home/card-bg.jpg" class="image"
+                        style="width: 100%; height:60%; display: block">
                     <div style="padding: 14px;">
-                        <span>{{item.title}} </span>
-                        <div class="bottom clearfix" v-if="!isTeamTrash">
-                            <el-button type="text" class="button" @click="todoc(item.id)">进入文档</el-button>
-                            <el-button type="text" class="button" @click="deletedoc(item)">删除文档</el-button>
-                        </div>
-                        <div class="bottom clearfix" v-if="isTeamTrash">
-                            <el-button type="text" class="button" @click="recoverdoc(item)">恢复文档</el-button>
-                            <el-button type="text" class="button" @click="removedoc(item)">永久删除</el-button>
+                        <div style="text-align: center; margin-bottom: 5%;">{{item.title}} </div>
+                        <div class="bottom clearfix">
+                            <div v-if="!isDelete" style="">
+                                <el-button v-if="!isTeamTrash" type="primary" style="float: left;  margin-bottom: 5%;" circle plain class="button" icon="el-icon-search" @click="todoc(item.id)">
+                                </el-button>
+                                <el-button v-if="isTeamTrash" type="success" style="float: left;  margin-bottom: 5%;" circle plain class="button" icon="el-icon-refresh-left" @click="recoverdoc(item)">
+                                </el-button>
+                                <el-button type="danger" style="float: right;" circle plain class="button" icon="el-icon-delete"
+                                    @click="deletedoc(item)">
+                                </el-button>
+                            </div>
                         </div>
                     </div>
                 </el-card>
@@ -70,9 +74,7 @@
     export default {
         data() {
             return {
-                TeamDocsList: [
-
-                ],
+                TeamDocsList: [],
                 brouseMode: false,
                 teamid: "",
                 visible: false,
@@ -178,24 +180,30 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
     .el-card{
-        width:160px;
+        width: 160px;
         height: 330px;
     }
     .box {
-       left: 50px;
+        left: 50px;
         margin-top: 30px;
         border-radius: 15px;
         box-shadow: 2px 2px 20px 3px rgba(0, 0, 0, 0.4);
     }
-
     .boxes {
         left: 7%;
     }
-
     .Teamdoc_btns {
         margin-bottom: 20px;
         float: right;
         margin-top: 10px;
         margin-right: 5px;
+    }
+    .card-box-s{
+        left: 50px;
+        margin-top: 0px;
+        height: 30%;
+        width: 80%;
+        border-radius: 15px;
+        box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.3);
     }
 </style>

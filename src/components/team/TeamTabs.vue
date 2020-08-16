@@ -1,11 +1,11 @@
 <template>
-    <el-card class="info_box">
+    <div class="info_box">
         <el-tabs v-model="activeName" @tab-click="handleClick">
             <el-tab-pane v-for="(item, index) in tabs" :key="item.id" :label="item.name" :name="item.id">
                 <router-view></router-view>
             </el-tab-pane>
         </el-tabs>
-    </el-card>
+    </div>
 </template>
 
 <script>
@@ -64,9 +64,10 @@
 
 <style>
     .info_box{
+        padding: 20px;
         width: 90%;
         height: auto;
-        min-height: 800px;
+        min-height: 400px;
         background-color: rgba(255, 255, 255, 0.6);
         border-radius: 30px;
         position: relative;
