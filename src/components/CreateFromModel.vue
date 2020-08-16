@@ -15,7 +15,8 @@
                                 <el-button type="info" style="margin:0 auto" @click="showSystemModel(scope.row)"
                                     icon="el-icon-view">预览
                                 </el-button>
-                                <el-button type="primary" style="margin:0 auto" @click="useModel(scope.row)">使用模板创建文档</el-button>
+                                <el-button type="primary" style="margin:0 auto" @click="useModel(scope.row)">使用模板创建文档
+                                </el-button>
                             </template>
                         </el-table-column>
 
@@ -36,7 +37,8 @@
                                 <el-button type="info" style="margin:0 auto" @click="" @click="showMyModel(scope.row)"
                                     icon="el-icon-view">预览
                                 </el-button>
-                                <el-button type="primary" style="margin:0 auto" @click="useModel(scope.row)">使用模板创建文档</el-button>
+                                <el-button type="primary" style="margin:0 auto" @click="useModel(scope.row)">使用模板创建文档
+                                </el-button>
                                 <el-button type="danger" style="margin:0 auto" @click="deleteModel(scope.$index)">删除模板
                                 </el-button>
                             </template>
@@ -55,8 +57,8 @@
 
 <script>
     import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document'
-	import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/zh-cn.js'
-	
+    import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/zh-cn.js'
+
     export default {
         data() {
             return {
@@ -65,30 +67,32 @@
                 MyModels: [],
                 dialogVisible: false,
                 dialogcontent: '',
-                editor:DecoupledEditor,
+                editor: DecoupledEditor,
                 editorConfig: {
                     // The configuration of the editor.
                     language: "zh-cn",
                     fontSize: {
-                    	options: [5,5.5,6.5,7.5,8,9,10,10.5,11,12,14,16,18,20,22,24,26,28,36,48,72],
-                    	supportAllValues: true
+                        options: [5, 5.5, 6.5, 7.5, 8, 9, 10, 10.5, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72],
+                        supportAllValues: true
                     },
-					toolbar: [ 'restrictedEditingException'],
-                	//toolbar: ['exportWord', heading', 'fontFamily', 'fontSize', 'fontColor', 'bold', 'italic', 'underline', 'strikeThrough', 'alignment', 'numberedList', 'bulletedList', 'increaseIndent', 'decreaseIndent', 'link', 'blockQuote', 'image', 'insertTable', 'undo', 'redo'],
-                	ckfinder: {
+                    toolbar: ['restrictedEditingException'],
+                    //toolbar: ['exportWord', heading', 'fontFamily', 'fontSize', 'fontColor', 'bold', 'italic', 'underline', 'strikeThrough', 'alignment', 'numberedList', 'bulletedList', 'increaseIndent', 'decreaseIndent', 'link', 'blockQuote', 'image', 'insertTable', 'undo', 'redo'],
+                    ckfinder: {
                         uploadUrl: '/apis/doc/upload',
                     },
-      	
+
                 },
+                teamid: ''
             }
         },
         created() {
             this.getmodels();
+            this.teamid = this.$route.query.teamid;
+            console.log(this.teamid);
         },
         methods: {
             getmodels() {
                 this.$http.get('/doc/getModelList?accountId=' + localStorage.getItem('userid')).then(res => {
-                    console.log(res);
                     this.MyModels = res.data;
                 })
             },
@@ -100,13 +104,23 @@
                 this.dialogVisible = true;
                 this.dialogcontent = item.content;
             },
-            useModel(item){
-                this.$router.push({
-                    path:'/add',
-                    query:{
-                        model:item.content
-                    }
-                })
+            useModel(item) {
+                if (this.teamid == null) {
+                    this.$router.push({
+                        path: '/add',
+                        query: {
+                            model: item.content
+                        }
+                    })
+                }
+                else {
+                    this.$router.push({
+                        path: '/teamdocadd/' + this.teamid,
+                        query: {
+                            model: item.content
+                        }
+                    })
+                }
             },
             deleteModel(item) {
                 this.$http.get('/doc/delmodel?modelId=' + this.MyModels[item].id).then(res => {
@@ -118,7 +132,7 @@
                     else this.$message.error('删除失败');
                 })
             },
-            onReady( editor )  {
+            onReady(editor) {
                 // Insert the toolbar before the editable area.
                 editor.ui.getEditableElement().parentElement.insertBefore(
                     editor.ui.view.toolbar.element,
@@ -131,9 +145,9 @@
 </script>
 
 <style>
-    .editorStyle{
-		width: 100%;
-		height: 100%;
+    .editorStyle {
+        width: 100%;
+        height: 100%;
         //overflow-y: hidden;
-	}
+    }
 </style>
