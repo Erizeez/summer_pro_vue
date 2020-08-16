@@ -185,6 +185,7 @@
               message: '评论失败'
             });
           }
+          this.submitComment.content = ""
         })
       },
       deleteComment(index) {
@@ -320,6 +321,18 @@
   }
 
   .box-card {
+    
+    width:90%;
+        min-height: 700px;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 30px;
+        position: absolute;
+        left: 50%;
+        top: 80px;
+        transform :translate(-50%, 0%);
+        box-shadow: 0px 6px 20px 8px rgba(0, 0, 0, 0.3);
+        margin: 10px 0px 50px 0px;
+        transition-duration: 0.5s;
     text-align: center;
   }
   .favorite{
