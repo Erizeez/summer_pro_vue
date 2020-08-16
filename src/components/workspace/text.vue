@@ -16,8 +16,8 @@
             <el-button type="warning" icon="el-icon-star-off" style="float: right" round @click="like">收藏</el-button>
           </span>
           <el-button type="primary" style="float: right; margin-right: 10px" round @click="dialogFormVisible=true">存为模板</el-button>
-          <el-button type="primary" style="float: right; margin-right: 10px" round @click="goEdit">编辑文本</el-button>
-          <el-button type="primary" style="float: right; margin-right: 10px" round @click="goAccess">预览文本</el-button>
+          <el-button type="primary" style="float: right; margin-right: 10px" round @click="goEdit" :disabled="!canEdit">编辑文本</el-button>
+          <el-button type="primary" style="float: right; margin-right: 10px" round @click="goAccess" :disabled="!canSee">预览文本</el-button>
 
           <el-dialog title="保存到模板" :visible.sync="dialogFormVisible" :append-to-body="true">
             <el-form :model="form">
@@ -75,7 +75,8 @@
             <el-divider></el-divider>
       </div>
       <el-collapse>
-  <el-collapse-item title="评论" name="1">
+        <div v-if="!canComment">很抱歉，您没有评论该文档的权限</div>
+  <el-collapse-item title="评论" name="1" v-if="canComment">
     <el-input placeholder="请输入内容" v-model="submitComment.content">
       <el-button type="primary" slot="append" @click="addComment()">发送</el-button>
     </el-input>
@@ -126,14 +127,17 @@
           name: '',
           accountId: ''
         },
-        formLabelWidth: "120px"
+        formLabelWidth: "120px",
+        canSee:true,
+        canEdit:true,
+        canComment:false,
+        uuid:''
       }
     },
     created() {
       this.getParams();
       this.checkLike();
       this.getComments();
-      this.getUserName();
       this.addRecent();
     },
     watch:{
@@ -150,7 +154,9 @@
       },
       getParams(){
         this.textid=this.$route.query.textid;
-        console.log(this.$route.query.textid);
+        if(this.$route.query.uuid!=null){
+          this.uuid=this.$route.query.uuid;
+        }
           this.$http.get('/doc/read?id='+this.$route.query.textid).then(res =>{
             console.log(res);
             this.docData.id = res.data.id;
@@ -163,7 +169,6 @@
             this.docData.intro = res.data.intro;
             this.userId = window.localStorage.getItem('userid');
             this.$http.get('/account/search?id=' +  res.data.createId).then(res =>{
-              console.log(res);
               this.userName = res.data.name;
             })
           })
@@ -172,7 +177,6 @@
         this.submitComment.accountId = parseInt(window.localStorage.getItem('userid'));
         this.submitComment.DocId = this.docData.id;
         this.$http.get('/comment/add?DocId=' + this.submitComment.DocId + '&accountId=' + this.submitComment.accountId + '&content=' + this.submitComment.content).then(res =>{
-          console.log(res);
           if(res.data === 'success'){
             this.getComments();
             this.$message({
@@ -193,7 +197,6 @@
         this.submitComment.id = this.comments[index].id;
         this.submitComment.DocId = this.docData.id;
         this.$http.post('/comment/delete', this.submitComment).then(res =>{
-          console.log(res);
           if(res.data === 'success'){
             location.reload(true);
             this.$message({
@@ -212,7 +215,6 @@
         var text = this.comments[i].content;
         if(this.comments[i].accountId === parseInt(localStorage.getItem('userid'))){
           this.$http.get('/comment/getcomment?id='+this.comments[i].id).then(res=>{
-            console.log(res);
             this.editcomment=res.data;
           })
           this.$prompt('请输入评论', '提示', {

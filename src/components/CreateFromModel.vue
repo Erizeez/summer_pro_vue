@@ -63,7 +63,7 @@
         data() {
             return {
                 tabPosition: 'left',
-                systemModels: [{ name: "系统模板1" }],
+                systemModels: [],
                 MyModels: [],
                 dialogVisible: false,
                 dialogcontent: '',
@@ -94,6 +94,9 @@
             getmodels() {
                 this.$http.get('/doc/getModelList?accountId=' + localStorage.getItem('userid')).then(res => {
                     this.MyModels = res.data;
+                })
+                this.$http.get('/doc/getSystemModel?accountId='+localStorage.getItem('userid')).then(res=>{
+                    this.systemModels=res.data;
                 })
             },
             showSystemModel(item) {
