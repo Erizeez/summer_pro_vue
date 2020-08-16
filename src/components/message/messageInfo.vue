@@ -7,11 +7,11 @@
         <el-tab-pane label="通知消息">
           <el-table
             :data="msg_data1" border stripe
-            style="width: 780px; left: 10%">
+            style="width: 880px; left: 10%">
 
             <el-table-column type="index"></el-table-column>
-            <el-table-column prop="title" label="通知标题" width="600" style="text-align: center"></el-table-column>
-            <el-table-column prop="content" label="查看" width="130px">
+            <el-table-column prop="title" label="通知标题" width="650" style="text-align: center"></el-table-column>
+            <el-table-column prop="content" label="查看" width="180px">
 
               <template slot-scope="scope">
                 <el-button type="info" style="display:block;margin:0 auto" v-if="scope.row.haveread === 1" @click="showcontent(scope.row)">已读</el-button>
@@ -25,9 +25,9 @@
         <el-tab-pane label="团队消息">
           <el-table
             :data="msg_data2" border stripe
-            style="width: 780px; left: 10%">
+            style="width: 880px; left: 10%">
             <el-table-column type="index"></el-table-column>
-            <el-table-column prop="title" label="通知标题" width="600" style="text-align: center"></el-table-column>
+            <el-table-column prop="title" label="通知标题" width="650" style="text-align: center"></el-table-column>
             <el-table-column prop="content" label="查看" width="180">
 
               <template slot-scope="scope">
@@ -110,7 +110,7 @@
         console.log(this.dialogcontent+'hhhh');
         item.haveread=1;
         this.$http.post('/msg/haveread', item).then(res =>{
-          this.$emit('ifMessage');
+          console.log(res);
         })
       },
       showcontent1(item){
@@ -121,7 +121,6 @@
         this.teamdia = item;
         this.$http.post('/msg/haveread', item).then(res =>{
           console.log(res);
-          this.$emit('ifMessage');
         })
       },
       accept(item){
@@ -154,9 +153,27 @@
 <style scoped>
   .box-card {
     width: 90%;
+    min-height: 600px;
+    box-shadow: 0px 0px 6px 4px rgba(0, 0, 0, 0.1), inset 0px -2px 10px 2px rgba(255, 255, 255, 1);
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 30px;
     position: absolute;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    top: 100px;
+    transform :translate(-50%, 0%);
   }
+  /* .info_box{
+        width: 90%;
+        height: auto;
+        min-height: 800px;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 30px;
+        position: absolute;
+        left: 50%;
+        top: 100px;
+        transform :translate(-50%, 0%);
+        box-shadow: 0px 6px 20px 8px rgba(0, 0, 0, 0.3);
+        margin: 10px 0px 50px 0px;
+        transition-duration: 0.5s;
+    } */
 </style>
