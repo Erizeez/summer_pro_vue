@@ -133,6 +133,7 @@
       this.getParams();
       this.checkLike();
       this.getComments();
+      this.getUserName();
       this.addRecent();
     },
     watch:{
@@ -173,7 +174,7 @@
         this.$http.get('/comment/add?DocId=' + this.submitComment.DocId + '&accountId=' + this.submitComment.accountId + '&content=' + this.submitComment.content).then(res =>{
           console.log(res);
           if(res.data === 'success'){
-            location.reload(true);
+            this.getComments();
             this.$message({
               type: 'success',
               message: '评论成功'
