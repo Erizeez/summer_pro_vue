@@ -37,15 +37,29 @@
                                 <template slot="prepend">文档名</template>
                             </el-input>
                         </el-col>
-                        <el-col :span="24" style="height: 5%; width: 95%; margin: 40px 0px 20px 0px;">
-                            <div class="detail-div">
-                                <span style="size: 30px;">简介</span>
+                        <el-col :span="24" style="height: 10%; width: 95%; margin: 40px 0px 20px 0px;">
+                            <div>
+                                <p style="font-size: 20px;">简介:</p>
                             </div>
                         </el-col>
-                        <el-col :span="24" style="height: 40%; width: 95%; margin: 40px 0px 20px 0px;">
+                        <el-col :span="24" style="height: 30%; width: 95%; margin: 40px 0px 20px 0px;">
                             <el-input style="max-height: 40%;" type="textarea" v-model="docData.intro" class="inputConfig">
                                 
                             </el-input>
+                        </el-col>
+                        <el-col :span="24" style="height: 30%; width: 95%; margin: 40px 0px 20px 0px;">
+                            <el-row>
+                                <el-col :span="12" style="height: 5%; margin: 40px 0px 20px 0px;">
+                                    <div class="btn-div-1" @click="cancelAdd">
+                                        <p class="titleB">取消</p>
+                                    </div>
+                                </el-col>
+                                <el-col :span="12" style="height: 5%;margin: 40px 0px 20px 0px;">
+                                    <div class="btn-div-2" @click="saveAdd">
+                                        <p class="titleB">创建</p>
+                                    </div>
+                                </el-col>
+                            </el-row>
                         </el-col>
                     </el-row>
                 </div>
@@ -287,11 +301,47 @@ export default {
         color: #666;
         transition-duration: 0.2s;
     }
-    .detail-div:hover{
+    .btn-div-1{
+        width: 20%;
+        height: 100%;
+        position: absolute;
+        left: 10%;
+        border-radius: 10px;
+        background-color: rgba(150, 150, 150, 0.05);
+        box-shadow: 0px 0px 6px 4px rgba(0, 0, 0, 0.1), inset 0px -2px 10px 2px rgba(255, 255, 255, 1);
+        text-align: center;
+        color: #666;
+    }
+    .btn-div-1:active{
+        background-color: rgba(255, 255, 255, 0.8);
+        box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1), inset 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+        color: #666;
+    }
+    .btn-div-2{
+        width: 20%;
+        height: 100%;
+        position: absolute;
+        right: 10%;
+        border-radius: 10px;
+        background-color: rgba(150, 150, 150, 0.05);
+        box-shadow: 0px 0px 6px 4px rgba(0, 0, 0, 0.1), inset 0px -2px 10px 2px rgba(255, 255, 255, 1);
+        text-align: center;
+        color: #666;
+    }
+    .btn-div-2:active{
+        background-color: rgba(255, 255, 255, 0.8);
+        box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1), inset 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+        color: #666;
+    }
+    .titleB{
+        font-size: 18px;
+        //color: #555;
+    }
+    /* .detail-div:hover{
         background-color: rgba(255, 255, 255, 0.8);
         box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1), inset 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
         color: #666;
         transition-duration: 0.2s;
-    }
+    } */
 </style>
 
