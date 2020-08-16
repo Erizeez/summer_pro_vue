@@ -41,7 +41,7 @@
                                     <div>
                                         <el-button type="info" style="margin:0 auto" @click="showSystemModel(item)" icon="el-icon-view">预览
                                         </el-button>
-                                        <el-button type="primary" style="margin:0 auto" @click="useModel(item)">使用模板创建文档
+                                        <el-button type="primary" style="margin:0 auto" @click="useModel(item)">按模板创建
                                         </el-button>
                                     </div>
                                 </el-col>
@@ -112,7 +112,7 @@
                                     <div>
                                         <el-button type="info" style="margin:0 auto" @click="showSystemModel(item)" icon="el-icon-view">预览
                                         </el-button>
-                                        <el-button type="primary" style="margin:0 auto" @click="useModel(item)">使用模板创建文档
+                                        <el-button type="primary" style="margin:0 auto" @click="useModel(item)">按模板创建
                                         </el-button>
                                         <el-button type="danger" style="margin:0 auto" @click="deleteModel(i)">删除模板
                                         </el-button>
