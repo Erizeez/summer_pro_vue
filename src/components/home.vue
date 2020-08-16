@@ -3,16 +3,26 @@
     <el-header class="el-header">
 
       <el-menu class="el-menu-demo" mode="horizontal"  text-color="#777" background-color="#fff" active-text-color="#222">
-        <el-menu-item index="0"> 
-          <img class="img-title" src="../assets/j-logo.png" @click="goindex"> 
+        <el-menu-item index="0">
+          <img class="img-title" src="../assets/j-logo.png" @click="goindex">
         </el-menu-item>
         <el-submenu class="submenu-1" index="2">
           <template slot="title">
             <i class="el-icon-menu" ></i>我的工作台
           </template>
-          <el-menu-item class="item1" index="2-1" @click="toRecent">
-            <i class="el-icon-view" ></i>最近浏览文档
-          </el-menu-item>
+<!--          <el-menu-item class="item1" index="2-1" @click="toRecent">-->
+<!--            <i class="el-icon-view" ></i>最近浏览文档-->
+<!--          </el-menu-item>-->
+
+          <el-submenu index="1-2">
+            <template slot="title">
+              <i class="el-icon-view" ></i>最近浏览文档
+            </template>
+            <el-menu-item index="1-2-1" @click="toRecent">个人最近浏览文档</el-menu-item>
+            <el-menu-item index="1-2-2" @click="toTeamRecent">团队最近浏览文档</el-menu-item>
+          </el-submenu>
+
+
           <el-submenu index="2-2">
             <template slot="title">
               <i class="el-icon-star-off"></i>收藏文档
@@ -34,16 +44,16 @@
 
 
         <el-menu-item index="3" @click="toPersonalInfo"><i class="el-icon-s-custom"></i>个人中心</el-menu-item>
-        
+
 
         <el-menu-item index="1" @click="tomessageInfo">
           <i class="el-icon-s-opportunity"></i>
           消息中心
           <el-badge v-if="haveNewMessage" value="new" class="item">
-          
+
           </el-badge>
-          
-          
+
+
         </el-menu-item>
 
         <el-submenu index="4">
@@ -55,13 +65,13 @@
         <el-tooltip class="item" effect="dark" content="退出登录" placement="bottom-end">
           <el-button type="danger" @click="logout" style="float:right; margin-right: 50px; margin-top: 10px" icon="el-icon-right" circle></el-button>
         </el-tooltip>
-        
+
         <a @click="toPersonalInfo">
         <el-tooltip class="item" effect="dark" :content="this.username" placement="bottom">
           <el-avatar class="header-img" :size="42" :src="photo" style="float:right; margin-right: 20px; margin-top: 8px"></el-avatar>
         </el-tooltip>
         </a>
-        
+
       </el-menu>
     </el-header>
     <el-main>
@@ -105,7 +115,7 @@
         this.$http.get('/account/search', {
           params: { id: window.localStorage.getItem("userid") }
         }).then(res =>{
-          console.log(res);   
+          console.log(res);
           this.photo = res.data.photo;
           this.username = "欢迎，" + res.data.name;
         })
@@ -163,6 +173,9 @@
           }
         })
       },
+      toTeamRecent(){
+        this.$router.push('/teamRecent');
+      }
     }
   }
 </script>
@@ -175,8 +188,8 @@
     background-color: cornsilk;
   }
   .el-menu-demo{
-    height: 60px; 
-    width: 100%; 
+    height: 60px;
+    width: 100%;
     font-size: x-large;
     box-shadow: 0px 0px 30px 2px rgba(0, 0, 0, 0.4);
     transition-duration: 0.3s;
@@ -186,7 +199,7 @@
     box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4);
   }
   .img-title{
-    height: 60px; 
+    height: 60px;
     width: auto;
   }
   .home_container{
@@ -204,10 +217,10 @@
     margin-top: 30px;
   }
   .submenu-1{
-    font-size: large; 
+    font-size: large;
   }
-  a:hover{ 
-    filter: brightness(120%); 
+  a:hover{
+    filter: brightness(120%);
   }
   .item {
     margin-top: -25px;
