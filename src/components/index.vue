@@ -1,5 +1,4 @@
 <template>
-  <el-container>
     <div class="body">
       <el-row :gutter="50">
         <el-col :span="15">
@@ -80,7 +79,6 @@
         </div></el-col>
       </el-row>
     </div>
-  </el-container>
 </template>
 
 <script>

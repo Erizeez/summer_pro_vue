@@ -133,6 +133,7 @@
       this.getParams();
       this.checkLike();
       this.getComments();
+      this.getUserName();
       this.addRecent();
     },
     watch:{
@@ -161,7 +162,7 @@
             this.docData.title = res.data.title;
             this.docData.intro = res.data.intro;
             this.userId = window.localStorage.getItem('userid');
-            this.$http.get('/account/search?id=' +  res.data.createId).then(res =>{
+            this.$http.get('/account/search?id=' +  res.data.id).then(res =>{
               console.log(res);
               this.userName = res.data.name;
             })
@@ -173,7 +174,7 @@
         this.$http.get('/comment/add?DocId=' + this.submitComment.DocId + '&accountId=' + this.submitComment.accountId + '&content=' + this.submitComment.content).then(res =>{
           console.log(res);
           if(res.data === 'success'){
-            location.reload(true);
+            this.getComments();
             this.$message({
               type: 'success',
               message: '评论成功'

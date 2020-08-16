@@ -8,7 +8,7 @@
         <el-form-item label="团队简介" prop="introduction">
           <el-input v-model="newteam.introduction"></el-input>
         </el-form-item>
-        <el-form-item style="position: relative; left: 25%">
+        <el-form-item class="newteam_confirm">
           <el-button type="primary" @click="submitForm">立即创建</el-button>
           <el-button @click="resetForm">重置</el-button>
         </el-form-item>
@@ -78,5 +78,9 @@
   left: 50%;
   top:30%;
   transform: translate(-50%, -50%);
+}
+.newteam_confirm{
+  position: relative; 
+  left: 25%
 }
 </style>

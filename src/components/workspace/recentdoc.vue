@@ -49,11 +49,7 @@ export default {
   data () {
     return {
       doclist:[
-        {
-          url:require("../../assets/home/card-bg2.jpg")
-        },{
-        url: require("../../assets/home/card-bg1.jpg")
-        }
+        
       ],
       user:{
         id:''
