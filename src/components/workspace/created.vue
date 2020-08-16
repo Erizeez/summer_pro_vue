@@ -10,7 +10,7 @@
 
             <el-row class="el-row-1">
                 <el-col class="title-col" :span="12">
-                    <div class="grid-content bg-purple-dark">
+                    <div class="title-div">
                         <p class="titleP">已创建的文档</p>
                     </div>
                 </el-col>
@@ -235,7 +235,7 @@
     }
     .titleP{
         font-size: 30px;
-        color: #555;
+        //color: #555;
     }
     .title-col{
         height: 100%;
@@ -250,14 +250,19 @@
         width: 90%;
         height: auto;
         min-height: 800px;
-        background-color: #fff;
+        background-color: rgba(255, 255, 255, 0.8);
         border-radius: 30px;
         position: absolute;
         left: 50%;
         top: 0px;
         transform :translate(-50%, 0%);
-        box-shadow: 0px 3px 20px 8px rgba(0, 0, 0, 0.3);
+        box-shadow: 0px 6px 20px 8px rgba(0, 0, 0, 0.3);
         margin: 10px 0px 50px 0px;
+        transition-duration: 0.5s;
+    }
+    .info_box:hover{
+      box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.3);
+      transition-duration: 0.5s;
     }
     .el-main-1{
         padding: 20px 0px 100px 0px;
@@ -276,5 +281,21 @@
         margin-top: 30px;
         border-radius: 15px;
         box-shadow: 2px 2px 20px 3px rgba(0, 0, 0, 0.4);
+    }
+    .title-div{
+      width: 40%;
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.7);
+      box-shadow: -1px -1px 8px 4px rgba(0, 0, 0, 0.25), inset 0px -2px 5px 2px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      color: #666;
+      transition-duration: 0.15s;
+    }
+    .title-div:hover{
+      background-color: rgba(240, 240, 240, 0.9);
+      box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2), inset 0px -2px 8px 2px rgba(255, 255, 255, 0.7);
+      opacity: 1;
+      color: #888;
+      transition-duration: 0.15s;
     }
 </style>

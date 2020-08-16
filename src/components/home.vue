@@ -178,6 +178,12 @@
     height: 60px; 
     width: 100%; 
     font-size: x-large;
+    box-shadow: 0px 0px 30px 2px rgba(0, 0, 0, 0.4);
+    transition-duration: 0.3s;
+  }
+  .el-menu-demo:hover{
+    transition-duration: 0.3s;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.4);
   }
   .img-title{
     height: 60px; 
