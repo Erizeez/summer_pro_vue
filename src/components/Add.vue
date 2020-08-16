@@ -32,18 +32,17 @@
                 </div>
                 <div class="info_box1" id="infoDiv">
                     <el-row :gutter="50" style="height: 100%; padding-left: 50px; margin-top: 20px; overflow: hidden;position: relative;">
-                        <el-col :span="24" style="height: 5%; width: 95%; margin: 40px 0px 20px 0px;">
+                        <el-col :span="24" style="height: 5%; width: 95%; margin: 10px 0px 20px 0px;">
+                            <p style="font-size: 20px;">文档名:</p>
                             <el-input v-model="docData.title">
-                                <template slot="prepend">文档名</template>
+                                <template slot="prepend"></template>
                             </el-input>
                         </el-col>
-                        <el-col :span="24" style="height: 10%; width: 95%; margin: 40px 0px 20px 0px;">
-                            <div>
-                                <p style="font-size: 20px;">简介:</p>
-                            </div>
+                        <el-col :span="24" style=" width: 95%; margin: 0px 0px 20px 0px;">
                         </el-col>
                         <el-col :span="24" style="height: 30%; width: 95%; margin: 40px 0px 20px 0px;">
-                            <el-input style="max-height: 40%;" type="textarea" v-model="docData.intro" class="inputConfig">
+                            <p style="font-size: 20px;">简介:</p>
+                            <el-input style="height: 40%;" type="textarea" v-model="docData.intro" class="inputConfig">
                                 
                             </el-input>
                         </el-col>
@@ -237,7 +236,7 @@ export default {
     }
     .info_box1{
         width: 90%;
-        height: 135%;
+        height: 95%;
         background-color: rgba(255, 255, 255, 0.8);
         border-radius: 30px;
         position: absolute;
