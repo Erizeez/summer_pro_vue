@@ -1,28 +1,66 @@
 <template>
-    <div id="app" class="divConfig1">
-        <el-container>
-            <el-header class="headConfig">
-                <div class="divConfig2">
-                    <el-input v-model="docData.title">
-                        <template slot="prepend">文档名</template> 
-                    </el-input>
+    <el-container>
+        <el-main class="el-main-1" style="overflow:-Scroll;overflow-x:hidden">
+
+            <el-row class="el-row-1">
+                <el-col class="title-col" :span="12">
+                    <div class="title-div">
+                        <p class="titleP">创建新的文档</p>
+                    </div>
+                </el-col>
+                <el-col class="title-col" :span="12">
+                    <el-tooltip class="seBtn" content="切换" placement="top">
+                        <el-switch
+                            style="display: block"
+                            v-model="value"
+                            active-color="#13ce66"
+                            inactive-color="#13ce66"
+                            active-text="基础信息"
+                            inactive-text="文档编辑">
+                        </el-switch>
+                    </el-tooltip>    
+                </el-col>
+            </el-row>
+            <el-row class="el-row-2">
+                <div class="info_box" id="contentDiv">
+                    <el-row :gutter="50" style="height: 100%; padding-left: 50px; margin-top: 20px; overflow: hidden;position: relative;">
+                        <el-col :span="24" style="height: 100%; width: 95%; margin: 40px 0px 20px 0px;">
+                            <ckeditor :editor="editor" v-model="docData.text" :config="editorConfig" @ready="onReady" class="editorStyle">{{this.$route.params.id}}</ckeditor>
+                        </el-col>
+                        
+                    </el-row>
                 </div>
-            </el-header>
-            <el-main class="mainConfig">
-                <el-input v-model="docData.intro" class="inputConfig">
-                    <template slot="prepend">简介</template>
-                </el-input>
-                <ckeditor :editor="editor" v-model="docData.text" :config="editorConfig" @ready="onReady" class="editorStyle">{{this.$route.params.id}}</ckeditor>
-            </el-main>
-            <el-footer class="footerConfig">
-                <el-button type="danger" @click="deleteDoc">移入回收站</el-button>
-                <el-button type="primary" @click="cancelEdit">返回</el-button>
-                <el-button type="primary" @click="goDetail">详情页面</el-button>
-                <el-button type="primary" @click="saveEdit">保存</el-button>
-            </el-footer>
-        </el-container>
-    </div>
+                <div class="info_box1" id="infoDiv">
+                    <el-row :gutter="50" style="height: 100%; padding-left: 50px; margin-top: 20px; overflow: hidden;position: relative;">
+                        <el-col :span="24" style="height: 5%; width: 95%; margin: 10px 0px 20px 0px;">
+                            <p style="font-size: 20px;">文档名:</p>
+                            <el-input v-model="docData.title">
+                                <template slot="prepend"></template>
+                            </el-input>
+                        </el-col>
+                        <el-col :span="24" style=" width: 95%; margin: 0px 0px 20px 0px;">
+                        </el-col>
+                        <el-col :span="24" style="height: 30%; width: 95%; margin: 40px 0px 20px 0px;">
+                            <p style="font-size: 20px;">简介:</p>
+                            <el-input style="height: 40%;" type="textarea" v-model="docData.intro" class="inputConfig">
+                                
+                            </el-input>
+                        </el-col>
+                        <el-col :span="24" style="height: 30%; width: 95%; margin: 40px 0px 20px 0px;">
+                            <el-row style="float: right;">
+                                <el-button type="danger" @click="deleteDoc">移入回收站</el-button>
+                                <el-button type="primary" @click="cancelEdit">返回</el-button>
+                                <el-button type="primary" @click="goDetail">详情页面</el-button>
+                                <el-button type="primary" @click="saveEdit">保存</el-button>
+                            </el-row>
+                        </el-col>
+                    </el-row>
+                </div>
+            </el-row>
+        </el-main>
+    </el-container>
 </template>
+
 
 <script>
     import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document'
@@ -58,9 +96,26 @@ export default {
                     status: '',
                     title: '',
                     intro: ''
-                }
+                },
+                value: false,
                 // ...
             };
+        },
+        watch:{
+          '$router':'getParams',
+            value(val, oldVal){
+                if(val == false){
+                    var contentDiv = document.getElementById("contentDiv");
+                    var infoDiv = document.getElementById("infoDiv");
+                    contentDiv.style["left"] = "50%";
+                    infoDiv.style["left"] = "150%";
+                }else{
+                    var contentDiv = document.getElementById("contentDiv");
+                    var infoDiv = document.getElementById("infoDiv");
+                    contentDiv.style["left"] = "-50%";
+                    infoDiv.style["left"] = "50%";
+                }
+            }
         },
         created() {
           this.getDocData();
@@ -116,7 +171,7 @@ export default {
                 function(res){
                     console.log(res);
                     if(res.data == "success"){
-                        _this.$router.back();
+                        _this.$router.push("/created");
                         _this.$message({
                             type: 'success',
                             message: '删除成功'
@@ -137,49 +192,165 @@ export default {
 </script>
 
 <style scoped>
-    .divConfig1 {
+.el-container{
+        height: 100%;
+    }
+    .editorStyle{
+        height: 78%;
+    }
+    .el-row-1{
+        top: -5%;
+        height: 15%;
+        width: 80%;
+        left: 50%;
+        transform: translate(-50%, 0%);
+        margin: 10px 0px 0px 0px;
+    }
+    .el-row-2{
+        top: -5%;
+        min-height: 85%;
+        height: auto;
         width: 100%;
-        height: 100%;
-        overflow-y: hidden;
+        left: 50%;
+        transform: translate(-50%, 0%);
     }
-    .divConfig2 {
-        width: 100%;
-        height: 100%;
-        //overflow-y: hidden;
-        padding: 5px 0px 0px 0px;
-    }
-    .el-container {
-        height: 100%;
-        margin-bottom: 40px;
-        background-image: url("../assets/login/login_bg.jpg");
-    }
-	.editorStyle{
-		width: 100%;
-		height: 100%;
-        //overflow-y: hidden;
-	}
-    .headConfig{
-        padding: 0px 10px 10px 15px;
-        font-family: "Microsoft YaHei";
+    .titleP{
         font-size: 30px;
-        color: #333;
-        text-align: left;
-        top: 100px;
-        width: 100%;
-        margin: 0 auto;
-        box-sizing: border-box;
+        //color: #555;
     }
-    .mainConfig{
-        width: 100%;
-        height: 80%;
-        background-color: #fff;
-        overflow-x: hidden; 
-     //   overflow-y: hidden;
+    .title-col{
+        height: 100%;
     }
-    .footerConfig{
+    .btn-change{
+        position:absolute;
+        top: 50%;
+        transform: translate(0%, -30%);
+        right: 0;
+    }
+    .info_box{
+        width: 90%;
+        height: 135%;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 30px;
+        position: absolute;
+        left: 50%;
+        top: 0px;
+        transform :translate(-50%, 0%);
+        box-shadow: 0px 6px 20px 8px rgba(0, 0, 0, 0.3);
+        margin: 10px 0px 10px 0px;
+        transition-duration: 0.5s;
+    }
+    .info_box:hover{
+      box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.3);
+      transition-duration: 0.5s;
+    }
+    .info_box1{
+        width: 90%;
+        height: 95%;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 30px;
+        position: absolute;
+        left: 150%;
+        top: 0px;
+        transform :translate(-50%, 0%);
+        box-shadow: 0px 6px 20px 8px rgba(0, 0, 0, 0.3);
+        margin: 10px 0px 10px 0px;
+        transition-duration: 0.5s;
+    }
+    .info_box1:hover{
+      box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.3);
+      transition-duration: 0.5s;
+    }
+    .el-main-1{
+        padding: 20px 0px 100px 0px;
+    }
+    .delete-btn{
+        position: fixed;
+        right: 10%;
+        bottom: 8%;
+        z-index: 99;
+    }
+    .delete-btn-part{
+        box-shadow: 2px 2px 20px 3px rgba(0, 0, 0, 0.4);
+    }
+    .card-box-s{
+        left: 50px;
+        margin-top: 30px;
+        border-radius: 15px;
+        box-shadow: 2px 2px 20px 3px rgba(0, 0, 0, 0.4);
+    }
+    .title-div{
+      width: 50%;
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.7);
+      box-shadow: -1px -1px 8px 4px rgba(0, 0, 0, 0.25), inset 0px -2px 5px 2px rgba(255, 255, 255, 0.8);
+      text-align: center;
+      color: #666;
+      transition-duration: 0.15s;
+    }
+    .title-div:hover{
+      background-color: rgba(240, 240, 240, 0.9);
+      box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2), inset 0px -2px 8px 2px rgba(255, 255, 255, 0.7);
+      opacity: 1;
+      color: #888;
+      transition-duration: 0.15s;
+    }
+    .seBtn{
+        position: absolute;
         right: 0px;
-        padding: 10px 10px 10px 10px;
-        text-align: right;
+        top: 50%;
     }
+    .detail-div{
+        width: 20%;
+        height: 100%;
+        border-radius: 10px;
+        background-color: rgba(150, 150, 150, 0.05);
+        box-shadow: 0px 0px 6px 4px rgba(0, 0, 0, 0.1), inset 0px -2px 10px 2px rgba(255, 255, 255, 1);
+        text-align: center;
+        color: #666;
+        transition-duration: 0.2s;
+    }
+    .btn-div-1{
+        width: 20%;
+        height: 100%;
+        position: absolute;
+        left: 10%;
+        border-radius: 10px;
+        background-color: rgba(150, 150, 150, 0.05);
+        box-shadow: 0px 0px 6px 4px rgba(0, 0, 0, 0.1), inset 0px -2px 10px 2px rgba(255, 255, 255, 1);
+        text-align: center;
+        color: #666;
+    }
+    .btn-div-1:active{
+        background-color: rgba(255, 255, 255, 0.8);
+        box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1), inset 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+        color: #666;
+    }
+    .btn-div-2{
+        width: 20%;
+        height: 100%;
+        position: absolute;
+        right: 10%;
+        border-radius: 10px;
+        background-color: rgba(150, 150, 150, 0.05);
+        box-shadow: 0px 0px 6px 4px rgba(0, 0, 0, 0.1), inset 0px -2px 10px 2px rgba(255, 255, 255, 1);
+        text-align: center;
+        color: #666;
+    }
+    .btn-div-2:active{
+        background-color: rgba(255, 255, 255, 0.8);
+        box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1), inset 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+        color: #666;
+    }
+    .titleB{
+        font-size: 18px;
+        //color: #555;
+    }
+    /* .detail-div:hover{
+        background-color: rgba(255, 255, 255, 0.8);
+        box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1), inset 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
+        color: #666;
+        transition-duration: 0.2s;
+    } */
 </style>
 
