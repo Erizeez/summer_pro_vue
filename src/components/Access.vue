@@ -212,7 +212,6 @@ export default {
         height: 80%;
         background-color: #fff;
         overflow-x: hidden;
-     //   overflow-y: hidden;
     }
     .footerConfig{
         right: 0px;
