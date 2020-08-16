@@ -1,25 +1,24 @@
 <template>
 <el-container class="home">
-        <el-aside width="18%">
+        <el-aside width="18%" style="background-color: rgba(255,255,255,0.4);">
             <el-menu default-active="2" class="el-menu-vertical-demo"
-                background-color="#fff" text-color="#666" active-text-color="#000">
-                <el-submenu index="1">
+                style="background-color: rgba(255,255,255,0.4);" text-color="#888" active-text-color="#000">
+                <el-submenu index="1" style="background-color: rgba(255,255,255,0.4);">
                     <template slot="title">
-                        <span>我创建的团队</span>
+                        <span class="sideTitle">我创建的团队</span>
                     </template>
                     <el-menu-item-group>
-
-                        <el-menu-item :key="index" v-for="(item,index) in createdTeams" @click="toTeamInfo(item.id)">
+                        <el-menu-item class="sidePart" :key="index" v-for="(item,index) in createdTeams" @click="toTeamInfo(item.id)">
                             {{item.name}}
                         </el-menu-item>
                     </el-menu-item-group>
                 </el-submenu>
-                <el-submenu index="2">
+                <el-submenu index="2" style="background-color: rgba(255,255,255,0.4);">
                     <template slot="title">
-                        <span>我加入的团队</span>
+                        <span class="sideTitle">我加入的团队</span>
                     </template>
                     <el-menu-item-group>
-                        <el-menu-item :key="index" v-for="(item,index) in joinedTeams" @click="toTeamInfo(item.id)">
+                        <el-menu-item class="sidePart" :key="index" v-for="(item,index) in joinedTeams" @click="toTeamInfo(item.id)">
                             {{item.name}}
                         </el-menu-item>
                     </el-menu-item-group>
@@ -82,5 +81,13 @@
 }
 .el-row{
     width: 100%;
+}
+.sideTitle{
+    font-weight: bold;
+    font-size: 18px;
+}
+.sidePart{
+    //font-weight: bold;
+    font-size: 18px;
 }
 </style>
