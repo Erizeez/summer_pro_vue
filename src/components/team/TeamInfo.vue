@@ -1,11 +1,11 @@
 <template>
-    <el-container class="TeamInfo_container">
+    <el-container style="height: 700px; border: 1px solid #eee">
         <el-aside width="80%">
             <router-view></router-view>
         </el-aside>
-        <el-main class="TeamInfo_main">
+        <el-main style="background-color: rgb(238, 241, 246)">
             <h3>团队信息
-                <el-button type="text" icon="el-icon-edit" class="TeamInfo_main_title_btn"
+                <el-button type="text" icon="el-icon-edit" style="float:right;margin-top:-5px"
                     v-if="!changeMode&& isCreator" @click="toEdit">修改团队信息
                 </el-button>
             </h3>
@@ -22,18 +22,18 @@
                 <el-form-item label="团队介绍">
                 </el-form-item>
             </el-form>
-            <div class="Team_intro">
-                <div v-if="!changeMode" class="Team_intro_show">
+            <div style="margin-left: 25px;margin-right:10px;font-size: 12px;height: 200px">
+                <div v-if="!changeMode" style="margin-left: 5px;margin-right:5px">
                     {{teamInfo.introduction||"暂无"}}</div>
                 <el-input type="textarea" :autosize="{ minRows: 4}" placeholder="请输入内容" v-model="editForm.introduction"
                     v-if="changeMode">
                 </el-input>
             </div>
-            <div v-if="changeMode" class="TeamInfo_change">
+            <div v-if="changeMode" style="margin-left:20px;margin-top:10px">
                 <el-button type="primary" @click="submit">确认</el-button>
                 <el-button @click="toChange">取消</el-button>
             </div>
-            <div class="changeTeamInfo_confirm">
+            <div style="position:absolute;right:10px;bottom:20px;">
                 <el-popconfirm confirmButtonText='是的' cancelButtonText='算了' icon="el-icon-info" iconColor="red"
                     title="确定要进行此操作吗" @onConfirm="deleteOrQuit">
                     <el-button slot="reference" type="danger" v-if="!isCreator">退出团队</el-button>
@@ -63,19 +63,17 @@
                 isCreator: false
             }
         },
-        mounted() {
-            this.teamid = this.$route.query.teamid;
+        created() {
+            this.getParams();
             this.getInfo();
         },
         watch: {
-            $route() {
-                this.teamid = this.$route.query.teamid;
-            },
-            teamid(){
-                this.getInfo();
-            }
+            '$router': 'getParams'
         },
         methods: {
+            getParams() {
+                this.teamid = this.$route.query.teamid;
+            },
             getInfo() {
                 this.$http.get("/team/getteam?teamId=" + this.teamid).then(res => {
                     this.teamInfo = res.data;
@@ -100,7 +98,7 @@
                 }
                 else if (this.activeName == "2") {
                     this.$router.push({
-                        path: '/random',
+                        path: '/TeamMember',
                         query: {
                             teamid: this.teamid
                         }
@@ -150,8 +148,8 @@
                         }
                     })
                 }
-                else {
-                    this.$http.get('/team/quit?accountId=' + window.localStorage.getItem('userid') + '&teamId=' + this.teamid).then(res => {
+                else{
+                    this.$http.get('/team/quit?accountId='+window.localStorage.getItem('userid')+'&teamId='+this.teamid).then(res=>{
                         if (res.data == "success") {
                             this.$message.success("退出团队成功！");
                             this.$router.push("/TeamAside");
@@ -165,42 +163,3 @@
         }
     }
 </script>
-
-<style>
-    .TeamInfo_container {
-        height: 700px;
-        border: 1px solid #eee
-    }
-
-    .TeamInfo_main {
-        background-color: rgb(238, 241, 246)
-    }
-
-    .TeamInfo_main_title_btn {
-        float: right;
-        margin-top: -5px
-    }
-
-    .Team_intro {
-        margin-left: 25px;
-        margin-right: 10px;
-        font-size: 12px;
-        height: 200px
-    }
-
-    .Team_intro_show {
-        margin-left: 5px;
-        margin-right: 5px
-    }
-
-    .TeamInfo_change {
-        margin-left: 20px;
-        margin-top: 10px
-    }
-
-    .changeTeamInfo_confirm {
-        position: absolute;
-        right: 10px;
-        bottom: 20px;
-    }
-</style>

@@ -26,8 +26,8 @@
                 </el-submenu>
             </el-menu>
         </el-col>
-        <el-col :span="18" :offset="1" class="Teams_layer">
-            <router-view @getTeams="getTeams"></router-view>
+        <el-col :span="18" :offset="1" style="margin-left: 50px">
+            <router-view></router-view>
         </el-col>
     </el-row>
 </template>
@@ -41,7 +41,7 @@
                 userID: ""
             }
         },
-        mounted() {
+        created() {
             this.getTeams();
         },
         methods: {
@@ -69,9 +69,3 @@
         }
     }
 </script>
-
-<style>
-.Teams_layer{
-    margin-left: 50px
-}
-</style>

@@ -53,4 +53,7 @@ export default {
     	opacity: 0.5;
     	filter: blur(400px);
   	}
+    .el-main{
+      background-image: url("./assets/login/login_bg.jpg");
+    }
 </style>

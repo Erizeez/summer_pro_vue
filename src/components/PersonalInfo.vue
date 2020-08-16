@@ -1,81 +1,83 @@
 <template>
     <div class="container">
         <el-container>
-            <el-main>
-                <el-card class="box-card" v-if="doChange">
-                    <div slot="header" class="clearfix">
-                        <span>修改个人信息</span>
-                        <el-button style="float: right; padding: 3px 3px" type="info" @click=toChange>取消修改
-                        </el-button>
-                    </div>
-                    <div class="text item">
-                        <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px">
-                            <el-form-item label="用户名" prop="name">
-                                <el-input v-model="ruleForm.name"></el-input>
-                            </el-form-item>
-                            <el-form-item label="邮箱" prop="email">
-                                <el-input v-model="ruleForm.email"></el-input>
-                            </el-form-item>
-                            <el-form-item label="手机号码" prop="mobile">
-                                <el-input v-model.number="ruleForm.mobile"></el-input>
-                            </el-form-item>
-                            <el-form-item label="家庭住址" prop="address">
-                                <el-input v-model="ruleForm.address"></el-input>
-                            </el-form-item>
-                            <el-form-item label="公司名" prop="company">
-                                <el-input v-model="ruleForm.company"></el-input>
-                            </el-form-item>
-                            <el-form-item label="头像" prop="photo">
-                                <!-- <li class="one" v-if="info.photo">
+                <el-main>
+                    <el-card class="box-card" v-if="doChange">
+                        <div slot="header" class="clearfix">
+                            <span>修改个人信息</span>
+                            <el-button style="float: right; padding: 3px 3px" type="info" @click=toChange>取消修改
+                            </el-button>
+                        </div>
+                        <div class="text item">
+                            <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px">
+                                <el-form-item label="用户名" prop="name">
+                                    <el-input v-model="ruleForm.name"></el-input>
+                                </el-form-item>
+                                <el-form-item label="邮箱" prop="email">
+                                    <el-input v-model="ruleForm.email"></el-input>
+                                </el-form-item>
+                                <el-form-item label="手机号码" prop="mobile">
+                                    <el-input v-model.number="ruleForm.mobile"></el-input>
+                                </el-form-item>
+                                <el-form-item label="家庭住址" prop="address">
+                                    <el-input v-model="ruleForm.address"></el-input>
+                                </el-form-item>
+                                <el-form-item label="公司名" prop="company">
+                                    <el-input v-model="ruleForm.company"></el-input>
+                                </el-form-item>
+                                <el-form-item label="头像" prop="photo">
+                                    <!-- <li class="one" v-if="info.photo">
                                         <img :src="info.photo">
                                     </li>
                                     <li style="position:relative" v-if="!info.photo">
                                         <input @change='add_img' type="file">
                                     </li> -->
-                                <el-upload class="avatar-uploader" action="/apis/account/upload_photo" name="photo"
-                                    :show-file-list="false" :on-success="handleAvatarSuccess"
-                                    :before-upload="beforeAvatarUpload" accept="image/*">
-                                    <img v-if="ruleForm.photo" :src="ruleForm.photo" class="avatar">
-                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                                </el-upload>
+                                    <el-upload class="avatar-uploader" action="/apis/account/upload_photo" name="photo"
+                                        :show-file-list="false" :on-success="handleAvatarSuccess"
+                                        :before-upload="beforeAvatarUpload" accept="image/*">
+                                        <img v-if="ruleForm.photo" :src="ruleForm.photo" class="avatar">
+                                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                    </el-upload>
+                                </el-form-item>
+                                <el-form-item>
+                                    <el-button type="primary" @click="submit('ruleForm')">
+                                        提交修改
+                                    </el-button>
+                                </el-form-item>
+                            </el-form>
+                        </div>
+                    </el-card>
+                    <el-card class="box-card" v-else>
+                        <div slot="header" class="clearfix">
+                            <span>个人信息</span>
+                            <el-button style="float: right; padding: 3px 0" type="text" @click=jumpToChange>完善与修改信息
+                            </el-button>
+                        </div>
+                        <el-form label-width="100px">
+                            <el-form-item label="用户名">
+                                {{info.name}}
                             </el-form-item>
-                            <el-form-item>
-                                <el-button type="primary" @click="submit('ruleForm')">
-                                    提交修改
-                                </el-button>
+                            <el-form-item label="邮箱">
+                                {{info.email||"暂无"}}
+                            </el-form-item>
+                            <el-form-item label="手机号码">
+                                {{info.mobile||"暂无"}}
+                            </el-form-item>
+                            <el-form-item label="家庭住址">
+                                {{info.address||"暂无"}}
+                            </el-form-item>
+                            <el-form-item label="公司名">
+                                {{info.company||"暂无"}}
+                            </el-form-item>
+                            <el-form-item label="头像">
+                                    <el-image
+                                    style="width: 100px; height: 100px"
+                                    :src="info.photo"
+                                    ></el-image>
                             </el-form-item>
                         </el-form>
-                    </div>
-                </el-card>
-                <el-card class="box-card" v-else>
-                    <div slot="header" class="clearfix">
-                        <span>个人信息</span>
-                        <el-button style="float: right; padding: 3px 0" type="text" @click=jumpToChange>完善与修改信息
-                        </el-button>
-                    </div>
-                    <el-form label-width="100px">
-                        <el-form-item label="用户名">
-                            {{info.name}}
-                        </el-form-item>
-                        <el-form-item label="邮箱">
-                            {{info.email||"暂无"}}
-                        </el-form-item>
-                        <el-form-item label="手机号码">
-                            {{info.mobile||"暂无"}}
-                        </el-form-item>
-                        <el-form-item label="家庭住址">
-                            {{info.address||"暂无"}}
-                        </el-form-item>
-                        <el-form-item label="公司名">
-                            {{info.company||"暂无"}}
-                        </el-form-item>
-                        <el-form-item label="头像">
-                            <div v-if="!info.photo">暂无</div>
-                            <el-image style="width: 100px; height: 100px" :src="info.photo" v-if="info.photo"></el-image>
-                        </el-form-item>
-                    </el-form>
-                </el-card>
-            </el-main>
+                    </el-card>
+                </el-main>
         </el-container>
     </div>
 </template>
@@ -174,12 +176,13 @@
                                 this.$message.success('修改成功');
                                 this.info.name = this.ruleForm.name;
                                 this.info.email = this.ruleForm.email;
-                                this.info.password = this.ruleForm.password;
+                                this.info.password=this.ruleForm.password;
                                 this.info.mobile = this.ruleForm.mobile;
                                 this.info.address = this.ruleForm.address;
                                 this.info.company = this.ruleForm.company;
                                 this.info.photo = this.ruleForm.photo;
                                 this.toChange();
+                                location.reload(true);
                             }
                             else {
 
@@ -197,7 +200,7 @@
                 this.ruleForm.id = this.info.id;
                 this.ruleForm.name = this.info.name;
                 this.ruleForm.email = this.info.email;
-                this.ruleForm.password = this.info.password;
+                this.ruleForm.password=this.info.password;
                 this.ruleForm.mobile = this.info.mobile;
                 this.ruleForm.address = this.info.address;
                 this.ruleForm.company = this.info.company;
@@ -242,12 +245,12 @@
                 });
             } */
             handleAvatarSuccess(res) {
-                var tmp = res.filepath;
+                var tmp=res.filepath;
                 console.log(tmp);
-                this.ruleForm.photo = tmp;
+                this.ruleForm.photo=tmp;
             },
             beforeAvatarUpload(file) {
-                const isJPG = file.type === 'image/gif' || 'image/jpeg' || 'image/png' || 'image/jpg';
+                const isJPG = file.type === 'image/gif'||'image/jpeg'||'image/png'||'image/jpg';
                 const isLt10M = file.size / 1024 / 1024 / 10;
 
                 if (!isJPG) {

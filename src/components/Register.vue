@@ -124,12 +124,13 @@
   .register_box{
     width: 450px;
     height: 500px;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.5);
     border-radius: 30px;
     position: absolute;
     left: 50%;
     top: 50%;
     transform :translate(-50%, -50%);
+    box-shadow: 0px 5px 35px 20px rgba(0, 0, 0, 0.3);
     .avatar_box{
       height: 130px;
       width: 130px;
@@ -141,6 +142,7 @@
       left: 50%;
       transform :translate(-50%, -50%);
       background-color: #fff;
+      box-shadow: 0px 2px 15px 3px rgba(0, 0, 0, 0.3);
       img{
         width: 100%;
         height: 100%;
