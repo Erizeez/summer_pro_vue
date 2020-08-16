@@ -9,7 +9,7 @@
         <el-button style="float: right" @click="dialogFormVisible = true">添加成员</el-button>
 
 
-        <el-dialog :append-to-body="true" title="添加成员" :visible.sync="dialogFormVisible">
+        <el-dialog title="添加成员" :visible.sync="dialogFormVisible" :append-to-body="true">
           <el-form :model="add">
             <el-form-item label="搜索" style="margin-left: 10%">
               <el-input v-model="add.addname" autocomplete="off" style="width: 480px;">
@@ -88,7 +88,7 @@
         </el-row>
       </el-card>
 
-      <el-dialog class="editdialog" title="编辑团队成员权限" :visible.sync="dialogFormVisible1">
+      <el-dialog style="width:700px" class="editdialog" title="编辑团队成员权限" :visible.sync="dialogFormVisible1" :append-to-body="true">
         <el-form :model="thisMember">
           <el-avatar style="margin-left: 40%;" :src="thisMember.photo" :size="50"></el-avatar>
           <br>
@@ -464,7 +464,7 @@
     /*left: 50%;*/
     /*top:50%;*/
     /*transform: translate(-50%, -50%);*/
-    width: 50%;
+    width: 100%;
     left: 30%;
   }
 </style>
