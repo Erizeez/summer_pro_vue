@@ -1,29 +1,100 @@
 <template>
-
   <div class="msg_container">
     <el-card class="box-card">
       <el-tabs :tab-position="tabPosition">
+        <el-tab-pane>
+          <span slot="label" class="paneTitle">通知消息</span>
+          <el-row :gutter="20">
+            <el-col :offset="2" :span="4">
+                <div>
+                    <span class="tableTitle">序号</span>
+                </div>
+            </el-col>
+            <el-col :span="13">
+                <div>
+                    <span class="tableTitle">通知标题</span>
+                </div>
+            </el-col>
+            <el-col :span="3">
+                <div>
+                    <span class="tableTitle">查看</span>
+                </div>
+            </el-col>
+          </el-row>
+          <el-divider></el-divider>
 
-        <el-tab-pane label="通知消息">
-          <el-table
-            :data="msg_data1" border stripe
-            style="width: 880px; left: 10%">
-
-            <el-table-column type="index"></el-table-column>
-            <el-table-column prop="title" label="通知标题" width="650" style="text-align: center"></el-table-column>
-            <el-table-column prop="content" label="查看" width="180px">
-
-              <template slot-scope="scope">
-                <el-button type="info" style="display:block;margin:0 auto" v-if="scope.row.haveread === 1" @click="showcontent(scope.row)">已读</el-button>
-                <el-button type="primary" style="display:block;margin:0 auto" v-else-if="scope.row.haveread === 0" @click="showcontent(scope.row)">查看</el-button>
-              </template>
-            </el-table-column>
-
-          </el-table>
+          <el-col :span="24" style="width: 95%; margin: 0px 0px 20px 0px;">
+            <div style="overflow: hidden;" v-for="(item,i) in msg_data1" :key="i" class="author-title">
+                <el-row :gutter="20">
+                    <el-col :offset="2" :span="4">
+                        <div>
+                            <span class="tablePart">{{i+1}}</span>
+                        </div>
+                    </el-col>
+                    <el-col :span="13">
+                        <div>
+                            <span class="tablePart">{{item.title}}</span>
+                        </div>
+                    </el-col>
+                    <el-col :span="3">
+                        <div>
+                            <el-button type="info" style="display:block;margin:0 auto" v-if="item.haveread === 1" @click="showcontent(item)">已读</el-button>
+                            <el-button type="primary" style="display:block;margin:0 auto" v-else-if="item.haveread === 0" @click="showcontent(item)">查看</el-button>
+                        </div>
+                    </el-col>
+                </el-row>
+                <el-divider></el-divider>
+            </div>
+          </el-col>
+  
         </el-tab-pane>
 
-        <el-tab-pane label="团队消息">
-          <el-table
+        <el-tab-pane>
+          <span slot="label" class="paneTitle">团队消息</span>
+          <el-row :gutter="20">
+              <el-col :offset="2" :span="4">
+                  <div>
+                      <span class="tableTitle">序号</span>
+                  </div>
+              </el-col>
+              <el-col :span="13">
+                  <div>
+                      <span class="tableTitle">通知标题</span>
+                  </div>
+              </el-col>
+              <el-col :span="3">
+                  <div>
+                      <span class="tableTitle">查看</span>
+                  </div>
+              </el-col>
+            </el-row>
+            <el-divider></el-divider>
+
+            <el-col :span="24" style="width: 95%; margin: 0px 0px 20px 0px;">
+              <div style="overflow: hidden;" v-for="(item,i) in msg_data2" :key="i" class="author-title">
+                  <el-row :gutter="20">
+                      <el-col :offset="2" :span="4">
+                          <div>
+                              <span class="tablePart">{{i+1}}</span>
+                          </div>
+                      </el-col>
+                      <el-col :span="13">
+                          <div>
+                              <span class="tablePart">{{item.title}}</span>
+                          </div>
+                      </el-col>
+                      <el-col :span="3">
+                          <div>
+                              <el-button type="info" style="display:block;margin:0 auto" v-if="item.haveread === 1" @click="showcontent(item)">已读</el-button>
+                              <el-button type="primary" style="display:block;margin:0 auto" v-else-if="item.haveread === 0" @click="showcontent(item)">查看</el-button>
+                          </div>
+                      </el-col>
+                  </el-row>
+                  <el-divider></el-divider>
+              </div>
+            </el-col>
+          
+          <!-- <el-table
             :data="msg_data2" border stripe
             style="width: 880px; left: 10%">
             <el-table-column type="index"></el-table-column>
@@ -35,7 +106,7 @@
                 <el-button type="primary" style="display:block;margin:0 auto" v-else-if="scope.row.haveread === 0" @click="showcontent1(scope.row)">查看</el-button>
 
               </template>
-            </el-table-column>
+            </el-table-column> -->
 
           </el-table>
         </el-tab-pane>
@@ -151,7 +222,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .box-card {
+  .box-card{
     width: 90%;
     min-height: 600px;
     box-shadow: 0px 0px 6px 4px rgba(0, 0, 0, 0.1), inset 0px -2px 10px 2px rgba(255, 255, 255, 1);
@@ -162,6 +233,21 @@
     top: 100px;
     transform :translate(-50%, 0%);
     margin-bottom: 50px;
+    }
+  .paneTitle{
+        font-size: 20px;
+        ///font-weight: bold;
+        color: #888;
+  }
+  .tableTitle{
+      font-size: 20px;
+      font-weight: bold;
+      color: #888;
+  }
+  .tablePart{
+      font-size: 20px;
+      //font-weight: bold;
+      color: #666;
   }
   /* .info_box{
         width: 90%;
