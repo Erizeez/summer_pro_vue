@@ -5,7 +5,7 @@
             <el-row class="el-row-1">
                 <el-col class="title-col" :span="12">
                     <div class="title-div">
-                        <p class="titleP">创建新的文档</p>
+                        <p class="titleP">修改个人文档</p>
                     </div>
                 </el-col>
                 <el-col class="title-col" :span="12">
@@ -117,11 +117,40 @@ export default {
                 }
             }
         },
+        mounted() {
+            window.onbeforeunload = e => {      //刷新时弹出提示
+            
+                this.$http.get("/doc/canceledit?DocId=" + this.docData.id).then(
+                function(res) {
+                    console.log(res);
+                }
+            )
+               return ''; 
+
+            };
+        },
         created() {
+            let __this = this
+            this.$http.get("/doc/checkedit?DocId=" + this.$route.params.id).then(
+                function(res) {
+                    console.log(res);
+                    if(res.data != "success"){
+                        __this.$router.back();   
+                        __this.$message({
+                            type: 'error',
+                            message: '他人正在编辑，请稍后再试',
+                        });
+                    }
+                }
+            );
             this.getDocData();
         },
-        destroyed() {
-            
+        beforeDestroy() {
+            this.$http.get("/doc/canceledit?DocId=" + this.docData.id).then(
+                function(res) {
+                    console.log(res);
+                }
+            )
         },
         methods: {
             onReady( editor )  {
