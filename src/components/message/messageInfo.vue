@@ -85,8 +85,8 @@
                       </el-col>
                       <el-col :span="3">
                           <div>
-                              <el-button type="info" style="display:block;margin:0 auto" v-if="item.haveread === 1" @click="showcontent(item)">已读</el-button>
-                              <el-button type="primary" style="display:block;margin:0 auto" v-else-if="item.haveread === 0" @click="showcontent(item)">查看</el-button>
+                              <el-button type="info" style="display:block;margin:0 auto" v-if="item.haveread === 1" @click="showcontent1(item)">已读</el-button>
+                              <el-button type="primary" style="display:block;margin:0 auto" v-else-if="item.haveread === 0" @click="showcontent1(item)">查看</el-button>
                           </div>
                       </el-col>
                   </el-row>

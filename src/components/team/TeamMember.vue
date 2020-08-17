@@ -41,7 +41,7 @@
               <br>
               <div style="text-align: center; margin-top: 5px">{{item.name}}</div>
               <el-button @click="editMember(item)" type="primary" icon="el-icon-edit" circle
-                style="margin-left: 15%; margin-top: 20px" size="mini" v-if="onlyCreator"></el-button>
+                style="margin-left: 15%; margin-top: 20px" size="mini"></el-button>
               <!-- <el-button type="danger" icon="el-icon-delete" circle size="mini" v-if="onlyCreator"></el-button> -->
             </el-card>
           </el-col>
@@ -57,7 +57,7 @@
               <br>
               <div style="text-align: center; margin-top: 5px">{{item.name}}</div>
               <el-button @click="editMember(item)" type="primary" icon="el-icon-edit" circle
-                style="margin-left: 15%; margin-top: 20px" size="mini" v-if="onlyCreator || Admin"></el-button>
+                style="margin-left: 15%; margin-top: 20px" size="mini"></el-button>
               <el-button type="danger" icon="el-icon-delete" circle size="mini" v-if="onlyCreator"
                 @click="kick(item.id)"></el-button>
             </el-card>
@@ -78,7 +78,7 @@
               <br>
               <div style="text-align: center; margin-top: 5px">{{item.name}}</div>
               <el-button @click="editMember(item)" type="primary" icon="el-icon-edit" circle
-                style="margin-left: 15%; margin-top: 20px" size="mini" v-if="onlyCreator || Admin"></el-button>
+                style="margin-left: 15%; margin-top: 20px" size="mini"></el-button>
               <el-button type="danger" icon="el-icon-delete" circle size="mini" v-if="onlyCreator || Admin"
                 @click="kick(item.id)"></el-button>
             </el-card>
@@ -86,20 +86,22 @@
         </el-row>
       </el-card>
 
-      <el-dialog style="width:700px" class="editdialog" title="编辑团队成员权限" :visible.sync="dialogFormVisible1" :append-to-body="true">
+      <el-dialog style="width:700px" class="editdialog" title="编辑团队成员权限" :visible.sync="dialogFormVisible1"
+        :append-to-body="true">
         <el-form :model="thisMember">
           <el-avatar style="margin-left: 40%;" :src="thisMember.photo" :size="50"></el-avatar>
           <br>
-          <el-form-item label="用户名:" style="margin-left: 10%;margin-top: 30px">
+          <el-form-item label="用 户 名:" style="margin-left: 10%;margin-top: 30px">
             {{thisMember.name}}
           </el-form-item>
-          <el-form-item label="邮  箱:" style="margin-left: 10%;margin-top: 30px">
+          <el-form-item label="邮    箱:" style="margin-left: 10%;margin-top: 30px">
             {{thisMember.email}}
           </el-form-item>
           <el-form-item label="手机号码:" style="margin-left: 10%;margin-top: 30px">
             {{thisMember.mobile}}
           </el-form-item>
-          <el-form-item v-model="role" label="选择角色">
+          <el-form-item label="角色：" v-if="!onlyCreator">{{roleName}}</el-form-item>
+          <el-form-item v-model="role" label="选择角色" v-if="onlyCreator">
             <el-select v-model="value" placeholder="请选择成员角色">
 
               <el-option v-for="item in role" :key="item.value" :label="item.label" :value="item.value"></el-option>
@@ -109,7 +111,7 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="权限设置: " style="margin-left: 10%;margin-top: 30px">
+          <el-form-item label="权限设置: " style="margin-left: 10%;margin-top: 30px" v-if="Admin&&value==0">
             <br>
 
             <!--          <el-checkbox-group v-model="rights.type">-->
@@ -125,9 +127,11 @@
               <!--            <el-checkbox label="可编辑" name="type" @click="addEdit"></el-checkbox>-->
               <!--            <el-checkbox label="可评论" name="type" @click="addComment"></el-checkbox>-->
             </el-checkbox-group>
-            <el-button type="primary" @click="comfirmAuth">确认</el-button>
           </el-form-item>
-
+          <div class="confirmbtn">
+            <el-button type="primary" @click="comfirmAuth"
+              v-if="(onlyCreator&&value==1)||(Admin&&value==0)">确认</el-button>
+          </div>
         </el-form>
       </el-dialog>
 
@@ -172,14 +176,11 @@
         rights: {
           type: [
             {
-              name: '可分享'
-            },
-            {
               name: '可评论'
-
             },
             {
-              name: '可编辑'
+              name: '可创建、编辑、删除文档'
+
             }
           ],
           select: []
@@ -197,7 +198,8 @@
           accountid: '',
           authority: '',
           role: ''
-        }
+        },
+        roleName: ''
       }
     },
     created() {
@@ -318,7 +320,15 @@
 
         this.$http.get('/team/findbelong?accountId=' + item.id + '&teamId=' + this.TeamId).then(res => {
           this.value = res.data.role;
-          console.log(res.data);
+          if (this.value == 0) {
+            this.roleName = "普通成员"
+          }
+          else if (this.value == 1) {
+            this.roleName = "管理员"
+          }
+          else {
+            this.roleName = "创建者"
+          }
           //console.log(this.rights.select);
 
 
@@ -330,30 +340,14 @@
           // this.rights.select[2] = null;
 
           if (res.data.authority === 3) {
-            this.rights.select[0] = "可分享";
+            this.rights.select[0] = "可评论";
           }
           if (res.data.authority === 5) {
-            this.rights.select[1] = "可评论";
+            this.rights.select[1] = "可创建、编辑、删除文档";
           }
           if (res.data.authority === 7) {
-            this.rights.select[0] = "可分享";
-            this.rights.select[1] = "可评论";
-          }
-          if (res.data.authority === 9) {
-            this.rights.select[0] = "可编辑";
-          }
-          if (res.data.authority === 11) {
-            this.rights.select[0] = "可分享";
-            this.rights.select[1] = "可编辑";
-          }
-          if (res.data.authority === 13) {
             this.rights.select[0] = "可评论";
-            this.rights.select[1] = "可编辑";
-          }
-          if (res.data.authority === 15) {
-            this.rights.select[0] = "可分享";
-            this.rights.select[1] = "可评论";
-            this.rights.select[2] = "可编辑";
+            this.rights.select[1] = "可创建、编辑、删除文档";
           }
 
           console.log(this.rights.select);
@@ -384,19 +378,16 @@
 
         this.authority = 1;
         for (var i = 0, len = this.rights.select.length; i < len; i++) {
-          if (this.rights.select[i] === "可分享") {
+          if (this.rights.select[i] === "可评论") {
             this.authority += 2;
           }
-          else if (this.rights.select[i] === "可评论") {
+          else {
             this.authority += 4;
           }
-          else {
-            this.authority += 8;
-          }
-          console.log(this.rights.select);
         }
-        console.log(this.authority);
-        console.log("上面是确定之后的权限")
+        if (this.value == 1) {
+          this.authority = 7;
+        }
         this.EditAuth.userid = parseInt(localStorage.getItem('userid'));
         this.EditAuth.authority = this.authority;
         this.$http.get('/team/findbelong?accountId=' + this.EditAuth.accountid + '&teamId=' + this.TeamId).then(res => {
@@ -404,8 +395,6 @@
         })
         this.EditAuth.teamid = parseInt(this.TeamId);
         this.EditAuth.role = this.value;
-        console.log(this.EditAuth);
-        console.log('上面是EditAuth');
         this.$http.post('/team/editAuth', this.EditAuth).then(res => {
           if (res.data === "success") {
             this.$message.success('编辑权限成功');
@@ -464,5 +453,9 @@
     /*transform: translate(-50%, -50%);*/
     width: 100%;
     left: 30%;
+  }
+
+  .confirmbtn {
+    text-align: center;
   }
 </style>
