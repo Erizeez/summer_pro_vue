@@ -105,6 +105,18 @@ export default {
                 // ...
             };
         },
+        mounted() {
+            window.onbeforeunload = e => {      //刷新时弹出提示
+            
+                this.$http.get("/team/canceledit?teamdocId=" + this.docData.id).then(
+                function(res) {
+                    console.log(res);
+                }
+            )
+               return ''; 
+
+            };
+        },
         created() {
             let __this = this
             this.$http.get("/team/checkedit?teamdocId=" + this.$route.params.id).then(
@@ -122,11 +134,11 @@ export default {
             this.getDocData();
         },
         beforeDestroy() {
-            this.$http.get("/team/canceledit?teamdocId=" + this.$route.params.id).then(
+            this.$http.get("/team/canceledit?teamdocId=" + this.docData.id).then(
                 function(res) {
                     console.log(res);
                 }
-            );
+            )
         },
         watch:{
           '$router':'getParams',
