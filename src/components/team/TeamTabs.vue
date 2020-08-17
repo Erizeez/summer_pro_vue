@@ -63,7 +63,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .info_box{
         padding: 20px;
         width: 90%;

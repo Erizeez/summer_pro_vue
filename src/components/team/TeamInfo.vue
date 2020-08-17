@@ -166,7 +166,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .TeamInfo_container {
         height: auto;
         min-height: 500px;

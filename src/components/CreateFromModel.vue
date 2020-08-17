@@ -223,7 +223,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .editorStyle {
         width: 100%;
         height: 100%;
