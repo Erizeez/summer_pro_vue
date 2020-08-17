@@ -5,7 +5,7 @@
             <el-row class="el-row-1">
                 <el-col class="title-col" :span="12">
                     <div class="title-div">
-                        <p class="titleP">创建新的文档</p>
+                        <p class="titleP">修改团队文档</p>
                     </div>
                 </el-col>
                 <el-col class="title-col" :span="12">
