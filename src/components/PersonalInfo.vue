@@ -88,15 +88,15 @@
             style="width: 70%; position: absolute; left:15%; top:5%;">
             <el-form :model="passwordform" :rules="pwdRule" ref="pwdformRef">
                 <el-form-item label="原密码" prop="old">
-                    <el-input type="password" v-model="passwordform.old" autocomplete="off" style="width: 400px">
+                    <el-input type="password" v-model="passwordform.old" autocomplete="off" style="width: 80%">
                     </el-input>
                 </el-form-item>
                 <el-form-item label="新密码" prop="new">
-                    <el-input type="password" v-model="passwordform.new" autocomplete="off" style="width: 400px">
+                    <el-input type="password" v-model="passwordform.new" autocomplete="off" style="width: 80%">
                     </el-input>
                 </el-form-item>
                 <el-form-item label="再次输入新密码" prop="newAgain">
-                    <el-input type="password" v-model="passwordform.newAgain" autocomplete="off" style="width: 345px">
+                    <el-input type="password" v-model="passwordform.newAgain" autocomplete="off" style="width: 93%">
                     </el-input>
                 </el-form-item>
             </el-form>
