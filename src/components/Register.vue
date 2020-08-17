@@ -9,14 +9,19 @@
         欢迎加入金刚石文档
       </div>
       <!-- 注册表单区域 -->
-      <el-form :model="RegisterForm" status-icon :rules="RegisterFormRules" ref="RegisterForm" label-width="0px" class="register_form">
+      <el-form :model="RegisterForm" status-icon :rules="RegisterFormRules" style="top:160px" ref="RegisterForm" label-width="0px" class="register_form">
         <!-- 用户名 -->
         <el-form-item prop="name">
-          <el-input v-model="RegisterForm.name" placeholder="请输入用户名" prefix-icon="el-icon-user-solid" > </el-input>
+          <el-input v-model="RegisterForm.name" placeholder="请输入用户名"  prefix-icon="el-icon-user-solid" > </el-input>
         </el-form-item>
         <!-- 邮箱 -->
         <el-form-item prop="email">
-          <el-input v-model="RegisterForm.email" placeholder="请输入邮箱" prefix-icon="el-icon-message"> </el-input>
+          <el-input v-model="RegisterForm.email" placeholder="请输入邮箱"  prefix-icon="el-icon-message"> </el-input>
+        </el-form-item>
+        <!-- 验证码 -->
+        <el-form-item prop="emailcheck">
+          <el-input prop="emailcheck" v-model="RegisterForm.emailcheck" placeholder="请输入邮箱验证码" style="width:290px" prefix-icon="el-icon-message"> </el-input>
+          <el-button  prefix-icon="el-icon-message" style="float:right;" @click="checkemail">获取验证码</el-button>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password">
@@ -54,7 +59,8 @@
           name: '',
           password: '',
           checkPassword: '',
-          email: ''
+          email: '',
+          emailcheck:''
         },
         RegisterFormRules: {
           name: [
@@ -71,8 +77,14 @@
           email: [
             { required: true, message: "请输入邮箱", trigger: "blur"},
             { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+          ],
+          emailcheck:[
+            {required :true, message: "请输入验证码", trigger:"blur"},
+            { min:6, max:6, message:'请输入六位邮箱验证码', trigger: "blur"}
           ]
-        }
+        },
+        havecheck:false,
+        check:''
       };
     },
     methods: {
@@ -80,6 +92,7 @@
         let _this = this;
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            if(this.RegisterForm.emailcheck === this.check){
             this.$http.post('/account/reg', this.RegisterForm).then(
               function(res){
               console.log(res);
@@ -96,8 +109,12 @@
                 });
               }
            });
-
-          } else {
+          }
+          else{
+            this.$message.error("邮箱验证失败");
+            return false;
+          }
+        } else {
             console.log('error submit!!');
             return false;
           }
@@ -107,6 +124,13 @@
         this.$nextTick(()=>{
           this.$refs[formName].resetFields();
         })
+      },
+      checkemail(){
+        this.$http.get('/account/getvcode?email='+this.RegisterForm.email).then(res=>{
+          console.log(res);
+          this.check = res.data.vcode;
+        })
+        
       },
       goLogin() {
         this.$router.push("/login");
@@ -123,7 +147,7 @@
   }
   .register_box{
     width: 450px;
-    height: 500px;
+    height: 550px;
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 30px;
     position: absolute;
