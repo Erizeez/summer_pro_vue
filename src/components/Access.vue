@@ -1,6 +1,8 @@
 <template>
+
     <div id="app" class="divConfig1">
-        <el-container>
+        <!-- <el-container> -->
+            <el-card class="box-card">
             <el-header class="headConfig">
                 <div class="divConfig2">
                     <el-input v-model="docData.title" readonly>
@@ -63,13 +65,9 @@
         </el-form>
       </el-dialog>
 
-
-
-
-
-
-        </el-container>
+            </el-card>
     </div>
+
 
     
 </template>
@@ -272,10 +270,23 @@ export default {
         height: 100%;
         overflow-y: hidden;
     }
+    .box-card {
+    width: 90%;
+    min-height: 700px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 30px;
+    position: absolute;
+    left: 50%;
+    top: 80px;
+    transform: translate(-50%, 0%);
+    box-shadow: 0px 6px 20px 8px rgba(0, 0, 0, 0.3);
+    margin: 10px 0px 50px 0px;
+    transition-duration: 0.5s;
+    text-align: center;
+  }
     .divConfig2 {
         width: 100%;
         height: 100%;
-        //overflow-y: hidden;
         padding: 5px 0px 0px 0px;
     }
     .el-container {
@@ -286,7 +297,6 @@ export default {
 	.editorStyle{
 		width: 100%;
 		height: 100%;
-        //overflow-y: hidden;
 	}
     .headConfig{
         padding: 0px 10px 10px 15px;
