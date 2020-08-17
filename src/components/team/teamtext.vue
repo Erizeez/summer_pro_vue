@@ -156,8 +156,13 @@
             this.userName = res.data.name;
           })
           this.$http.get('/team/findbelong?accountId=' + window.localStorage.getItem('userid') + '&teamId=' + this.teamdocData.teamId).then(res => {
+            console.log(res.data);
             this.authority=res.data.authority;
+            if(res.data.role === 2){
+              this.authority = 15
+            }
             if(this.authority>=4){
+              this.canSee = true;
               this.canEdit=true;
               this.authority-=4;
             }
