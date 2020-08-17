@@ -100,8 +100,8 @@
           <el-form-item label="手机号码:" style="margin-left: 10%;margin-top: 30px">
             {{thisMember.mobile}}
           </el-form-item>
-          <el-form-item label="角色：" v-if="!onlyCreator">{{roleName}}</el-form-item>
-          <el-form-item v-model="role" label="选择角色" v-if="onlyCreator">
+          <el-form-item label="角色：" v-if="!onlyCreator||value==2">{{roleName}}</el-form-item>
+          <el-form-item v-model="role" label="选择角色" v-if="onlyCreator&&value!=2">
             <el-select v-model="value" placeholder="请选择成员角色">
 
               <el-option v-for="item in role" :key="item.value" :label="item.label" :value="item.value"></el-option>
