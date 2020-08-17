@@ -308,28 +308,57 @@ export default {
         min-height: 85%;
         height: auto;
         width: 100%;
-        height: 100%;
-        padding: 5px 0px 0px 0px;
+        left: 50%;
+        transform: translate(-50%, 0%);
     }
-    .el-container {
-        height: 100%;
-        margin-bottom: 40px;
-        background-image: url("../assets/login/login_bg.jpg");
-    }
-	.editorStyle{
-		width: 100%;
-		height: 100%;
-	}
-    .headConfig{
-        padding: 0px 10px 10px 15px;
-        font-family: "Microsoft YaHei";
+    .titleP{
         font-size: 30px;
     }
-    .mainConfig{
-        width: 100%;
-        height: 80%;
-        background-color: #fff;
-        overflow-x: hidden;
+    .title-col{
+        height: 100%;
+    }
+    .btn-change{
+        position:absolute;
+        top: 50%;
+        transform: translate(0%, -30%);
+        right: 0;
+    }
+    .info_box{
+        width: 90%;
+        height: 135%;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 30px;
+        position: absolute;
+        left: 50%;
+        top: 0px;
+        transform :translate(-50%, 0%);
+        box-shadow: 0px 6px 20px 8px rgba(0, 0, 0, 0.3);
+        margin: 10px 0px 10px 0px;
+        transition-duration: 0.5s;
+    }
+    .info_box:hover{
+      box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.3);
+      transition-duration: 0.5s;
+    }
+    .info_box1{
+        width: 90%;
+        height: 95%;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 30px;
+        position: absolute;
+        left: 150%;
+        top: 0px;
+        transform :translate(-50%, 0%);
+        box-shadow: 0px 6px 20px 8px rgba(0, 0, 0, 0.3);
+        margin: 10px 0px 10px 0px;
+        transition-duration: 0.5s;
+    }
+    .info_box1:hover{
+      box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.3);
+      transition-duration: 0.5s;
+    }
+    .el-main-1{
+        padding: 20px 0px 100px 0px;
     }
     .delete-btn{
         position: fixed;
