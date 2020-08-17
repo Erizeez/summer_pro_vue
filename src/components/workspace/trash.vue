@@ -52,7 +52,7 @@
                             </el-col>
                             <el-col :span="3">
                                 <div>
-                                    <span class="tableTitle">查看 / 删除</span>
+                                    <span class="tableTitle">删除 / 查看</span>
                                 </div>
                             </el-col>
                             </el-row>
@@ -100,7 +100,7 @@
                                     <div style="text-align: center; margin-bottom: 5%;">{{item.title}} </div>
                                     <div class="bottom clearfix">
                                         <div v-if="!isDelete" style="">
-                                            <el-button size="small" type="danger" style="float: left;  margin-bottom: 5%;" round plain class="button" icon="el-icon-delete" @click="deleteDoc(item.id, i)">彻底删除
+                                            <el-button size="small" type="danger" style="float: left;  margin-bottom: 5%;" round plain class="button" @click="deleteDoc(item.id, i)">彻底删除
                                             </el-button>
 
                                             <el-button size="small" type="success" style="float: right;" round plain class="button" icon="el-icon-refresh-left"

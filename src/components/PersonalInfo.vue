@@ -367,16 +367,21 @@
     }
 
     .box-card {
-        box-shadow: 0px 0px 6px 4px rgba(0, 0, 0, 0.1), inset 0px -2px 10px 2px rgba(255, 255, 255, 1);
-        background-color: rgba(255, 255, 255, 0.6);
+        box-shadow: 0px 0px 12px 6px rgba(0, 0, 0, 0.2), inset 0px -2px 10px 2px rgba(255, 255, 255, 1);
+        background-color: rgba(255, 255, 255, 0.5);
         border-radius: 30px;
         min-height: 300px;
         position: absolute;
         left: 50%;
         top: 100px;
         transform: translate(-50%, 0%);
-        transition-duration: 0.5s;
+        transition-duration: 0.3s;
         width: 1000px;
+    }
+    .box-card:hover {
+        box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.3), inset 0px -2px 15px 2px rgba(255, 255, 255, 0.7);
+        background-color: rgba(255, 255, 255, 0.4);
+        transition-duration: 0.3s;
     }
 
     .avatar-uploader .el-upload {
