@@ -172,11 +172,9 @@
         min-height: 500px;
         border: 1px solid #eee;
     }
-
     .TeamInfo_main {
         
     }
-
     .TeamInfo_main_title_btn {
         float: right;
         margin-top: -5px

@@ -206,7 +206,6 @@ export default {
     }
     .titleP{
         font-size: 30px;
-        //color: #555;
     }
     .title-col{
         height: 100%;
@@ -334,7 +333,6 @@ export default {
     }
     .titleB{
         font-size: 18px;
-        //color: #555;
     }
     /* .detail-div:hover{
         background-color: rgba(255, 255, 255, 0.8);

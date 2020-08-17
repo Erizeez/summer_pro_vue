@@ -1,6 +1,6 @@
 @font-face {  
-  font-family: 'PingFang';  //重命名字体名
-  src: url('Apple.ttf');  //引入字体
+  font-family: 'PingFang';  
+  src: url('Apple.ttf');  
   font-weight: normal;  
   font-style: normal;  
 }

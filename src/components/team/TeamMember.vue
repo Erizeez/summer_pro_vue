@@ -436,7 +436,6 @@
     left: 5%;
     top: 5%;
   }
-
   .el-divider--vertical {
     display: inline-block;
     width: 1px;
@@ -447,10 +446,6 @@
   }
 
   .editdialog {
-    /*position: absolute;*/
-    /*left: 50%;*/
-    /*top:50%;*/
-    /*transform: translate(-50%, -50%);*/
     width: 100%;
     left: 30%;
   }

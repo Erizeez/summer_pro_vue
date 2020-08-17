@@ -227,7 +227,6 @@
     .editorStyle {
         width: 100%;
         height: 100%;
-        //overflow-y: hidden;
     }
     .box-card{
         width: 90%;
@@ -248,12 +247,10 @@
     }
     .tablePart{
         font-size: 20px;
-        //font-weight: bold;
         color: #666;
     }
     .paneTitle{
         font-size: 20px;
-        ///font-weight: bold;
         color: #888;
     }
 </style>

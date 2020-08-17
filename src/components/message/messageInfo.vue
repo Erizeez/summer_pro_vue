@@ -240,7 +240,6 @@
     }
   .paneTitle{
         font-size: 20px;
-        ///font-weight: bold;
         color: #888;
   }
   .tableTitle{
@@ -250,21 +249,6 @@
   }
   .tablePart{
       font-size: 20px;
-      //font-weight: bold;
       color: #666;
   }
-  /* .info_box{
-        width: 90%;
-        height: auto;
-        min-height: 800px;
-        background-color: rgba(255, 255, 255, 0.8);
-        border-radius: 30px;
-        position: absolute;
-        left: 50%;
-        top: 100px;
-        transform :translate(-50%, 0%);
-        box-shadow: 0px 6px 20px 8px rgba(0, 0, 0, 0.3);
-        margin: 10px 0px 50px 0px;
-        transition-duration: 0.5s;
-    } */
 </style>

@@ -85,7 +85,6 @@
     }
     .paneTitle{
         font-size: 20px;
-        ///font-weight: bold;
         color: #888;
     }
 </style>

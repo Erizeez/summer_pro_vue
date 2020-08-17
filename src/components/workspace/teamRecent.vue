@@ -159,14 +159,6 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  /* .box{
-    margin-top: 30px;
-  }
-  .boxes{
-    position: relative;
-    left: 7%;
-  } */
-
   .el-container{
         height: 100%;
     }
@@ -256,7 +248,6 @@
     }
     .tablePart{
         font-size: 20px;
-        //font-weight: bold;
         color: #666;
     }
 </style>

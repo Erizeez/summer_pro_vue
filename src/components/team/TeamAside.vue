@@ -87,7 +87,6 @@
     font-size: 18px;
 }
 .sidePart{
-    //font-weight: bold;
     font-size: 18px;
 }
 </style>

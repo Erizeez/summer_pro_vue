@@ -379,15 +379,6 @@
         width: 1000px;
     }
 
-    /*  .one {
-        width: 3rem;
-        height: 3rem;
-    }
-
-    .one img {
-        width: 3rem;
-        height: 3rem;
-    } */
     .avatar-uploader .el-upload {
         border: 1px dashed #d9d9d9;
         border-radius: 6px;

@@ -230,7 +230,6 @@
     }
     .titleP{
         font-size: 30px;
-        //color: #555;
     }
     .title-col{
         height: 100%;
@@ -298,7 +297,6 @@
     }
     .tablePart{
         font-size: 20px;
-        //font-weight: bold;
         color: #666;
     }
 </style>

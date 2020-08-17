@@ -2,6 +2,13 @@
 require('./check-versions')()
 
 process.env.NODE_ENV = 'production'
+process.on('unhandledRejection', error => {
+
+      console.error('unhandledRejection', error);
+  
+      process.exit(1)// To exit with a 'failure' code
+  
+  });
 
 const ora = require('ora')
 const rm = require('rimraf')

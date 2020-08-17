@@ -185,7 +185,6 @@ export default {
     .divConfig2 {
         width: 100%;
         height: 100%;
-        //overflow-y: hidden;
         padding: 5px 0px 0px 0px;
     }
     .el-container {
@@ -196,7 +195,6 @@ export default {
 	.editorStyle{
 		width: 100%;
 		height: 100%;
-        //overflow-y: hidden;
 	}
     .headConfig{
         padding: 0px 10px 10px 15px;
@@ -214,7 +212,6 @@ export default {
         height: 80%;
         background-color: #fff;
         overflow-x: hidden;
-     //   overflow-y: hidden;
     }
     .footerConfig{
         right: 0px;
