@@ -67,7 +67,7 @@
                     <el-col :span="5">
                         <div>
                             <el-button v-if="!isTeamTrash" size="small" type="primary" icon="el-icon-search" circle @click="todoc(item.id)"></el-button>
-                            <el-button v-if="!isTeamTrash" size="small" type="danger" icon="el-icon-delete" circle @click="deletedoc(item)"></el-button>
+                            <el-button v-if="!isTeamTrash&&canEdit" size="small" type="danger" icon="el-icon-delete" circle @click="deletedoc(item)"></el-button>
 
                             <el-button v-if="isTeamTrash" size="small" type="success" icon="el-icon-refresh-left" circle @click="recoverdoc(item)"></el-button>
                             <el-button v-if="isTeamTrash" size="small" type="danger" icon="el-icon-delete" circle @click="removedoc(item)"></el-button>
@@ -90,7 +90,7 @@
                                 <el-button v-if="isTeamTrash" type="success" style="float: left;  margin-bottom: 5%;" circle plain class="button" icon="el-icon-refresh-left" @click="recoverdoc(item)">
                                 </el-button>
                                 <el-button v-if="!isTeamTrash" type="danger" style="float: right;" circle plain class="button" icon="el-icon-delete"
-                                    @click="deletedoc(item)">
+                                    @click="deletedoc(item)" :disabled="!canEdit">
                                 </el-button>
                                 <el-button v-if="isTeamTrash" type="danger" style="float: right;" circle plain class="button" icon="el-icon-delete"
                                     @click="removedoc(item)">
