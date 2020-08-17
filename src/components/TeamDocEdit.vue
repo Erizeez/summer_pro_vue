@@ -48,10 +48,10 @@
                         </el-col>
                         <el-col :span="24" style="height: 30%; width: 95%; margin: 40px 0px 20px 0px;">
                             <el-row style="float: right;">
-                                <el-button type="danger" @click="deleteDoc">移入回收站</el-button>
-                                <el-button type="primary" @click="cancelEdit">返回</el-button>
-                                <el-button type="primary" @click="goDetail">详情页面</el-button>
-                                <el-button type="primary" @click="saveEdit">保存</el-button>
+                                <el-button round type="danger" @click="deleteDoc">移入回收站</el-button>
+                                <el-button round type="primary" @click="cancelEdit">返回</el-button>
+                                <el-button round type="primary" @click="goDetail">详情页面</el-button>
+                                <el-button round type="primary" @click="saveEdit">保存</el-button>
                             </el-row>
                         </el-col>
                     </el-row>
@@ -106,7 +106,27 @@ export default {
             };
         },
         created() {
-          this.getDocData();
+            let __this = this
+            this.$http.get("/team/checkedit?teamdocId=" + this.$route.params.id).then(
+                function(res) {
+                    console.log(res);
+                    if(res.data != "success"){
+                        __this.$router.back();   
+                        __this.$message({
+                            type: 'error',
+                            message: '他人正在编辑，请稍后再试',
+                        });
+                    }
+                }
+            );
+            this.getDocData();
+        },
+        beforeDestroy() {
+            this.$http.get("/team/canceledit?teamdocId=" + this.$route.params.id).then(
+                function(res) {
+                    console.log(res);
+                }
+            );
         },
         watch:{
           '$router':'getParams',

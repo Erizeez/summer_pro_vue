@@ -2,7 +2,6 @@
     <div class="model_container">
         <el-card class="box-card">
             <el-tabs :tab-position="tabPosition">
-
                 <el-tab-pane>
                     <span slot="label" class="paneTitle">系统模板</span>
                     <el-row :gutter="20">
