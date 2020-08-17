@@ -14,7 +14,9 @@ import QRCode from 'qrcodejs2';
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
 import Clipboard from 'v-clipboard'
+import VueClipboard  from 'vue-clipboard2'
 
+Vue.use(VueClipboard);
 Vue.use(mavonEditor)
 Vue.use( CKEditor );
 Vue.use(ElementUI);

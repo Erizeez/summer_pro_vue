@@ -1,7 +1,6 @@
 <template>
     <el-container>
         <el-main class="el-main-1" style="overflow:-Scroll;overflow-x:hidden">
-
             <el-row class="el-row-1">
                 <el-col class="title-col" :span="12">
                     <div class="title-div">
