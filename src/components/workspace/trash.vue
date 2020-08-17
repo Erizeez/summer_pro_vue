@@ -84,7 +84,7 @@
                             </el-col>
                             <el-col :span="3">
                                 <div>
-                                    <el-button type="primary" icon="el-icon-search" circle @click="todoc(item.id)"></el-button>
+                                    <el-button type="danger" icon="el-icon-delete" circle @click="deleteDoc(item.id, i)"></el-button>
                                     <el-button type="success" icon="el-icon-refresh-left" circle @click="recoverDoc(item, i)"></el-button>
                                 </div>
                             </el-col>
@@ -100,14 +100,14 @@
                                     <div style="text-align: center; margin-bottom: 5%;">{{item.title}} </div>
                                     <div class="bottom clearfix">
                                         <div v-if="!isDelete" style="">
-                                            <el-button size="small" type="primary" style="float: left;  margin-bottom: 5%;" round plain class="button" icon="el-icon-search" @click="todoc(item.id)">查看
+                                            <el-button size="small" type="danger" style="float: left;  margin-bottom: 5%;" round plain class="button" icon="el-icon-delete" @click="deleteDoc(item.id, i)">彻底删除
                                             </el-button>
 
                                             <el-button size="small" type="success" style="float: right;" round plain class="button" icon="el-icon-refresh-left"
                                                 @click="recoverDoc(item, i)">复原
                                             </el-button>
                                         </div>
-                                        <el-button type="danger" icon="el-icon-refresh-left" circle
+                                        <el-button type="danger" icon="el-icon-delete" circle
                                             v-if="isDelete&&deleteIndex[index].show" @click="deleteMark(index)"></el-button>
                                         <el-button icon="el-icon-refresh-left" circle v-if="isDelete && !deleteIndex[index].show"
                                             @click="deleteMark(index)"></el-button>
@@ -131,6 +131,17 @@
       return {
         doclist:[],
         brouseMode: false,
+        Doc:{
+            id:'',
+            createId:'',
+            createTime:'',
+            lastTime:'',
+            text:'',
+            status:'',
+            title:'',
+            intro:'',
+            isedit:''
+        }
       }
     },
     created() {
@@ -144,6 +155,21 @@
           console.log(res);
           if(res.status !== 200) return this.$message.error('获取失败');
           this.doclist = res.data;
+        })
+      },
+      deleteDoc(id, i){
+        this.Doc.id = id;
+        this.$http.post('/doc/gototrash/delete', this.Doc).then(res=>{
+            console.log(res);
+            if(res.data === "success"){
+                this.doclist.splice(i, 1);
+                this.$message.success("彻底删除成功");
+                this.gettrashDoc();
+            }
+            else{
+                this.$message.error("彻底删除失败");
+                this.gettrashDoc();
+            }
         })
       },
       todoc(id){
