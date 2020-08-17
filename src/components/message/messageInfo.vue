@@ -160,6 +160,8 @@
     },
     methods: {
       getmessage() {
+        this.msg_data1=[];
+        this.msg_data2=[];
         this.$http.get('/msg/getmsg?accountId=' + localStorage.getItem('userid')).then(res => {
           console.log(res);
           this.msg_data = res.data;
@@ -199,7 +201,9 @@
         this.$http.post('/msg/agree', item).then(res =>{
           console.log(res);
           if(res.data === 'success'){
-            this.$message.success('加入队伍成功')
+            this.$message.success('加入队伍成功');
+            this.getmessage();
+            this.$emit('ifMessage');
           }
           else{
             this.$message.error('加入队伍失败')
