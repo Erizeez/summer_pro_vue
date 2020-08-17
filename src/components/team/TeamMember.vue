@@ -381,7 +381,7 @@
           if (this.rights.select[i] === "可评论") {
             this.authority += 2;
           }
-          else {
+          else if(this.rights.select[i]==="可创建、编辑、删除文档"){
             this.authority += 4;
           }
         }

@@ -157,15 +157,12 @@
           })
           this.$http.get('/team/findbelong?accountId=' + window.localStorage.getItem('userid') + '&teamId=' + this.teamdocData.teamId).then(res => {
             this.authority=res.data.authority;
-            if(this.authority>=8){
-              this.canEdit=true;
-              this.authority-=8;
-            }
             if(this.authority>=4){
-              this.canComment=true;
+              this.canEdit=true;
               this.authority-=4;
             }
             if(this.authority>=2){
+              this.canComment=true;
               this.authority-=2;
             }
             if(this.authority==1){

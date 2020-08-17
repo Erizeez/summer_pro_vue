@@ -211,7 +211,7 @@
             },
             getAuth(){
                 this.$http.get('/team/findbelong?accountId='+window.localStorage.getItem('userid')+'&teamId='+this.teamid).then(res=>{
-                    if(res.data.authority>=8){
+                    if(res.data.authority>=4){
                         this.canEdit=true;
                     }
                     else{
