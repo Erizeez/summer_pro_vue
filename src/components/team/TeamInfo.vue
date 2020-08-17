@@ -9,7 +9,7 @@
                     v-if="!changeMode&& isCreator" @click="toEdit">修改团队信息
                 </el-button>
             </h3>
-            <el-form ref="editForm" :model="editForm" :rules="rules" label-width="40%">
+            <el-form ref="editForm" :model="editForm" :rules="rules" label-width="50%">
                 <el-form-item label="团队名：" prop="name" v-if="changeMode">
                     <el-input v-model="editForm.name"></el-input>
                 </el-form-item>
@@ -19,7 +19,7 @@
                 <el-form-item label="创建者：">
                     {{creatorName}}
                 </el-form-item>
-                <el-form-item label="团队介绍">
+                <el-form-item label="团队介绍:">
                 </el-form-item>
             </el-form>
             <div class="Team_intro">

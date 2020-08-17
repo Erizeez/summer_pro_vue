@@ -79,7 +79,7 @@
         <el-divider></el-divider>
       </div>
       <el-collapse>
-        <div v-if="!canComment">很抱歉，您没有评论该文档的权限</div>
+        <div v-if="!canComment" class="sorryTitle">很抱歉，您没有评论该文档的权限</div>
         <el-collapse-item title="评论" name="1" v-if="canComment">
           <el-input placeholder="请输入内容" v-model="submitComment.content">
             <el-button type="primary" slot="append" @click="addComment()">发送</el-button>
@@ -411,7 +411,10 @@
     transition-duration: 0.5s;
     text-align: center;
   }
-
+  .sorryTitle{
+    font-size: 30px;
+    color: #888;
+  }
   .favorite {
     margin: 5px;
   }

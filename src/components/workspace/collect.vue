@@ -25,27 +25,27 @@
                             <el-row :gutter="20">
                             <el-col :span="4">
                                 <div>
-                                    <span class="author-name">序号</span>
+                                    <span class="tableTitle">序号</span>
                                 </div>
                             </el-col>
                             <el-col :span="5">
-                                <div class="talk-box">
-                                    <span class="reply">文档名</span>
+                                <div>
+                                    <span class="tableTitle">文档名</span>
                                 </div>
                             </el-col>
                             <el-col :span="6">
                                 <div>
-                                    <span class="reply">创建时间</span>
+                                    <span class="tableTitle">创建时间</span>
                                 </div>
                             </el-col>
                             <el-col :span="7">
                                 <div>
-                                    <span class="reply">修改时间</span>
+                                    <span class="tableTitle">修改时间</span>
                                 </div>
                             </el-col>
                             <el-col :span="2">
                                 <div>
-                                    <span class="reply">查看</span>
+                                    <span class="tableTitle">查看</span>
                                 </div>
                             </el-col>
                             </el-row>
@@ -57,22 +57,22 @@
                             <el-row :gutter="20">
                             <el-col :span="4">
                                 <div>
-                                    <span class="author-name">{{i+1}}</span>
+                                    <span class="tablePart">{{i+1}}</span>
                                 </div>
                             </el-col>
                             <el-col :span="5">
-                                <div class="talk-box">
-                                    <span class="reply">{{item.title}}</span>
+                                <div>
+                                    <span class="tablePart">{{item.title}}</span>
                                 </div>
                             </el-col>
                             <el-col :span="6">
                                 <div>
-                                    <span class="reply">{{item.createTime}}</span>
+                                    <span class="tablePart">{{item.createTime}}</span>
                                 </div>
                             </el-col>
                             <el-col :span="7">
                                 <div>
-                                    <span class="reply">{{item.lastTime}}</span>
+                                    <span class="tablePart">{{item.lastTime}}</span>
                                 </div>
                             </el-col>
                             <el-col :span="2">
@@ -84,7 +84,7 @@
                             <el-divider></el-divider>
                         </div>
                         </el-col>
-                        <el-col style="width: 18%; margin: 0px 0px 20px 0px;left:0px;" :span="5" v-if="brouseMode==false" v-for="(item,index) in collectlist" :key="item.id">
+                        <el-col style="width: 18%; margin: -50px 0px 20px 0px;left:0px;" :span="5" v-if="brouseMode==false" v-for="(item,index) in collectlist" :key="item.id">
                             <el-card :span="5" :body-style="{ padding: '0px' }" shadow="hover" class="card-box-s">
                                 <img src="../../assets/home/card-bg.jpg" class="image"
                                     style="width: 100%; height:200px; display: block">
@@ -222,16 +222,24 @@
       width: 60%;
       border-radius: 10px;
       background-color: rgba(255, 255, 255, 0.7);
-      box-shadow: -1px -1px 8px 4px rgba(0, 0, 0, 0.25), inset 0px -2px 5px 2px rgba(255, 255, 255, 0.8);
+      box-shadow: -1px -1px 6px 2px rgba(0, 0, 0, 0.1), inset 0px 0px 5px 2px rgba(255, 255, 255, 0.8);
       text-align: center;
       color: #666;
-      transition-duration: 0.15s;
+      transition-duration: 0.5s;
     }
     .title-div:hover{
-      background-color: rgba(240, 240, 240, 0.9);
-      box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2), inset 0px -2px 8px 2px rgba(255, 255, 255, 0.7);
-      opacity: 1;
-      color: #888;
-      transition-duration: 0.15s;
+      background-color: rgba(255, 255, 255, 0.7);
+      box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.2), inset 0px 0px 3px 1px rgba(255, 255, 255, 0.7);
+      transition-duration: 0.5s;
+    }
+    .tableTitle{
+        font-size: 20px;
+        font-weight: bold;
+        color: #888;
+    }
+    .tablePart{
+        font-size: 20px;
+        //font-weight: bold;
+        color: #666;
     }
 </style>

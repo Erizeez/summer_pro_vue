@@ -4,8 +4,8 @@
             <el-main>
                 <el-card class="box-card" v-if="doChange">
                     <div slot="header" class="clearfix">
-                        <span>修改个人信息</span>
-                        <el-button style="float: right; padding: 3px 3px" type="info" @click=toChange>取消修改
+                        <span class="titleStyle">修改个人信息</span>
+                        <el-button round size="medium" style="float: right; padding: 3px 3px; margin-top: -5px" type="info" @click=toChange>取消修改
                         </el-button>
                     </div>
                     <div class="text item">
@@ -40,7 +40,7 @@
                                 </el-upload>
                             </el-form-item>
                             <el-form-item>
-                                <el-button type="primary" @click="submit('ruleForm')">
+                                <el-button round type="primary" @click="submit('ruleForm')">
                                     提交修改
                                 </el-button>
                             </el-form-item>
@@ -49,12 +49,12 @@
                 </el-card>
                 <el-card class="box-card" v-else>
                     <div slot="header" class="clearfix">
-                        <span>个人信息</span>
-                        <el-button style="float:right; margin-left: 25px;" size="small" type="warning" plain
+                        <span class="titleStyle">个人信息</span>
+                        <el-button round style="float:right; margin-left: 25px;" size="medium" type="warning" plain
                             @click="openPassword">修改密码</el-button>
                         <!--                            <el-button style="float: right; padding: 3px 0" type="text" @click=jumpToChange>完善与修改信息-->
                         <!--                            </el-button>-->
-                        <el-button type="primary" size="small" style="float: right;" @click=jumpToChange plain>完善与修改信息
+                        <el-button type="primary" size="medium" round style="float: right;" @click=jumpToChange plain>完善与修改信息
                         </el-button>
 
                     </div>
@@ -88,21 +88,21 @@
             style="width: 70%; position: absolute; left:15%; top:5%;">
             <el-form :model="passwordform" :rules="pwdRule" ref="pwdformRef">
                 <el-form-item label="原密码" prop="old">
-                    <el-input type="password" v-model="passwordform.old" autocomplete="off" style="width: 400px">
+                    <el-input type="password" v-model="passwordform.old" autocomplete="off" style="width: 80%">
                     </el-input>
                 </el-form-item>
                 <el-form-item label="新密码" prop="new">
-                    <el-input type="password" v-model="passwordform.new" autocomplete="off" style="width: 400px">
+                    <el-input type="password" v-model="passwordform.new" autocomplete="off" style="width: 80%">
                     </el-input>
                 </el-form-item>
                 <el-form-item label="再次输入新密码" prop="newAgain">
-                    <el-input type="password" v-model="passwordform.newAgain" autocomplete="off" style="width: 345px">
+                    <el-input type="password" v-model="passwordform.newAgain" autocomplete="off" style="width: 93%">
                     </el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="submitPassword">确 定</el-button>
+                <el-button round @click="dialogFormVisible = false">取 消</el-button>
+                <el-button round type="primary" @click="submitPassword">确 定</el-button>
             </div>
         </el-dialog>
 
@@ -367,17 +367,14 @@
     }
 
     .box-card {
-
         box-shadow: 0px 0px 6px 4px rgba(0, 0, 0, 0.1), inset 0px -2px 10px 2px rgba(255, 255, 255, 1);
         background-color: rgba(255, 255, 255, 0.6);
-
         border-radius: 30px;
         min-height: 300px;
         position: absolute;
         left: 50%;
         top: 100px;
         transform: translate(-50%, 0%);
-
         transition-duration: 0.5s;
         width: 1000px;
     }
@@ -416,5 +413,9 @@
         width: 178px;
         height: 178px;
         display: block;
+    }
+    .titleStyle{
+        font-size: 25px;
+        color: #888;
     }
 </style>

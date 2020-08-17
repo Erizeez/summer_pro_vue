@@ -48,10 +48,10 @@
                         </el-col>
                         <el-col :span="24" style="height: 30%; width: 95%; margin: 40px 0px 20px 0px;">
                             <el-row style="float: right;">
-                                <el-button type="danger" @click="deleteDoc">移入回收站</el-button>
-                                <el-button type="primary" @click="cancelEdit">返回</el-button>
-                                <el-button type="primary" @click="goDetail">详情页面</el-button>
-                                <el-button type="primary" @click="saveEdit">保存</el-button>
+                                <el-button round type="danger" @click="deleteDoc">移入回收站</el-button>
+                                <el-button round type="primary" @click="cancelEdit">返回</el-button>
+                                <el-button round type="primary" @click="goDetail">详情页面</el-button>
+                                <el-button round type="primary" @click="saveEdit">保存</el-button>
                             </el-row>
                         </el-col>
                     </el-row>
@@ -118,7 +118,10 @@ export default {
             }
         },
         created() {
-          this.getDocData();
+            this.getDocData();
+        },
+        destroyed() {
+            
         },
         methods: {
             onReady( editor )  {

@@ -1,7 +1,8 @@
 <template>
     <div class="info_box">
         <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane v-for="(item, index) in tabs" :key="item.id" :label="item.name" :name="item.id">
+            <el-tab-pane v-for="(item, index) in tabs" :key="item.id" :name="item.id">
+                <span slot="label" class="paneTitle">{{item.name}}</span>
                 <router-view></router-view>
             </el-tab-pane>
         </el-tabs>
@@ -81,5 +82,10 @@
     .info_box:hover{
       box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.3);
       transition-duration: 0.5s;
+    }
+    .paneTitle{
+        font-size: 20px;
+        ///font-weight: bold;
+        color: #888;
     }
 </style>

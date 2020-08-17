@@ -48,17 +48,22 @@
       },
       submitForm(){
         console.log(this.newteam);
+        let _this = this;
         this.$refs.newteamRef.validate((valid) => {
           if (valid) {
             this.$http.post('/team/create', this.newteam).then(res =>{
               console.log(res);
             })
-
-
-            alert('submit!');
+            _this.$message({
+              type: 'success',
+              message: '新建成功',
+            });
             this.$router.push('/TeamAside');
           } else {
-            console.log('error submit!!');
+            _this.$message({
+              type: 'error',
+              message: '新建失败',
+            });
             return false;
           }
         });
