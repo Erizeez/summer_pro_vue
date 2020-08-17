@@ -33,7 +33,7 @@
                         </el-col>
                     </el-row>
 
-                    <el-button type="warning" slot="reference" @click="showshare">分享</el-button>
+                    <el-button type="warning" slot="reference" @click="showshare" :disabled="!canShare">分享</el-button>
                 </el-popover>
                 <el-button type="primary" @click="goBack">返回</el-button>
                 <el-button type="primary" @click="goDetail">详情页面</el-button>
@@ -126,11 +126,14 @@ export default {
                 showShare:false,
                 authority:1,
                 showlink:false,
-                sharelink:"http://localhost:8081/#/text"
+                sharelink:"http://localhost:8081/#/text",
+                canShare:true,
+                shareAuth:1
                 // ...
             };
         },
         created() {
+            this.getAuth();
             this.getDocData();
             this.address = window.location.href;
         },
@@ -171,7 +174,26 @@ export default {
                     this.docData.status = res.data.status;
                     this.docData.title = res.data.title;
                     this.docData.intro = res.data.intro;
+
+                    this.$http.get('/share/getauth?receiverId='+localStorage.getItem('userid')+'&DocId='+res.data.id).then(res=>{
+                        console.log(res);
+                        if(res.data === 15) return;
+                        else{
+                            console.log('hh')
+                            if(res.data === 3 || res.data === 7 || res.data === 11 || res.data === 15){
+                                this.canShare = true;
+                            }
+                            else{
+                                this.canShare = false;
+                            }
+                        }
+                    })
                 })
+
+                
+            },
+            getAuth(){
+                
             },
             goBack() {
                 this.$router.back();

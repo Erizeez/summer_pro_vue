@@ -164,23 +164,7 @@
         
         if (this.$route.query.uuid != null) {
           this.uuid = this.$route.query.uuid;
-        }
-        
-        this.$http.get('/doc/read?id=' + this.$route.query.textid).then(res => {
-          this.docData.id = res.data.id;
-          this.docData.createId = res.data.createId;
-          this.docData.createTime = res.data.createTime;
-          this.docData.lastTime = res.data.lastTime;
-          this.docData.text = res.data.text;
-          this.docData.status = res.data.status;
-          this.docData.title = res.data.title;
-          this.docData.intro = res.data.intro;
-          this.userId = window.localStorage.getItem('userid');
-          this.$http.get('/account/search?id=' + res.data.createId).then(res => {
-            this.userName = res.data.name;
-          })
-        })
-        this.$http.get('/share/sharedoc?uuid='+this.uuid+'&accountId='+localStorage.getItem('userid')).then(res =>{
+           this.$http.get('/share/sharedoc?uuid='+this.uuid+'&accountId='+localStorage.getItem('userid')).then(res =>{
           console.log(res);
           console.log('hh');
           this.canSee= false,
@@ -194,6 +178,7 @@
           if(this.authority-8 > 0){
             this.authority -= 8;
             this.canEdit = true;
+            this.canSee = true;
           }
           if(this.authority-4 > 0){
             this.authority -= 4;
@@ -208,6 +193,58 @@
           }
           console.log(this.authority);
         })
+        }
+
+        
+        
+        this.$http.get('/doc/read?id=' + this.$route.query.textid).then(res => {
+          this.docData.id = res.data.id;
+          this.docData.createId = res.data.createId;
+          this.docData.createTime = res.data.createTime;
+          this.docData.lastTime = res.data.lastTime;
+          this.docData.text = res.data.text;
+          this.docData.status = res.data.status;
+          this.docData.title = res.data.title;
+          this.docData.intro = res.data.intro;
+          this.userId = window.localStorage.getItem('userid');
+          this.$http.get('/account/search?id=' + res.data.createId).then(res1 => {
+            this.userName = res1.data.name;
+          })
+
+          console.log(this.$route.query.uuid);
+          if(!this.$route.query.uuid){
+          console.log('hhh');
+          this.$http.get('/share/getauth?receiverId='+localStorage.getItem('userid')+'&DocId='+res.data.id).then(res2=>{
+                  console.log(res2);
+                  this.canSee= false,
+                  this.canEdit=false,
+                  this.canComment=false,
+                  this.authority = res2.data;
+                  if(this.authority===1){
+                    canSee = true;
+                    return;
+                  }
+                  if(this.authority-8 > 0){
+                    this.authority -= 8;
+                    this.canEdit = true;
+                    this.canSee = true;
+                  }
+                  if(this.authority-4 > 0){
+                    this.authority -= 4;
+                    this.canComment = true;
+                  }
+                  if(this.authority-2 > 0){
+                    this.authority -=2;
+                    // this.canSee = true;
+                  }
+                  if(this.authority === 1){
+                    this.canSee = true;
+                  }
+                  console.log(this.authority);
+              })
+          }
+        })
+       
       },
       addComment() {
         this.submitComment.accountId = parseInt(window.localStorage.getItem('userid'));
