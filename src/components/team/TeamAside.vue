@@ -46,8 +46,15 @@
         mounted() {
             this.getTeams();
         },
+        watch:{
+            $route(){
+                this.getTeams();
+            }
+        },
         methods: {
             getTeams() {
+                this.createdTeams=[];
+                this.joinedTeams=[];
                 this.userID = window.localStorage.getItem('userid');
                 this.$http.get('/team/findTeam?accountId=' + this.userID).then(res => {
                     for (var i = 0; i < res.data.length; i++) {

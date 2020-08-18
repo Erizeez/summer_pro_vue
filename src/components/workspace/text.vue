@@ -57,7 +57,7 @@
           <el-col :span="4">
             <el-avatar class="header-img" :size="40" :src="item.photo"></el-avatar>
             <div class="author-info">
-              <span class="author-name">{{item.name}}</span>
+                <el-link :underline="false" :href="'http://localhost:8081/#/PersonalInfo?id='+item.accountId">{{item.name}}</el-link>
             </div>
           </el-col>
           <el-col :span="16">

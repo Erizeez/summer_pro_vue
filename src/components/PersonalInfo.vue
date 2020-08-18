@@ -5,13 +5,14 @@
                 <el-card class="box-card" v-if="doChange">
                     <div slot="header" class="clearfix">
                         <span class="titleStyle">修改个人信息</span>
-                        <el-button round size="medium" style="float: right; padding: 3px 3px; margin-top: -5px" type="info" @click=toChange>取消修改
+                        <el-button round size="medium" style="float: right; padding: 3px 3px; margin-top: -5px"
+                            type="info" @click=toChange>取消修改
                         </el-button>
                     </div>
                     <div class="text item">
                         <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="100px">
                             <el-form-item label="用户名" prop="name">
-                                    {{info.name}}
+                                {{info.name}}
                             </el-form-item>
                             <el-form-item label="邮箱" prop="email">
                                 {{info.email}}
@@ -51,10 +52,16 @@
                     <div slot="header" class="clearfix">
                         <span class="titleStyle">个人信息</span>
                         <el-button round style="float:right; margin-left: 25px;" size="medium" type="warning" plain
-                            @click="openPassword">修改密码</el-button>
+                            @click="openPassword" v-if="!isLookMode">修改密码</el-button>
                         <!--                            <el-button style="float: right; padding: 3px 0" type="text" @click=jumpToChange>完善与修改信息-->
                         <!--                            </el-button>-->
-                        <el-button type="primary" size="medium" round style="float: right;" @click=jumpToChange plain>完善与修改信息
+                        <el-button type="primary" size="medium" round style="float: right;" @click=jumpToChange plain
+                            v-if="!isLookMode">
+                            完善与修改信息
+                        </el-button>
+                        <el-button type="primary" size="medium" round style="float: right;" @click=back plain
+                            v-if="isLookMode" icon="el-icon-back">
+                            返回
                         </el-button>
 
                     </div>
@@ -76,7 +83,8 @@
                         </el-form-item>
                         <el-form-item label="头像">
                             <div v-if="!info.photo">暂无</div>
-                            <el-image style="width: 100px; height: 100px" :src="info.photo" v-if="info.photo"></el-image>
+                            <el-image style="width: 100px; height: 100px" :src="info.photo" v-if="info.photo">
+                            </el-image>
                         </el-form-item>
                     </el-form>
                 </el-card>
@@ -195,28 +203,31 @@
                     accept: 'image/gif, image/jpeg, image/png, image/jpg',
                 },
                 dialogFormVisible: false,
-
+                isLookMode:true
             };
         },
         created() {
-            this.info.id = window.localStorage.getItem('userid');
+            if (this.$route.query.id != null) {
+                this.info.id = this.$route.query.id;
+            }
+            else {
+                this.info.id = window.localStorage.getItem('userid');
+                this.isLookMode = false;
+            }
         },
         mounted: function () {
             this.$http.get('/account/search?id=' + this.info.id).then(res => {
-                console.log(res);
                 this.info = res.data;
             })
 
         },
         methods: {
             getInfo: function () {
-                console.log(this.info);
             },
             submit(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
                         this.$http.post('/account/edit', this.ruleForm).then(res => {
-                            console.log(res);
                             if ((res.data.msg) !== ('success')) {
                                 this.$message.success('修改成功');
                                 this.info.name = this.ruleForm.name;
@@ -342,6 +353,9 @@
                     this.$message.error('上传头像图片大小不能超过 10MB!');
                 }
                 return isJPG && isLt10M;
+            },
+            back(){
+                this.$router.go(-1);
             }
 
         }
@@ -379,6 +393,7 @@
         transition-duration: 0.3s;
         width: 1000px;
     }
+
     .box-card:hover {
         box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.3), inset 0px -2px 15px 2px rgba(255, 255, 255, 0.7);
         background-color: rgba(255, 255, 255, 0.4);
@@ -411,7 +426,8 @@
         height: 178px;
         display: block;
     }
-    .titleStyle{
+
+    .titleStyle {
         font-size: 25px;
         color: #888;
     }
