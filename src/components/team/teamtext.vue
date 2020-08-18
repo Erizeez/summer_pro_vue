@@ -150,7 +150,12 @@
       this.userId = localStorage.getItem('userid');
     },
     watch: {
-      '$router': 'getParams'
+      $route() {
+        this.textid = this.$route.query.textid;
+      },
+      textid() {
+        this.getParams();
+      }
     },
     methods: {
       addRecent() {
@@ -181,9 +186,12 @@
             this.userName = res.data.name;
           })
           this.$http.get('/team/findbelong?accountId=' + window.localStorage.getItem('userid') + '&teamId=' + this.teamdocData.teamId).then(res => {
-            console.log(res.data);
-            this.authority = res.data.authority;
-            if (res.data.role === 2) {
+            if (res.data.msg == "failed") {
+              this.$router.push("/MyTeams");
+              return;
+            }
+            this.authority = res.data.belong.authority;
+            if (res.data.belong.role === 2) {
               this.authority = 7;
             }
             if (this.authority >= 4) {

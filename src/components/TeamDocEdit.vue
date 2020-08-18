@@ -103,6 +103,7 @@ export default {
                     teamId: '',
                 },
                 value: false,
+                textid:''
                 // ...
             };
         },
@@ -116,6 +117,7 @@ export default {
             };
         },
         created() {
+            this.textid = this.$route.params.id;
             this.getDocData();
         },
         beforeDestroy() {
@@ -127,7 +129,12 @@ export default {
             
         },
         watch:{
-          '$router':'getParams',
+            $route() {
+                this.textid = this.$route.params.id;
+            },
+            textid() {
+                this.getDocData();
+            },
             value(val, oldVal){
                 if(val == false){
                     var contentDiv = document.getElementById("contentDiv");
@@ -153,9 +160,8 @@ export default {
             },
             getDocData() {
                 this.$http.get('/team/getteamdoc', {
-                    params: { DocId: this.$route.params.id }
+                    params: { DocId: this.textid }
                 }).then(res =>{
-                    console.log(res);
                     this.docData.id = res.data.id;
                     this.docData.createId = res.data.createId;
                     this.docData.createTime = res.data.createTime;
@@ -168,7 +174,13 @@ export default {
                     this.docData.isEdit = res.data.isedit;
                     this.teamTrash.docId = res.data.id;
                     this.teamTrash.teamId = res.data.teamId;
-
+                    this.$http.get('/team/findbelong?accountId=' + window.localStorage.getItem('userid') + '&teamId=' + this.docData.teamId).then(res=>{
+                        if(res.data.msg=="failed"){
+                            this.$router.push("../MyTeams");
+                            this.$message.warning("不要偷看别人的文档哟！");
+                            return;
+                        }
+                    })
                 })
             },
             cancelEdit() {

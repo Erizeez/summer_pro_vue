@@ -179,7 +179,8 @@
                     teamId: '',
                 },
                 value: false,
-                canEdit:false
+                canEdit: false,
+                textid:''
                 // ...
             };
         },
@@ -200,6 +201,7 @@
             }
         },
         created() {
+            this.textid = this.$route.params.id;
             this.getDocData();
             this.address = window.location.href;
         },
@@ -207,6 +209,14 @@
             this.$nextTick(function () {
                 this.bindQRCode();
             })
+        },
+        watch: {
+            $route() {
+                this.textid = this.$route.params.id;
+            },
+            textid() {
+                this.getDocData();
+            }
         },
         methods: {
             goBack() {
@@ -235,7 +245,7 @@
             },
             getDocData() {
                 this.$http.get('/team/getteamdoc', {
-                    params: { DocId: this.$route.params.id }
+                    params: { DocId: this.textid }
                 }).then(res => {
                     this.docData.id = res.data.id;
                     this.docData.createId = res.data.createId;
@@ -247,8 +257,13 @@
                     this.docData.intro = res.data.intro;
                     this.docData.teamId = res.data.teamId;
                     this.$http.get('/team/findbelong?accountId=' + window.localStorage.getItem('userid') + '&teamId=' + this.docData.teamId).then(res => {
-                        if(res.data.authority>=4){
-                            this.canEdit=true;
+                        if(res.data.msg=="failed"){
+                            this.$router.push("../MyTeams");
+                            this.$message.warning("不要偷看别人的文档哟！");
+                            return;
+                        }
+                        if (res.data.belong.authority >= 4) {
+                            this.canEdit = true;
                         }
                     })
                 })
