@@ -40,8 +40,8 @@
               <el-avatar :src="item.photo"></el-avatar>
               <br>
               <div style="margin-top: 5px">{{item.name}}</div>
-              <el-button @click="editMember(item)" type="primary" icon="el-icon-edit" circle
-                style="margin-top: 20px" size="mini"></el-button>
+              <el-button @click="editMember(item)" type="primary" icon="el-icon-edit" circle style="margin-top: 20px"
+                size="mini"></el-button>
               <!-- <el-button type="danger" icon="el-icon-delete" circle size="mini" v-if="onlyCreator"></el-button> -->
             </el-card>
           </el-col>
@@ -57,8 +57,7 @@
               <br>
               <div style="margin-top: 5px">{{item.name}}</div>
               <div style="margin-top: 20px">
-                <el-button @click="editMember(item)" type="primary" icon="el-icon-edit" circle
-                  size="mini"></el-button>
+                <el-button @click="editMember(item)" type="primary" icon="el-icon-edit" circle size="mini"></el-button>
                 <el-button type="danger" icon="el-icon-delete" circle size="mini" v-if="onlyCreator"
                   @click="kick(item.id)"></el-button>
               </div>
@@ -79,8 +78,8 @@
               <el-avatar :src="item.photo"></el-avatar>
               <br>
               <div style="margin-top: 5px">{{item.name}}</div>
-              <el-button @click="editMember(item)" type="primary" icon="el-icon-edit" circle
-                style="margin-top: 20px" size="mini"></el-button>
+              <el-button @click="editMember(item)" type="primary" icon="el-icon-edit" circle style="margin-top: 20px"
+                size="mini"></el-button>
               <el-button type="danger" icon="el-icon-delete" circle size="mini" v-if="onlyCreator || Admin"
                 @click="kick(item.id)"></el-button>
             </el-card>
@@ -222,12 +221,12 @@
           // console.log(this.TeamMember.length);
           for (var i = 0; i < this.TeamMember.length; i++) {
             await this.$http.get('/team/findbelong?accountId=' + res.data[i].id + '&teamId=' + this.TeamId).then(res1 => {
-              if (res1.data.role === 2) {
+              if (res1.data.belong.role === 2) {
                 this.TeamCreator.push(res.data[i]);
               }
-              if (res1.data.role === 0) {
+              if (res1.data.belong.role === 0) {
                 this.TeamCommon.push(res.data[i]);
-              } if (res1.data.role === 1) {
+              } if (res1.data.belong.role === 1) {
                 this.TeamAdmin.push(res.data[i]);
               }
               //  if(res1.data.authority === 1){
@@ -272,15 +271,19 @@
       },
       getUser() {
         this.$http.get('/team/findbelong?accountId=' + localStorage.getItem('userid') + '&teamId=' + this.TeamId).then(res => {
-          if (res.data.role === 2) {
+          if (res.data.msg == "failed") {
+            this.$router.push("/MyTeams");
+            return;
+          }
+          if (res.data.belong.role === 2) {
             this.onlyCreator = true;
             this.Admin = true;
           }
-          if (res.data.role === 1) {
+          if (res.data.belong.role === 1) {
             this.onlyCreator = false;
             this.Admin = true;
           }
-          if (res.data.role === 0) {
+          if (res.data.belong.role === 0) {
             this.onlyCreator = false;
             this.Admin = false;
           }
@@ -322,7 +325,7 @@
 
 
         this.$http.get('/team/findbelong?accountId=' + item.id + '&teamId=' + this.TeamId).then(res => {
-          this.value = res.data.role;
+          this.value = res.data.belong.role;
           if (this.value == 0) {
             this.roleName = "普通成员"
           }

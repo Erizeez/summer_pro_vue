@@ -47,9 +47,6 @@
             this.getTeams();
         },
         watch:{
-            $route(){
-                this.getTeams();
-            }
         },
         methods: {
             getTeams() {
