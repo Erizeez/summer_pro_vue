@@ -14,7 +14,7 @@
                                     {{info.name}}
                             </el-form-item>
                             <el-form-item label="邮箱" prop="email">
-                                <el-input v-model="ruleForm.email"></el-input>
+                                {{info.email}}
                             </el-form-item>
                             <el-form-item label="手机号码" prop="mobile">
                                 <el-input v-model.number="ruleForm.mobile"></el-input>
@@ -86,17 +86,17 @@
 
         <el-dialog title="修改密码" :visible.sync="dialogFormVisible"
             style="width: 70%; position: absolute; left:15%; top:5%;">
-            <el-form :model="passwordform" :rules="pwdRule" ref="pwdformRef">
+            <el-form :model="passwordform" :rules="pwdRule" ref="pwdformRef" label-width="100px">
                 <el-form-item label="原密码" prop="old">
-                    <el-input type="password" v-model="passwordform.old" autocomplete="off" style="width: 80%">
+                    <el-input type="password" v-model="passwordform.old" autocomplete="off">
                     </el-input>
                 </el-form-item>
                 <el-form-item label="新密码" prop="new">
-                    <el-input type="password" v-model="passwordform.new" autocomplete="off" style="width: 80%">
+                    <el-input type="password" v-model="passwordform.new" autocomplete="off">
                     </el-input>
                 </el-form-item>
-                <el-form-item label="再次输入新密码" prop="newAgain">
-                    <el-input type="password" v-model="passwordform.newAgain" autocomplete="off" style="width: 93%">
+                <el-form-item label="确认新密码" prop="newAgain">
+                    <el-input type="password" v-model="passwordform.newAgain" autocomplete="off">
                     </el-input>
                 </el-form-item>
             </el-form>
@@ -131,7 +131,7 @@
                     }
                 }, 100)
             };
-            var checkEmail = (rule, value, callback) => {
+            /* var checkEmail = (rule, value, callback) => {
                 const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
                 if (!value) {
                     return callback(new Error('邮箱不能为空'))
@@ -143,7 +143,7 @@
                         callback(new Error('请输入正确的邮箱格式'))
                     }
                 }, 100)
-            }
+            } */
             return {
                 info: {
                     id: 0,
@@ -165,9 +165,9 @@
                     photo: ''
                 },
                 rules: {
-                    email: [
+                    /* email: [
                         { required: true, validator: checkEmail, trigger: 'blur' }
-                    ],
+                    ], */
                     mobile: [
                         { required: true, validator: checkPhone, trigger: 'blur' }
                     ]
@@ -227,6 +227,7 @@
                                 this.info.company = this.ruleForm.company;
                                 this.info.photo = this.ruleForm.photo;
                                 this.toChange();
+                                this.$emit('getUserInfo');
                             }
                             else {
 

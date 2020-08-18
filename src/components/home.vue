@@ -2,10 +2,13 @@
   <el-container class="home_container">
     <el-header class="el-header">
 
-      <el-menu class="el-menu-demo" mode="horizontal" text-color="#777" background-color="#fff"
-        active-text-color="#222" :default-active="activeIndex">
+      <el-menu class="el-menu-demo" mode="horizontal" text-color="#777" background-color="#fff" active-text-color="#222"
+        :default-active="activeIndex">
         <el-menu-item index="0">
-          <img class="img-title" src="../assets/j-logo.png" @click="goindex">
+          <div @click="goindex">
+            <img class="img-title" src="../assets/logo11.png">
+            <span class="LogoFont">黑曜石文档</span>
+          </div>
         </el-menu-item>
         <el-submenu class="submenu-1" index="2">
           <template slot="title">
@@ -78,7 +81,7 @@
       </el-menu>
     </el-header>
     <el-main>
-      <router-view @ifMessage="ifMessage"></router-view>
+      <router-view @ifMessage="ifMessage" @getUserInfo="getUserInfo"></router-view>
     </el-main>
   </el-container>
 
@@ -107,7 +110,7 @@
         username: '',
         haveNewMessage: false,
         src: require("../assets/home/team1.png"),
-        activeIndex:''
+        activeIndex: ''
       }
     },
     created() {
@@ -122,7 +125,7 @@
               this.haveNewMessage = true;
               break;
             }
-            this.haveNewMessage=false;
+            this.haveNewMessage = false;
           }
         })
       },
@@ -161,7 +164,7 @@
         this.$router.push('/created');
       },
       toPersonalInfo() {
-        this.activeIndex=3;
+        this.activeIndex = 3;
         this.$router.push('/PersonalInfo');
       },
       tomessageInfo() {
@@ -243,5 +246,9 @@
     margin-top: -25px;
     margin-left: -4px;
     margin-right: -15px;
+  }
+  .LogoFont{
+    font-weight:bolder;
+    font-size: large;
   }
 </style>
