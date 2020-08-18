@@ -137,7 +137,7 @@
                 showShare: false,
                 authority: 0,
                 showlink: false,
-                sharelink: "http://localhost:8081/#/text",
+                sharelink: "http://localhost/#/text",
                 canShare: true,
                 shareAuth: 1,
                 value: false,

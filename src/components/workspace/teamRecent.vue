@@ -94,7 +94,7 @@
              
                 <el-row :gutter="50" style="margin-top: 20px;" class="boxes">
               
-              <el-col :span="5" v-for="item in doclist" :key="item.id" style="width: 18%; margin: 0px 0px 20px 0px;left:0px;">
+              <el-col :span="5" v-for="item in doclist" :key="item.id" style="width: 20%; margin: 0px 0px 20px 0px;left:0px;">
                 <el-card :span="5" :body-style="{ padding: '0px' }"  shadow="hover" class="card-box-s">
                   <img src="../../assets/home/card-bg2.jpg" class="image" style="width: 100%; height:200px; display: block"/>
                   <div style="padding: 14px;">
