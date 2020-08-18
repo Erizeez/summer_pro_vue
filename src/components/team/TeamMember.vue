@@ -105,7 +105,6 @@
             {{roleName}}</el-form-item>
           <el-form-item v-model="role" label="选择角色" v-if="onlyCreator&&value!=2">
             <el-select v-model="value" placeholder="请选择成员角色">
-
               <el-option v-for="item in role" :key="item.value" :label="item.label" :value="item.value"></el-option>
 
               <!--                <el-option label="管理员" value="1" @click="setRole(1)"></el-option>-->
@@ -207,6 +206,13 @@
     created() {
       this.getParams();
       this.getUser();
+      var lett = this;
+      document.onkeydown = function(e) {
+        var key = window.event.keyCode;
+        if (key == 13) {
+        lett.AddMember();
+        }
+      }
     },
     watch: {
       '$router': 'getParams'
