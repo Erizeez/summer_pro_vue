@@ -27,7 +27,7 @@ import TeamMember from "../components/team/TeamMember";
 import teamRecent from "../components/workspace/teamRecent";
 
 import TeamAside from "../components/team/TeamAside"
-import Myteams from "../components/team/Myteams"
+import Myteams from "../components/Myteams"
 import TeamTabs from "../components/team/TeamTabs"
 import TeamInfo from "../components/team/TeamInfo"
 import TeamDocs from "../components/team/TeamDocs"
