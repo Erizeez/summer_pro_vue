@@ -95,7 +95,7 @@ export default {
                     status: '',
                     title: '',
                     intro: '',
-                    isEdit: ''
+                    isEdit: '-1'
                 },
                 value: false,
                 // ...
@@ -118,41 +118,23 @@ export default {
             }
         },
         mounted() {
+            this.docData.id = this.$route.params.id;
             window.onbeforeunload = e => {      //刷新时弹出提示
-                if(this.docData.isEdit == 0){
-                    this.$http.get("/doc/canceledit?DocId=" + this.docData.id).then(
-                    function(res) {
-                        console.log(res);
-                    })
-                }
+                this.$http.get("/doc/canceledit?DocId=" + this.docData.id).then(
+                function(res) {
+                    console.log(res);
+                })
                return ''; 
-
             };
         },
         created() {
-            let __this = this
-            this.$http.get("/doc/checkedit?DocId=" + this.$route.params.id).then(
-                function(res) {
-                    console.log(res);
-                    if(res.data != "success"){
-                        __this.$router.back();   
-                        __this.$message({
-                            type: 'error',
-                            message: '他人正在编辑，请稍后再试',
-                        });
-                    }
-                }
-            );
             this.getDocData();
         },
         beforeDestroy() {
-            if(this.docData.isEdit == 0){
-                this.$http.get("/doc/canceledit?DocId=" + this.docData.id).then(
-                    function(res) {
-                        console.log(res);
-                    }
-                )
-            }
+            this.$http.get("/doc/canceledit?DocId=" + this.docData.id).then(
+            function(res) {
+                console.log("cancel success");
+            })
         },
         methods: {
             onReady( editor )  {

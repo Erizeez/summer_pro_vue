@@ -18,7 +18,7 @@
           </span>
           <el-button type="primary" style="float: right; margin-right: 10px" round @click="dialogFormVisible=true">存为模板
           </el-button>
-          <el-button type="primary" style="float: right; margin-right: 10px" round @click="goEdit" :disabled="!canEdit">
+          <el-button v-loading.fullscreen.lock="fullscreenLoading" type="primary" style="float: right; margin-right: 10px" round @click="goEdit" :disabled="!canEdit">
             编辑文本</el-button>
           <el-button type="primary" style="float: right; margin-right: 10px" round @click="goAccess"
             :disabled="!canSee">预览文本</el-button>
@@ -137,6 +137,7 @@
         canComment: false,
         uuid: '',
         authority:1,
+        fullscreenLoading: false,
       }
     },
     created() {
@@ -351,7 +352,24 @@
         this.nonfavor = false;
       },
       goEdit() {
-        this.$router.push("/edit/" + this.docData.id);
+        let __this = this;
+        this.fullscreenLoading = true;
+        this.$http.get("/doc/checkedit?DocId=" + this.$route.query.textid).then(
+        function(res) {
+            console.log(res);
+            if(res.data != "success"){   
+                __this.$message({
+                    type: 'error',
+                    message: '他人正在编辑，请稍后再试',
+                });
+                this.fullscreenLoading = false;
+            }else{
+              __this.$router.push("/edit/" + __this.$route.query.textid);
+            }
+        }
+        );
+            
+        
       },
       goAccess() {
         this.$router.push("/access/" + this.docData.id);

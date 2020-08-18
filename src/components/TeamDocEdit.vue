@@ -108,39 +108,23 @@ export default {
         },
         mounted() {
             window.onbeforeunload = e => {      //刷新时弹出提示
-                if(this.docData.isEdit == 0){
-                    this.$http.get("/team/canceledit?teamdocId=" + this.docData.id).then(
-                    function(res) {
-                        console.log(res);
-                    })
-                }
+                this.$http.get("/team/canceledit?teamdocId=" + this.docData.id).then(
+                function(res) {
+                    console.log(res);
+                })
                return ''; 
             };
         },
         created() {
             this.getDocData();
-            let __this = this
-            this.$http.get("/team/checkedit?teamdocId=" + this.$route.params.id).then(
-                function(res) {
-                    console.log(res);
-                    if(res.data != "success"){
-                        __this.$router.back();   
-                        __this.$message({
-                            type: 'error',
-                            message: '他人正在编辑，请稍后再试',
-                        });
-                    }
-                }
-            );
         },
         beforeDestroy() {
-            if(this.docData.isEdit == 0){
-                this.$http.get("/team/canceledit?teamdocId=" + this.docData.id).then(
-                    function(res) {
-                        console.log(res);
-                    }
-                )
-            }
+            this.$http.get("/team/canceledit?teamdocId=" + this.docData.id).then(
+                function(res) {
+                    console.log(res);
+                }
+            )
+            
         },
         watch:{
           '$router':'getParams',

@@ -14,7 +14,7 @@
           <span class="non-favor" v-else-if="nonfavor">
             <el-button type="warning" icon="el-icon-star-off" style="float: right" round @click="like">收藏</el-button>
           </span>
-          <el-button type="primary" style="float: right; margin-right: 10px" round @click="goEdit" :disabled="!canEdit">
+          <el-button v-loading.fullscreen.lock="fullscreenLoading" type="primary" style="float: right; margin-right: 10px" round @click="goEdit" :disabled="!canEdit">
             编辑文本</el-button>
           <el-button type="primary" style="float: right; margin-right: 10px" round @click="goAccess" :disabled="!canSee">预览文本</el-button>
         </div>
@@ -118,7 +118,8 @@
         canSee:false,
         canComment:false,
         canEdit: false,
-        authority:0
+        authority:0,
+        fullscreenLoading: false,
       }
     },
     created() {
@@ -282,7 +283,23 @@
 
       },
       goEdit() {
-        this.$router.push("/teamdocedit/" + this.teamdocData.id);
+        let __this = this;
+        this.fullscreenLoading = true;
+        this.$http.get("/team/checkedit?teamdocId=" + this.teamdocData.id).then(
+            function(res) {
+                console.log(res);
+                if(res.data != "success"){  
+                    __this.$message({
+                        type: 'error',
+                        message: '他人正在编辑，请稍后再试',
+                    });
+                    this.fullscreenLoading = false;
+                }else{
+                  __this.$router.push("/teamdocedit/" + __this.teamdocData.id);
+                }
+            }
+        );
+        
       },
       goAccess() {
         this.$router.push("/teamdocaccess/" + this.teamdocData.id);
