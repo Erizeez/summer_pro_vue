@@ -3,11 +3,12 @@
         <div style="width: 70%;">
             <router-view></router-view>
         </div>
-        <div style="width: 20%;" class="TeamInfo_main">
+        <div style="width: 29%;" class="TeamInfo_main">
             <h3>团队信息
-                <el-button type="text" icon="el-icon-edit" class="TeamInfo_main_title_btn"
-                    v-if="!changeMode&& isCreator" @click="toEdit">修改团队信息
-                </el-button>
+                <el-button style="margin-left:50px;" round v-if="changeMode" type="primary" @click="submit">确认</el-button>
+                <el-button round v-if="changeMode" @click="toChange">取消</el-button>
+                <el-button style="float:right;" size="mini" round type="info" icon="el-icon-edit" class="TeamInfo_main_title_btn"
+                    v-if="!changeMode&& isCreator" @click="toEdit">修改团队信息</el-button>
             </h3>
             <el-form ref="editForm" :model="editForm" :rules="rules" label-width="50%">
                 <el-form-item label="团队名：" prop="name" v-if="changeMode">
@@ -22,22 +23,18 @@
                 <el-form-item label="团队介绍:">
                 </el-form-item>
             </el-form>
-            <div class="Team_intro">
-                <div v-if="!changeMode" class="Team_intro_show">
-                    {{teamInfo.introduction||"暂无"}}</div>
+            <el-card class="Team_intro" shadow="hover">
+                <span v-if="!changeMode" class="Team_intro_show">
+                    {{teamInfo.introduction||"暂无"}}</span>
                 <el-input type="textarea" :autosize="{ minRows: 4}" placeholder="请输入内容" v-model="editForm.introduction"
                     v-if="changeMode">
                 </el-input>
-            </div>
-            <div v-if="changeMode" class="TeamInfo_change">
-                <el-button type="primary" @click="submit">确认</el-button>
-                <el-button @click="toChange">取消</el-button>
-            </div>
+            </el-card>
             <div class="changeTeamInfo_confirm">
                 <el-popconfirm confirmButtonText='是的' cancelButtonText='算了' icon="el-icon-info" iconColor="red"
                     title="确定要进行此操作吗" @onConfirm="deleteOrQuit">
-                    <el-button slot="reference" type="danger" v-if="!isCreator">退出团队</el-button>
-                    <el-button slot="reference" type="danger" v-if="isCreator">解散团队</el-button>
+                    <el-button round slot="reference" type="danger" v-if="!isCreator">退出团队</el-button>
+                    <el-button round slot="reference" type="danger" v-if="isCreator">解散团队</el-button>
                 </el-popconfirm>
             </div>
         </div>
@@ -176,30 +173,34 @@
         
     }
     .TeamInfo_main_title_btn {
-        float: right;
-        margin-top: -5px
+        //float: right;
+        //margin-top: -5px
     }
 
     .Team_intro {
         margin-left: 25px;
         margin-right: 10px;
         font-size: 12px;
-        height: 200px
+        height: 200px;
+        background-color: rgba(0, 0, 0, 0);
     }
 
     .Team_intro_show {
         margin-left: 5px;
-        margin-right: 5px
+        margin-right: 5px;
+        word-wrap: break-word;
+        word-break: break-all;
+        overflow: hidden;
     }
 
     .TeamInfo_change {
-        margin-left: 20px;
-        margin-top: 10px
+        /* margin-left: 20px;
+        margin-top: 10px */
     }
 
     .changeTeamInfo_confirm {
-        position: absolute;
-        right: 10px;
-        bottom: 20px;
+        position: fixed;
+        right: 1%;
+        bottom: 2%;
     }
 </style>

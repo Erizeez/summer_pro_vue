@@ -58,10 +58,14 @@
       <div v-for="(item,i) in comments" :key="i" class="author-title">
         <el-row :gutter="20">
           <el-col :span="4">
-            <el-avatar class="header-img" :size="40" :src="item.photo"></el-avatar>
+            <a @click="toPersonalInfo(item.accountId)">
+              <el-tooltip class="item" effect="dark" content="查看个人信息" placement="bottom">
+                <el-avatar class="header-img" :size="40" :src="item.photo"></el-avatar>
+              </el-tooltip>
+            </a>
             <div class="author-info">
-              <el-link :underline="false" :href="'http://localhost:8081/#/PersonalInfo?id='+item.accountId">
-                {{item.name}}</el-link>
+              <span>
+                {{item.name}}</span>
             </div>
           </el-col>
           <el-col :span="16">
@@ -89,15 +93,7 @@
             <el-button type="primary" slot="append" @click="addComment()">发送</el-button>
           </el-input>
         </el-collapse-item>
-
-
       </el-collapse>
-
-
-
-
-
-
     </el-card>
   </div>
 </template>
@@ -161,6 +157,10 @@
         this.$http.get('/team/addlatest?DocId=' + this.textid + '&accountId=' + localStorage.getItem('userid')).then(res => {
           console.log(res);
         })
+      },
+      toPersonalInfo(acId) {
+        this.activeIndex = 3;
+        this.$router.push('/PersonalInfo?id='+acId);
       },
       goBack() {
         this.$router.go(-1);
@@ -378,7 +378,9 @@
     transition-duration: 0.5s;
     text-align: center;
   }
-
+  a:hover {
+    filter: brightness(80%);
+  }
   .favorite {
     margin: 5px;
   }

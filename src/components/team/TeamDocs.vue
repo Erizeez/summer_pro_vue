@@ -126,6 +126,7 @@
                 this.teamid = this.$route.query.teamid;
             },
             teamid() {
+                this.getAuth();
                 this.getTeamDocs();
                 this.isTeamTrash = false;
             },
@@ -141,7 +142,6 @@
         methods: {
             getTeamDocs() {
                 this.$http.get('/team/teamdoclist?teamId=' + this.teamid).then(res => {
-                    console.log(res);
                     if (res.status !== 200) {
                         return this.$message.error('获取失败');
                     }
@@ -157,7 +157,6 @@
                 })
             },
             todoc(id) {
-                console.log(id);
                 this.$router.push({
                     path: '/teamtext',
                     query: {
@@ -211,7 +210,11 @@
             },
             getAuth(){
                 this.$http.get('/team/findbelong?accountId='+window.localStorage.getItem('userid')+'&teamId='+this.teamid).then(res=>{
-                    if(res.data.authority>=4){
+                    if(res.data.msg=="failed"){
+                        this.$router.push("/MyTeams");
+                        return;
+                    }
+                    if(res.data.belong.authority>=4){
                         this.canEdit=true;
                     }
                     else{
