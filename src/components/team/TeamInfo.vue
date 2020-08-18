@@ -3,7 +3,7 @@
         <div style="width: 70%;">
             <router-view></router-view>
         </div>
-        <div class="TeamInfo_main">
+        <div style="width: 20%;" class="TeamInfo_main">
             <h3>团队信息
                 <el-button type="text" icon="el-icon-edit" class="TeamInfo_main_title_btn"
                     v-if="!changeMode&& isCreator" @click="toEdit">修改团队信息
@@ -36,8 +36,8 @@
             <div class="changeTeamInfo_confirm">
                 <el-popconfirm confirmButtonText='是的' cancelButtonText='算了' icon="el-icon-info" iconColor="red"
                     title="确定要进行此操作吗" @onConfirm="deleteOrQuit">
-                    <el-button round slot="reference" type="danger" v-if="!isCreator">退出团队</el-button>
-                    <el-button round slot="reference" type="danger" v-if="isCreator">解散团队</el-button>
+                    <el-button slot="reference" type="danger" v-if="!isCreator">退出团队</el-button>
+                    <el-button slot="reference" type="danger" v-if="isCreator">解散团队</el-button>
                 </el-popconfirm>
             </div>
         </div>
@@ -173,7 +173,7 @@
         border: 1px solid #eee;
     }
     .TeamInfo_main {
-        width: 30%;
+        
     }
     .TeamInfo_main_title_btn {
         float: right;
@@ -181,17 +181,15 @@
     }
 
     .Team_intro {
-        margin-left: 15px;
-        margin-right: 15px;
+        margin-left: 25px;
+        margin-right: 10px;
         font-size: 12px;
-        width: 100%;
         height: 200px
     }
 
     .Team_intro_show {
         margin-left: 5px;
-        margin-right: 5px;
-        width: 80%;
+        margin-right: 5px
     }
 
     .TeamInfo_change {
@@ -200,8 +198,8 @@
     }
 
     .changeTeamInfo_confirm {
-        position: fixed;
-        right: 10%;
-        bottom: 5%;
+        position: absolute;
+        right: 10px;
+        bottom: 20px;
     }
 </style>
