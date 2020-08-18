@@ -174,8 +174,6 @@
         methods: {
             getAuth() {
                 this.$http.get('/share/getauth?receiverId=' + localStorage.getItem('userid') + '&DocId=' + this.$route.params.id).then(res => {
-                    console.log(res);
-                    console.log("access");
                     if (res.data === 0) {
                         this.$message.error("您没有查看权限！");
                         return this.$router.push('/index');
@@ -204,7 +202,6 @@
                 this.$http.get('/doc/read', {
                     params: { id: this.$route.params.id }
                 }).then(res => {
-                    console.log(res);
                     this.docData.id = res.data.id;
                     this.docData.createId = res.data.createId;
                     this.docData.createTime = res.data.createTime;
@@ -241,8 +238,6 @@
                 this.$http.get('/doc/exportWord', {
                     params: { id: this.docData.id }
                 }).then(res => {
-                    console.log(res);
-
                     var link = document.createElement('a');
                     link.setAttribute('href', res.data.url);
                     link.setAttribute('download', this.docData.title);
@@ -252,6 +247,24 @@
                 })
             },
             showshare() {
+                this.rights.select=[]
+                this.$http.get('/share/getauth2?DocId='+this.$route.params.id).then(res=>{
+                    if(res.data>=8){
+                        this.rights.select.push("可编辑");
+                        res.data-=8;
+                    }
+                    if(res.data>=4){
+                        this.rights.select.push("可评论");
+                        res.data-=4;
+                    }
+                    if(res.data>=2){
+                        this.rights.select.push("可分享");
+                        res.data-=2;
+                    }
+                    if(res.data==1){
+                        this.rights.select.push("可查看");
+                    }
+                })
                 this.showShare = true;
             },
             editAuth() {
@@ -272,15 +285,10 @@
                         this.authority += 8;
                     }
                 }
-                this.rights.select = [];
-                console.log(this.authority);
                 this.showlink = true;
                 this.$http.get('/share/getlink?docId=' + this.$route.params.id + '&auth=' + this.authority).then(res => {
-                    console.log(res);
                     this.$http.get('/share/sharedoc?uuid=' + res.data + '&accountId=' + localStorage.getItem('userid')).then(res1 => {
-                        console.log(res1);
                         this.sharelink = this.sharelink + "?textid=" + this.$route.params.id + "&uuid=" + res.data;
-                        console.log(this.sharelink);
                         _this.$copyText(this.sharelink).then(function (e) {
                             _this.$message({
                                 message: '复制成功！',
