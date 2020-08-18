@@ -159,7 +159,7 @@
             console.log(res.data);
             this.authority=res.data.authority;
             if(res.data.role === 2){
-              this.authority = 15
+              this.authority = 7;
             }
             if(this.authority>=4){
               this.canSee = true;
