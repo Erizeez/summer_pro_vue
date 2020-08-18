@@ -260,7 +260,7 @@ export default {
             editAuth(){
                 let _this = this;
                 this.sharelink = "http://localhost:8081/#/text";
-                this.authority = 1;
+                this.authority = 0;
                 for(var i = 0; i < this.rights.select.length; i ++){
                     if(this.rights.select[i] === "可查看"){
                         this.authority += 1;
