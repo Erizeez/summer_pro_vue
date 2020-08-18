@@ -136,16 +136,6 @@
     import '@ckeditor/ckeditor5-build-decoupled-document/build/translations/zh-cn.js'
     import QRCode from 'qrcodejs2';
 
-    const htmlString = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Document</title>
-</head>
-<body>
-  <figure class="image"><img src="http://localhost:8080/summer_pro_ssm/resources/upload/1597308266601.png"></figure><figure class="image"><img src="http://localhost:8080/summer_pro_ssm/resources/upload/1597308270489.jpeg"></figure><blockquote><p>sadasdas<span style="font-size:48px;">dasd<strong>dd</strong><i><strong>dddd<u>ddddd</u></strong><s><strong><u>ddd</u></strong></s></i></span><span style="color:hsl(60, 75%, 60%);font-size:48px;"><i><s><strong><u>ddd</u></strong></s></i></span><span style="background-color:hsl(0, 0%, 60%);color:hsl(60, 75%, 60%);font-size:48px;"><i><s><strong><u>dddd</u></strong></s></i></span></p></blockquote>
-</body>
-</html>`
 
     export default {
         name: 'app',
@@ -198,25 +188,18 @@
                     contentDiv.style["left"] = "-50%";
                     infoDiv.style["left"] = "50%";
                 }
-            }
-        },
-        created() {
-            this.textid = this.$route.params.id;
-            this.getDocData();
-            this.address = window.location.href;
-        },
-        mounted() {
-            this.$nextTick(function () {
-                this.bindQRCode();
-            })
-        },
-        watch: {
+            },
             $route() {
                 this.textid = this.$route.params.id;
             },
             textid() {
                 this.getDocData();
             }
+        },
+        created() {
+            this.textid = this.$route.params.id;
+            this.getDocData();
+            this.address = window.location.href;
         },
         methods: {
             goBack() {
@@ -232,16 +215,6 @@
                     editor.ui.getEditableElement(),
                     editor.isReadOnly = true,
                 );
-            },
-            bindQRCode: function () {
-                new QRCode(this.$refs.qrCodeDiv, {
-                    text: window.location.href,
-                    width: 100,
-                    height: 100,
-                    colorDark: "#333333", //二维码颜色
-                    colorLight: "#ffffff", //二维码背景色
-                    correctLevel: QRCode.CorrectLevel.L//容错率，L/M/H
-                })
             },
             getDocData() {
                 this.$http.get('/team/getteamdoc', {

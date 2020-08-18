@@ -269,7 +269,7 @@
             },
             editAuth() {
                 let _this = this;
-                this.sharelink = "http://doc.ecacon.com:8081/#/text";
+                this.sharelink = "http://doc.ecacon.com/#/text";
                 this.authority = 0;
                 for (var i = 0; i < this.rights.select.length; i++) {
                     if (this.rights.select[i] === "可查看") {
