@@ -14,9 +14,28 @@
           <span class="non-favor" v-else-if="nonfavor">
             <el-button type="warning" icon="el-icon-star-off" style="float: right" round @click="like">收藏</el-button>
           </span>
-          <el-button v-loading.fullscreen.lock="fullscreenLoading" type="primary" style="float: right; margin-right: 10px" round @click="goEdit" :disabled="!canEdit">
+          <el-button v-loading.fullscreen.lock="fullscreenLoading" type="primary"
+            style="float: right; margin-right: 10px" round @click="dialogFormVisible=true" :disabled="!canEdit">
+            添加为我的文档</el-button>
+
+          <el-dialog title="保存为我的文档" :visible.sync="dialogFormVisible" :append-to-body="true">
+            <el-form :model="form">
+              <el-form-item label="文档名称" label-width="120px">
+                <el-input v-model="form.name" autocomplete="off">
+                </el-input>
+              </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+              <el-button @click="dialogFormVisible = false">取 消
+              </el-button>
+              <el-button type="primary" @click="submitToMyDoc">确 定</el-button>
+            </div>
+          </el-dialog>
+          <el-button v-loading.fullscreen.lock="fullscreenLoading" type="primary"
+            style="float: right; margin-right: 10px" round @click="goEdit" :disabled="!canEdit">
             编辑文本</el-button>
-          <el-button type="primary" style="float: right; margin-right: 10px" round @click="goAccess" :disabled="!canSee">预览文本</el-button>
+          <el-button type="primary" style="float: right; margin-right: 10px" round @click="goAccess"
+            :disabled="!canSee">预览文本</el-button>
         </div>
       </div>
 
@@ -41,7 +60,8 @@
           <el-col :span="4">
             <el-avatar class="header-img" :size="40" :src="item.photo"></el-avatar>
             <div class="author-info">
-                <el-link :underline="false" :href="'http://localhost:8081/#/PersonalInfo?id='+item.accountId">{{item.name}}</el-link>
+              <el-link :underline="false" :href="'http://localhost:8081/#/PersonalInfo?id='+item.accountId">
+                {{item.name}}</el-link>
             </div>
           </el-col>
           <el-col :span="16">
@@ -115,11 +135,15 @@
         },
         favor: true,
         nonfavor: false,
-        canSee:false,
-        canComment:false,
+        canSee: false,
+        canComment: false,
         canEdit: false,
-        authority:0,
+        authority: 0,
         fullscreenLoading: false,
+        dialogFormVisible:false,
+        form:{
+          name:''
+        }
       }
     },
     created() {
@@ -158,21 +182,21 @@
           })
           this.$http.get('/team/findbelong?accountId=' + window.localStorage.getItem('userid') + '&teamId=' + this.teamdocData.teamId).then(res => {
             console.log(res.data);
-            this.authority=res.data.authority;
-            if(res.data.role === 2){
+            this.authority = res.data.authority;
+            if (res.data.role === 2) {
               this.authority = 7;
             }
-            if(this.authority>=4){
+            if (this.authority >= 4) {
               this.canSee = true;
-              this.canEdit=true;
-              this.authority-=4;
+              this.canEdit = true;
+              this.authority -= 4;
             }
-            if(this.authority>=2){
-              this.canComment=true;
-              this.authority-=2;
+            if (this.authority >= 2) {
+              this.canComment = true;
+              this.authority -= 2;
             }
-            if(this.authority==1){
-              this.canSee=true;
+            if (this.authority == 1) {
+              this.canSee = true;
             }
           })
         })
@@ -286,26 +310,34 @@
         let __this = this;
         this.fullscreenLoading = true;
         this.$http.get("/team/checkedit?teamdocId=" + this.teamdocData.id).then(
-            function(res) {
-                console.log(res);
-                if(res.data != "success"){  
-                    __this.$message({
-                        type: 'error',
-                        message: '他人正在编辑，请稍后再试',
-                    });
-                    __this.fullscreenLoading = false;
-                }else{
-                  __this.$router.push("/teamdocedit/" + __this.teamdocData.id);
-                }
+          function (res) {
+            console.log(res);
+            if (res.data != "success") {
+              __this.$message({
+                type: 'error',
+                message: '他人正在编辑，请稍后再试',
+              });
+              __this.fullscreenLoading = false;
+            } else {
+              __this.$router.push("/teamdocedit/" + __this.teamdocData.id);
             }
+          }
         );
-        
+
       },
       goAccess() {
         this.$router.push("/teamdocaccess/" + this.teamdocData.id);
       },
-      toPersonalInfo(id){
-        console.log(id);
+      submitToMyDoc(){
+        this.$http.get("/team/saveasdoc?accountId="+this.userId+"&teamdocId="+this.teamdocData.id+"&title="+this.form.name).then(res=>{
+          if(res.data=="success"){
+            this.$message.success("保存成功！");
+            this.dialogFormVisible=false;
+          }
+          else{
+            this.$message.error("保存失败！");
+          }
+        })
       }
     }
   }
