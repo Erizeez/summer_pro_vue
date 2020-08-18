@@ -362,7 +362,7 @@
                     type: 'error',
                     message: '他人正在编辑，请稍后再试',
                 });
-                this.fullscreenLoading = false;
+                __this.fullscreenLoading = false;
             }else{
               __this.$router.push("/edit/" + __this.$route.query.textid);
             }
