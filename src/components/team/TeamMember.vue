@@ -35,13 +35,13 @@
 
         <el-row :gutter="12" style="margin-top: 30px; margin-left: 30px">
 
-          <el-col :span="4" v-for="item in TeamCreator" :key="item.id">
+          <el-col :span="4" style="text-align: center;" v-for="item in TeamCreator" :key="item.id">
             <el-card shadow="hover">
-              <el-avatar :src="item.photo" style="margin-left: 33%"></el-avatar>
+              <el-avatar :src="item.photo"></el-avatar>
               <br>
-              <div style="text-align: center; margin-top: 5px">{{item.name}}</div>
+              <div style="margin-top: 5px">{{item.name}}</div>
               <el-button @click="editMember(item)" type="primary" icon="el-icon-edit" circle
-                style="margin-left: 15%; margin-top: 20px" size="mini"></el-button>
+                style="margin-top: 20px" size="mini"></el-button>
               <!-- <el-button type="danger" icon="el-icon-delete" circle size="mini" v-if="onlyCreator"></el-button> -->
             </el-card>
           </el-col>
@@ -51,15 +51,17 @@
           </el-col>
 
           <el-col :span="3">&#8197; </el-col>
-          <el-col :span="4" v-for="item in TeamAdmin" :key="item.id">
+          <el-col :span="4" style="text-align: center;" v-for="item in TeamAdmin" :key="item.id">
             <el-card shadow="hover">
-              <el-avatar :src="item.photo" style="margin-left: 33%"></el-avatar>
+              <el-avatar :src="item.photo"></el-avatar>
               <br>
-              <div style="text-align: center; margin-top: 5px">{{item.name}}</div>
-              <el-button @click="editMember(item)" type="primary" icon="el-icon-edit" circle
-                style="margin-left: 15%; margin-top: 20px" size="mini"></el-button>
-              <el-button type="danger" icon="el-icon-delete" circle size="mini" v-if="onlyCreator"
-                @click="kick(item.id)"></el-button>
+              <div style="margin-top: 5px">{{item.name}}</div>
+              <div style="margin-top: 20px">
+                <el-button @click="editMember(item)" type="primary" icon="el-icon-edit" circle
+                  size="mini"></el-button>
+                <el-button type="danger" icon="el-icon-delete" circle size="mini" v-if="onlyCreator"
+                  @click="kick(item.id)"></el-button>
+              </div>
             </el-card>
           </el-col>
         </el-row>
@@ -72,13 +74,13 @@
         <el-divider></el-divider>
         团队成员
         <el-row :gutter="12" style="margin-top: 30px; margin-left: 30px">
-          <el-col :span="4" v-for="item in TeamCommon" :key="item.id">
+          <el-col :span="4" style="text-align: center;" v-for="item in TeamCommon" :key="item.id">
             <el-card shadow="hover">
-              <el-avatar :src="item.photo" style="margin-left: 33%"></el-avatar>
+              <el-avatar :src="item.photo"></el-avatar>
               <br>
-              <div style="text-align: center; margin-top: 5px">{{item.name}}</div>
+              <div style="margin-top: 5px">{{item.name}}</div>
               <el-button @click="editMember(item)" type="primary" icon="el-icon-edit" circle
-                style="margin-left: 15%; margin-top: 20px" size="mini"></el-button>
+                style="margin-top: 20px" size="mini"></el-button>
               <el-button type="danger" icon="el-icon-delete" circle size="mini" v-if="onlyCreator || Admin"
                 @click="kick(item.id)"></el-button>
             </el-card>
@@ -91,16 +93,17 @@
         <el-form :model="thisMember">
           <el-avatar style="margin-left: 40%;" :src="thisMember.photo" :size="50"></el-avatar>
           <br>
-          <el-form-item label="用 户 名:" style="margin-left: 10%;margin-top: 30px">
+          <el-form-item label="用 户 名:" style="margin-left: 5%;margin-top: 30px">
             {{thisMember.name}}
           </el-form-item>
-          <el-form-item label="邮    箱:" style="margin-left: 10%;margin-top: 30px">
+          <el-form-item label="用户邮箱:" style="margin-left: 5%;margin-top: 30px">
             {{thisMember.email}}
           </el-form-item>
-          <el-form-item label="手机号码:" style="margin-left: 10%;margin-top: 30px">
+          <el-form-item label="手机号码:" style="margin-left: 5%;margin-top: 30px">
             {{thisMember.mobile}}
           </el-form-item>
-          <el-form-item label="角色：" v-if="!onlyCreator||value==2">{{roleName}}</el-form-item>
+          <el-form-item label="用户角色：" v-if="!onlyCreator||value==2" style="margin-left: 5%;margin-top: 30px">
+            {{roleName}}</el-form-item>
           <el-form-item v-model="role" label="选择角色" v-if="onlyCreator&&value!=2">
             <el-select v-model="value" placeholder="请选择成员角色">
 
@@ -129,8 +132,8 @@
             </el-checkbox-group>
           </el-form-item>
           <div class="confirmbtn">
-            <el-button type="primary" @click="comfirmAuth"
-              v-if="(onlyCreator&&value==1)||(Admin&&value==0)">确认</el-button>
+            <el-button type="primary" @click="comfirmAuth" v-if="(onlyCreator&&value==1)||(Admin&&value==0)">确认
+            </el-button>
           </div>
         </el-form>
       </el-dialog>
@@ -349,11 +352,6 @@
             this.rights.select[0] = "可评论";
             this.rights.select[1] = "可创建、编辑、删除文档";
           }
-
-          console.log(this.rights.select);
-          console.log('初始化权限');
-          this.dialogFormVisible1 = true;
-
           // if(res.data.authority === 3){
           //   this.rights.select[0] = "可分享";
           // }
@@ -372,6 +370,7 @@
         this.EditAuth.accountid = item.id;
         this.$http.get('/account/search?id=' + item.id).then(res => {
           this.thisMember = res.data;
+          this.dialogFormVisible1 = true;
         })
       },
       comfirmAuth() {
@@ -381,7 +380,7 @@
           if (this.rights.select[i] === "可评论") {
             this.authority += 2;
           }
-          else if(this.rights.select[i]==="可创建、编辑、删除文档"){
+          else if (this.rights.select[i] === "可创建、编辑、删除文档") {
             this.authority += 4;
           }
         }
@@ -436,6 +435,7 @@
     left: 5%;
     top: 5%;
   }
+
   .el-divider--vertical {
     display: inline-block;
     width: 1px;
