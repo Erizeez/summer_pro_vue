@@ -3,10 +3,10 @@
     <div class="register_box">
       <!-- 头像区域 -->
       <div class="avatar_box">
-        <img src="../assets/rlc-logo.png" alt="">
+        <img src="../assets/logo11.png" alt="">
       </div>
       <div class="big_stress">
-        欢迎加入金刚石文档
+        欢迎加入黑曜石文档
       </div>
       <!-- 注册表单区域 -->
       <el-form :model="RegisterForm" status-icon :rules="RegisterFormRules" style="top:160px" ref="RegisterForm" label-width="0px" class="register_form">

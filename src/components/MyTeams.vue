@@ -1,6 +1,6 @@
 <template>
     <div>
-        <img class="image" src="../assets/logo11.png">
+        <img class="image11" src="../assets/logo11.png">
     </div>
 </template>
 <script>
@@ -9,7 +9,7 @@
     
 
 <style scoped>
-    .image{
+    .image11{
         position: absolute;
         left: 50%;
         top:50%;

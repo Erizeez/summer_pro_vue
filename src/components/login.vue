@@ -2,10 +2,10 @@
   <div class="login_container">
     <div class="login_box">
       <div class="avatar_box">
-        <img src="../assets/rlc-logo.png" alt="">
+        <img src="../assets/logo11.png" alt="">
       </div>
       <div class="big_stress">
-        欢迎使用金刚石文档
+        欢迎使用黑曜石文档
       </div>
       <el-form :model="loginForm" :rules="loginformRules" class="login_form" ref="loginformRef">
         <el-form-item prop="name">
