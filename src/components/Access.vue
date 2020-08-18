@@ -284,7 +284,7 @@
             },
             editAuth() {
                 let _this = this;
-                this.sharelink = "http://localhost:8081/#/text";
+                this.sharelink = "http://140.82.50.25:8080/#/text";
                 this.authority = 1;
                 for (var i = 0; i < this.rights.select.length; i++) {
                     if (this.rights.select[i] === "可分享") {
