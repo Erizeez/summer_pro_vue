@@ -153,7 +153,7 @@
                 showShare: false,
                 authority: 1,
                 showlink: false,
-                sharelink: "http://localhost:8081/#/text",
+                sharelink: "http://doc.ecacon.com/#/text",
                 canShare: false,
                 shareAuth: 1,
                 value: false,
