@@ -94,7 +94,8 @@ export default {
                     text: '',
                     status: '',
                     title: '',
-                    intro: ''
+                    intro: '',
+                    isEdit: ''
                 },
                 value: false,
                 // ...
@@ -118,12 +119,12 @@ export default {
         },
         mounted() {
             window.onbeforeunload = e => {      //刷新时弹出提示
-            
-                this.$http.get("/doc/canceledit?DocId=" + this.docData.id).then(
-                function(res) {
-                    console.log(res);
+                if(this.docData.isEdit == 0){
+                    this.$http.get("/doc/canceledit?DocId=" + this.docData.id).then(
+                    function(res) {
+                        console.log(res);
+                    })
                 }
-            )
                return ''; 
 
             };
@@ -145,11 +146,13 @@ export default {
             this.getDocData();
         },
         beforeDestroy() {
-            this.$http.get("/doc/canceledit?DocId=" + this.docData.id).then(
-                function(res) {
-                    console.log(res);
-                }
-            )
+            if(this.docData.isEdit == 0){
+                this.$http.get("/doc/canceledit?DocId=" + this.docData.id).then(
+                    function(res) {
+                        console.log(res);
+                    }
+                )
+            }
         },
         methods: {
             onReady( editor )  {
@@ -173,6 +176,7 @@ export default {
                     this.docData.status = res.data.status;
                     this.docData.title = res.data.title;
                     this.docData.intro = res.data.intro;
+                    this.docData.isEdit = res.data.isedit;
                 })
             },
             cancelEdit() {

@@ -96,6 +96,7 @@ export default {
                     title: '',
                     intro: '',
                     teamId: '',
+                    isEdit: ''
                 },
                 teamTrash: {
                     docId: '',
@@ -107,17 +108,17 @@ export default {
         },
         mounted() {
             window.onbeforeunload = e => {      //刷新时弹出提示
-            
-                this.$http.get("/team/canceledit?teamdocId=" + this.docData.id).then(
-                function(res) {
-                    console.log(res);
+                if(this.docData.isEdit == 0){
+                    this.$http.get("/team/canceledit?teamdocId=" + this.docData.id).then(
+                    function(res) {
+                        console.log(res);
+                    })
                 }
-            )
                return ''; 
-
             };
         },
         created() {
+            this.getDocData();
             let __this = this
             this.$http.get("/team/checkedit?teamdocId=" + this.$route.params.id).then(
                 function(res) {
@@ -131,14 +132,15 @@ export default {
                     }
                 }
             );
-            this.getDocData();
         },
         beforeDestroy() {
-            this.$http.get("/team/canceledit?teamdocId=" + this.docData.id).then(
-                function(res) {
-                    console.log(res);
-                }
-            )
+            if(this.docData.isEdit == 0){
+                this.$http.get("/team/canceledit?teamdocId=" + this.docData.id).then(
+                    function(res) {
+                        console.log(res);
+                    }
+                )
+            }
         },
         watch:{
           '$router':'getParams',
@@ -179,8 +181,10 @@ export default {
                     this.docData.title = res.data.title;
                     this.docData.intro = res.data.intro;
                     this.docData.teamId = res.data.teamId;
+                    this.docData.isEdit = res.data.isedit;
                     this.teamTrash.docId = res.data.id;
                     this.teamTrash.teamId = res.data.teamId;
+
                 })
             },
             cancelEdit() {

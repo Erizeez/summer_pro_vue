@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/apis/*':{
-        target:'http://localhost:8080',
+        target:'http://140.82.50.25:8080',
         changeOrigin: true,
         pathRewrite:{
           '^/apis':'/summer_pro_ssm'
