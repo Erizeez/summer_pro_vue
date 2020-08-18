@@ -60,10 +60,17 @@
               <span class="author-name">{{item.name}}</span>
             </div>
           </el-col>
-          <el-col :span="16">
+          <el-col :span="8">
             <div class="talk-box">
               <p>
                 <span class="reply" :id="generateID(i)">{{item.content}}</span>
+              </p>
+            </div>
+          </el-col>
+          <el-col :span="8">
+            <div class="comment_time">
+              <p>
+                <span class="reply">{{item.time}}</span>
               </p>
             </div>
           </el-col>
@@ -151,7 +158,7 @@
     methods: {
       addRecent() {
         this.$http.get('/doc/addlatest?DocId=' + this.textid + '&accountId=' + localStorage.getItem('userid')).then(res => {
-          console.log(res);
+          
         })
       },
       goBack() {
@@ -165,8 +172,7 @@
         if (this.$route.query.uuid != null) {
           this.uuid = this.$route.query.uuid;
            this.$http.get('/share/sharedoc?uuid='+this.uuid+'&accountId='+localStorage.getItem('userid')).then(res =>{
-          console.log(res);
-          console.log('hh');
+         
           this.canSee= false,
           this.canEdit=false,
           this.canComment=false,
@@ -198,15 +204,15 @@
             this.$message.error("您没有查看权限！");
             this,$router.push('/index');
           }
-          console.log(this.authority);
+         
         })
         }
 
 
         if(!this.$route.query.uuid){
-          console.log('hhh');
+         
           this.$http.get('/share/getauth?receiverId='+localStorage.getItem('userid')+'&DocId='+this.$route.query.textid).then(res2=>{
-                  console.log(res2);
+                
                   this.canSee= false,
                   this.canEdit=false,
                   this.canComment=false,
@@ -243,7 +249,7 @@
                     this.$message.error("您没有查看权限！");
                     this,$router.push('/index');
                   }
-                  console.log(this.authority);
+                  
               })
           }
 
@@ -263,8 +269,6 @@
           this.$http.get('/account/search?id=' + res.data.createId).then(res1 => {
             this.userName = res1.data.name;
           })
-
-          console.log(this.$route.query.uuid);
           
         })
        
@@ -320,8 +324,7 @@
           }).then(({ value }) => {
             this.editcomment.content = value;
             this.$http.post('/comment/edit', this.editcomment).then(res => {
-              console.log(res);
-              console.log('hhh');
+              
             })
             location.reload(true);
             this.$message({
@@ -342,7 +345,7 @@
       },
       checkLike() {
         this.$http.get('/doc/iscollect?DocId=' + this.$route.query.textid + '&accountId=' + localStorage.getItem('userid')).then(res => {
-          console.log(res);
+          
           if (res.data === 'Record exist') { //已收藏
             this.favor = true;
             this.nonfavor = false;
@@ -363,12 +366,12 @@
         this.favor = false;
         this.nonfavor = true;
         this.$http.get('/doc/discollect?DocId=' + this.textid + '&accountId=' + localStorage.getItem('userid')).then(res => {
-          console.log(res);
+          
         })
       },
       like() {
         this.$http.get('/doc/collect?DocId=' + this.textid + '&accountId=' + localStorage.getItem('userid')).then(res => {
-          console.log(res);
+          
         })
         this.favor = true;
         this.nonfavor = false;
