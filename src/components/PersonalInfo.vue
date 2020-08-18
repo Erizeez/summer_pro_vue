@@ -86,17 +86,17 @@
 
         <el-dialog title="修改密码" :visible.sync="dialogFormVisible"
             style="width: 70%; position: absolute; left:15%; top:5%;">
-            <el-form :model="passwordform" :rules="pwdRule" ref="pwdformRef">
+            <el-form :model="passwordform" :rules="pwdRule" ref="pwdformRef" label-width="100px">
                 <el-form-item label="原密码" prop="old">
-                    <el-input type="password" v-model="passwordform.old" autocomplete="off" style="width: 80%">
+                    <el-input type="password" v-model="passwordform.old" autocomplete="off">
                     </el-input>
                 </el-form-item>
                 <el-form-item label="新密码" prop="new">
-                    <el-input type="password" v-model="passwordform.new" autocomplete="off" style="width: 80%">
+                    <el-input type="password" v-model="passwordform.new" autocomplete="off">
                     </el-input>
                 </el-form-item>
-                <el-form-item label="再次输入新密码" prop="newAgain">
-                    <el-input type="password" v-model="passwordform.newAgain" autocomplete="off" style="width: 93%">
+                <el-form-item label="确认新密码" prop="newAgain">
+                    <el-input type="password" v-model="passwordform.newAgain" autocomplete="off">
                     </el-input>
                 </el-form-item>
             </el-form>
