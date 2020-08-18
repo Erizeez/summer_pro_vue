@@ -78,7 +78,7 @@
       </el-menu>
     </el-header>
     <el-main>
-      <router-view @ifMessage="ifMessage"></router-view>
+      <router-view @ifMessage="ifMessage" @getUserInfo="getUserInfo"></router-view>
     </el-main>
   </el-container>
 

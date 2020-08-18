@@ -14,7 +14,7 @@
                                     {{info.name}}
                             </el-form-item>
                             <el-form-item label="邮箱" prop="email">
-                                <el-input v-model="ruleForm.email"></el-input>
+                                {{info.email}}
                             </el-form-item>
                             <el-form-item label="手机号码" prop="mobile">
                                 <el-input v-model.number="ruleForm.mobile"></el-input>
@@ -131,7 +131,7 @@
                     }
                 }, 100)
             };
-            var checkEmail = (rule, value, callback) => {
+            /* var checkEmail = (rule, value, callback) => {
                 const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
                 if (!value) {
                     return callback(new Error('邮箱不能为空'))
@@ -143,7 +143,7 @@
                         callback(new Error('请输入正确的邮箱格式'))
                     }
                 }, 100)
-            }
+            } */
             return {
                 info: {
                     id: 0,
@@ -165,9 +165,9 @@
                     photo: ''
                 },
                 rules: {
-                    email: [
+                    /* email: [
                         { required: true, validator: checkEmail, trigger: 'blur' }
-                    ],
+                    ], */
                     mobile: [
                         { required: true, validator: checkPhone, trigger: 'blur' }
                     ]
@@ -227,6 +227,7 @@
                                 this.info.company = this.ruleForm.company;
                                 this.info.photo = this.ruleForm.photo;
                                 this.toChange();
+                                this.$emit('getUserInfo');
                             }
                             else {
 
