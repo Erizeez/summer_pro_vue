@@ -18,7 +18,7 @@
           </span>
           <el-button type="primary" style="float: right; margin-right: 10px" round @click="dialogFormVisible=true">存为模板
           </el-button>
-          <el-button v-loading.fullscreen.lock="fullscreenLoading" type="primary" style="float: right; margin-right: 10px" round @click="goEdit" :disabled="!canEdit">
+          <el-button type="primary" style="float: right; margin-right: 10px" round @click="goEdit" :disabled="!canEdit">
             编辑文本</el-button>
           <el-button type="primary" style="float: right; margin-right: 10px" round @click="goAccess"
             :disabled="!canSee">预览文本</el-button>
@@ -57,7 +57,7 @@
           <el-col :span="4">
             <el-avatar class="header-img" :size="40" :src="item.photo"></el-avatar>
             <div class="author-info">
-                <el-link :underline="false" :href="'http://localhost:8081/#/PersonalInfo?id='+item.accountId">{{item.name}}</el-link>
+              <span class="author-name">{{item.name}}</span>
             </div>
           </el-col>
           <el-col :span="16">
@@ -137,7 +137,6 @@
         canComment: false,
         uuid: '',
         authority:1,
-        fullscreenLoading: false,
       }
     },
     created() {
@@ -176,25 +175,78 @@
             canSee = true;
             return;
           }
-          if(this.authority-8 > 0){
+          if(this.authority-8 >= 0){
             this.authority -= 8;
             this.canEdit = true;
             this.canSee = true;
           }
-          if(this.authority-4 > 0){
+          if(this.authority-4 >= 0){
             this.authority -= 4;
             this.canComment = true;
           }
-          if(this.authority-2 > 0){
+          if(this.authority-2 >= 0){
             this.authority -=2;
             // this.canSee = true;
           }
           if(this.authority === 1){
             this.canSee = true;
           }
+          if(this.authority === 0){
+            this.canSee = false;
+            this.canComment = false;
+            this.canEdit = false;
+            this.$message.error("您没有查看权限！");
+            this,$router.push('/index');
+          }
           console.log(this.authority);
         })
         }
+
+
+        if(!this.$route.query.uuid){
+          console.log('hhh');
+          this.$http.get('/share/getauth?receiverId='+localStorage.getItem('userid')+'&DocId='+this.$route.query.textid).then(res2=>{
+                  console.log(res2);
+                  this.canSee= false,
+                  this.canEdit=false,
+                  this.canComment=false,
+                  this.authority = res2.data;
+
+                  if(this.authority === 0){
+                    this.$message.error("您没有查看权限！");
+                    return this.$router.push('/index');
+                  }
+                  if(this.authority===1){
+                    canSee = true;
+                    return;
+                  }
+                  if(this.authority-8 >= 0){
+                    this.authority -= 8;
+                    this.canEdit = true;
+                    this.canSee = true;
+                  }
+                  if(this.authority-4 >= 0){
+                    this.authority -= 4;
+                    this.canComment = true;
+                  }
+                  if(this.authority-2 >= 0){
+                    this.authority -=2;
+                    // this.canSee = true;
+                  }
+                  if(this.authority === 1){
+                    this.canSee = true;
+                  }
+                  if(this.authority === 0){
+                    this.canSee = false;
+                    this.canComment = false;
+                    this.canEdit = false;
+                    this.$message.error("您没有查看权限！");
+                    this,$router.push('/index');
+                  }
+                  console.log(this.authority);
+              })
+          }
+
 
         
         
@@ -213,37 +265,7 @@
           })
 
           console.log(this.$route.query.uuid);
-          if(!this.$route.query.uuid){
-          console.log('hhh');
-          this.$http.get('/share/getauth?receiverId='+localStorage.getItem('userid')+'&DocId='+res.data.id).then(res2=>{
-                  console.log(res2);
-                  this.canSee= false,
-                  this.canEdit=false,
-                  this.canComment=false,
-                  this.authority = res2.data;
-                  if(this.authority===1){
-                    canSee = true;
-                    return;
-                  }
-                  if(this.authority-8 > 0){
-                    this.authority -= 8;
-                    this.canEdit = true;
-                    this.canSee = true;
-                  }
-                  if(this.authority-4 > 0){
-                    this.authority -= 4;
-                    this.canComment = true;
-                  }
-                  if(this.authority-2 > 0){
-                    this.authority -=2;
-                    // this.canSee = true;
-                  }
-                  if(this.authority === 1){
-                    this.canSee = true;
-                  }
-                  console.log(this.authority);
-              })
-          }
+          
         })
        
       },
@@ -352,24 +374,7 @@
         this.nonfavor = false;
       },
       goEdit() {
-        let __this = this;
-        this.fullscreenLoading = true;
-        this.$http.get("/doc/checkedit?DocId=" + this.$route.query.textid).then(
-        function(res) {
-            console.log(res);
-            if(res.data != "success"){   
-                __this.$message({
-                    type: 'error',
-                    message: '他人正在编辑，请稍后再试',
-                });
-                __this.fullscreenLoading = false;
-            }else{
-              __this.$router.push("/edit/" + __this.$route.query.textid);
-            }
-        }
-        );
-            
-        
+        this.$router.push("/edit/" + this.docData.id);
       },
       goAccess() {
         this.$router.push("/access/" + this.docData.id);

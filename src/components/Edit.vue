@@ -94,8 +94,7 @@ export default {
                     text: '',
                     status: '',
                     title: '',
-                    intro: '',
-                    isEdit: '-1'
+                    intro: ''
                 },
                 value: false,
                 // ...
@@ -118,25 +117,50 @@ export default {
             }
         },
         mounted() {
-            this.docData.id = this.$route.params.id;
             window.onbeforeunload = e => {      //刷新时弹出提示
+            
                 this.$http.get("/doc/canceledit?DocId=" + this.docData.id).then(
                 function(res) {
                     console.log(res);
-                })
+                }
+            )
                return ''; 
+
             };
         },
         created() {
+            let __this = this
+            this.$http.get("/doc/checkedit?DocId=" + this.$route.params.id).then(
+                function(res) {
+                    console.log(res);
+                    if(res.data != "success"){
+                        __this.$router.back();   
+                        __this.$message({
+                            type: 'error',
+                            message: '他人正在编辑，请稍后再试',
+                        });
+                    }
+                }
+            );
             this.getDocData();
+            this.getAuth();
         },
         beforeDestroy() {
             this.$http.get("/doc/canceledit?DocId=" + this.docData.id).then(
-            function(res) {
-                console.log("cancel success");
-            })
+                function(res) {
+                    console.log(res);
+                }
+            )
         },
         methods: {
+            getAuth(){
+                this.$http.get('/share/getauth?receiverId='+localStorage.getItem('userid')+'&DocId='+this.$route.params.id).then(res =>{
+                    if(res.data<=8){
+                        this.$message.error("您没有编辑权限！");
+                        this.$router.push('/index');
+                    }
+                })
+            },
             onReady( editor )  {
                 // Insert the toolbar before the editable area.
                 editor.ui.getEditableElement().parentElement.insertBefore(
@@ -158,7 +182,6 @@ export default {
                     this.docData.status = res.data.status;
                     this.docData.title = res.data.title;
                     this.docData.intro = res.data.intro;
-                    this.docData.isEdit = res.data.isedit;
                 })
             },
             cancelEdit() {
