@@ -129,19 +129,6 @@ export default {
             };
         },
         created() {
-            let __this = this
-            this.$http.get("/doc/checkedit?DocId=" + this.$route.params.id).then(
-                function(res) {
-                    console.log(res);
-                    if(res.data != "success"){
-                        __this.$router.back();   
-                        __this.$message({
-                            type: 'error',
-                            message: '他人正在编辑，请稍后再试',
-                        });
-                    }
-                }
-            );
             this.getDocData();
             this.getAuth();
         },
