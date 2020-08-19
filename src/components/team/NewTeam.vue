@@ -52,11 +52,19 @@
         this.$refs.newteamRef.validate((valid) => {
           if (valid) {
             this.$http.post('/team/create', this.newteam).then(res => {
-              _this.$message({
-                type: 'success',
-                message: '新建成功',
-              });
-              this.$router.push('/TeamAside');
+              if (res.data == "success") {
+                _this.$message({
+                  type: 'success',
+                  message: '新建成功',
+                });
+                this.$router.push('/TeamAside');
+              }
+              else if(res.data=="Please change the name"){
+                this.$message.error("该团队名已被使用");
+              }
+              else{
+                this.$message.error("创建失败");
+              }
             })
           } else {
             _this.$message({

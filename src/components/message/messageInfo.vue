@@ -17,7 +17,7 @@
             </el-col>
             <el-col :span="3">
                 <div>
-                    <span class="tableTitle">查看</span>
+                    <span class="tableTitle">操作</span>
                 </div>
             </el-col>
           </el-row>
@@ -37,9 +37,10 @@
                         </div>
                     </el-col>
                     <el-col :span="3">
-                        <div>
-                            <el-button type="info" style="display:block;margin:0 auto" v-if="item.haveread === 1" @click="showcontent(item)">已读</el-button>
-                            <el-button type="primary" style="display:block;margin:0 auto" v-else-if="item.haveread === 0" @click="showcontent(item)">查看</el-button>
+                        <div style="display:block;margin:0 auto">
+                            <el-button type="info" v-if="item.haveread === 1" @click="showcontent(item)">已读</el-button>
+                            <el-button type="primary" v-else-if="item.haveread === 0" @click="showcontent(item)">查看</el-button>
+                            <el-button type="danger" @click="deleteMsg(item)">删除</el-button>
                         </div>
                     </el-col>
                 </el-row>
@@ -213,11 +214,21 @@
       refuse(item){
         this.dialogVisible1 = false;
         this.$http.post('/msg/refuse', item).then(res =>{
-          console.log(res);
           if(res.data==='success'){
             this.$message.success('拒绝成功！')
           }
           else this.$message.error('拒绝失败！')
+        })
+      },
+      deleteMsg(item){
+        this.$http.get('/msg/delete?MessageId='+item.id).then(res=>{
+          if(res.data=="success"){
+            this.$message.success('删除成功！');
+            this.getmessage();
+          }
+          else{
+            this.$message.error('删除失败！');
+          }
         })
       }
     }
