@@ -36,7 +36,7 @@
                             <span class="tablePart">{{item.title}}</span>
                         </div>
                     </el-col>
-                    <el-col :span="3">
+                    <el-col :span="4">
                         <div style="display:block;margin:0 auto">
                             <el-button type="info" v-if="item.haveread === 1" @click="showcontent(item)">已读</el-button>
                             <el-button type="primary" v-else-if="item.haveread === 0" @click="showcontent(item)">查看</el-button>
