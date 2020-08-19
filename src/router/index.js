@@ -22,6 +22,7 @@ import TeamDocEdit from '@/components/TeamDocEdit'
 import TeamDocAccess from '@/components/TeamDocAccess'
 import TeamDocAdd from '@/components/TeamDocAdd'
 import HelloWorld from '@/components/HelloWorld'
+import ShareDoc from '@/components/ShareDoc'
 import NewTeam from "../components/team/NewTeam";
 import TeamMember from "../components/team/TeamMember";
 import teamRecent from "../components/workspace/teamRecent";
@@ -100,7 +101,11 @@ const router =  new Router({
       name:TeamMember,
       component:TeamMember
     },
-
+    {
+      path:'/ShareDoc',
+      name:ShareDoc,
+      component:ShareDoc
+    },
     {
       path: '/add',
      name: 'Add',
