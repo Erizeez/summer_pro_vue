@@ -39,11 +39,15 @@ const router =  new Router({
   routes: [
     {
       path: '/',
-      redirect:'/login'
+      redirect:'/login',
+      meta:{
+        title:"黑曜石文档"
+      }
     },
     {
       path:'/login',
-      component:login
+      component:login,
+      meta:{title:"黑曜石文档-登录"}
     },
     {
       path:'/test',
@@ -54,73 +58,64 @@ const router =  new Router({
       component:home,
       redirect:'/index',
       children:[
-        {path: '/index', name:index, component: index},
-        {path: '/recentdoc', name:recentdoc, component: recentdoc},
-        {path:'/teamRecent', name:teamRecent, component:teamRecent},
-        {path: '/text', name:text, component:text},
-        {path: '/collect', name:collect, component:collect},
-        {path: '/trash', name:trash, component:trash},
-        {path: '/trashtext', name:trashtext, component:trashtext},
-        {path: '/PersonalInfo', name: PersonalInfo, component: PersonalInfo },
-        {path: '/created', name: created, component: created },
-        {path: '/messageInfo', name:messageInfo, component:messageInfo},
-        {path: '/Add', name:Add, component:Add},
-        {path: '/access/:id', name: Access, component: Access},
-        {path: '/edit/:id', name: Edit, component: Edit},
-        {path:'/teamtext', name:teamtext, component:teamtext},
-        {path:'/teamCollect', name:teamCollect, component:teamCollect},
-        {path: '/teamdocadd/:teamid', name:TeamDocAdd, component:TeamDocAdd},
-        {path: '/teamdocaccess/:id', name: TeamDocAccess, component: TeamDocAccess},
-        {path: '/teamdocedit/:id', name: TeamDocEdit, component: TeamDocEdit},
+        {path: '/index', name:index, component: index,
+        meta:{
+                  title:"黑曜石文档-首页"
+        }},
+        {path: '/recentdoc', name:recentdoc, component: recentdoc,meta:{title:"黑曜石文档-个人最近浏览"}},
+        {path:'/teamRecent', name:teamRecent, component:teamRecent,meta:{title:"黑曜石文档-团队最近浏览"}},
+        {path: '/text', name:text, component:text,meta:{title:"黑曜石文档-个人文档详情"}},
+        {path: '/collect', name:collect, component:collect,meta:{title:"黑曜石文档-个人收藏"}},
+        {path: '/trash', name:trash, component:trash,meta:{title:"黑曜石文档-回收站"}},
+        {path: '/trashtext', name:trashtext, component:trashtext,meta:{title:"黑曜石文档-回收站"}},
+        {path: '/PersonalInfo', name: PersonalInfo, component: PersonalInfo,meta:{title:"黑曜石文档-个人信息"}},
+        {path: '/created', name: created, component: created,meta:{title:"黑曜石文档-已创建文档"}},
+        {path: '/messageInfo', name:messageInfo, component:messageInfo,meta:{title:"黑曜石文档-消息通知"}},
+        {path: '/Add', name:Add, component:Add,meta:{title:"黑曜石文档-个人文档创建"}},
+        {path: '/access/:id', name: Access, component: Access,meta:{title:"黑曜石文档-个人文档预览"}},
+        {path: '/edit/:id', name: Edit, component: Edit,meta:{title:"黑曜石文档-个人文档编辑"}},
+        {path:'/teamtext', name:teamtext, component:teamtext,meta:{title:"黑曜石文档-团队文档详情"}},
+        {path:'/teamCollect', name:teamCollect, component:teamCollect,meta:{title:"黑曜石文档-团队收藏"}},
+        {path: '/teamdocadd/:teamid', name:TeamDocAdd, component:TeamDocAdd,meta:{title:"黑曜石文档-团队文档创建"}},
+        {path: '/teamdocaccess/:id', name: TeamDocAccess, component: TeamDocAccess,meta:{title:"黑曜石文档-团队文档预览"}},
+        {path: '/teamdocedit/:id', name: TeamDocEdit, component: TeamDocEdit,meta:{title:"黑曜石文档-团队文档编辑"}},
         {
           path: '/TeamAside', name: TeamAside, component: TeamAside, redirect: '/Myteams',
           children: [
-            { path: '/MyTeams', name: Myteams, component: Myteams },
+            { path: '/MyTeams', name: Myteams, component: Myteams,meta:{title:"黑曜石文档-团队主页"}},
             {
               path: '/TeamTabs', name: TeamTabs, component: TeamTabs, redirect: '/TeamDocs', children: [{
                 path: '/TeamInfo', name: TeamInfo, component: TeamInfo, redirect: '/TeamDocs',
                 children: [
-                  { path: '/TeamDocs', name: TeamDocs, component: TeamDocs },
+                  { path: '/TeamDocs', name: TeamDocs, component: TeamDocs,meta:{title:"黑曜石文档-团队文档"}},
                 ]},
-              { path: '/TeamMember', name: TeamMember, component: TeamMember }
+              { path: '/TeamMember', name: TeamMember, component: TeamMember,meta:{title:"黑曜石文档-团队成员"}}
               ]
             }
           ]
         },
-        { path: '/CreateFromModel', name: CreateFromModel, component: CreateFromModel },
-        {path:'/NewTeam', name:NewTeam, component:NewTeam}
+        { path: '/CreateFromModel', name: CreateFromModel, component: CreateFromModel,meta:{title:"黑曜石文档-从模板创建"}},
+        {path:'/NewTeam', name:NewTeam, component:NewTeam,meta:{title:"黑曜石文档-创建团队"}}
       ]
     },
     {
       path: '/register',
       name: 'Register',
-      component: Register
-    },
-    {
-      path:'/TeamMember',
-      name:TeamMember,
-      component:TeamMember
+      component: Register,
+      meta:{title:"黑曜石文档-注册"}
     },
     {
       path:'/ShareDoc',
       name:ShareDoc,
       component:ShareDoc
-    },
-    {
-      path: '/add',
-     name: 'Add',
-      component: Add
-    },
-    {
-      path: '/personalinfo',
-      name: 'PersonalInfo',
-      component: PersonalInfo
     }
   ]
 })
 
+
 //路由卫士
 router.beforeEach((to, from, next) =>{
+  document.title = to.meta.title;
   const tokenStr = window.sessionStorage.getItem('token')
   if(!tokenStr){
     if(to.path === '/login' || to.path === '/register'){
