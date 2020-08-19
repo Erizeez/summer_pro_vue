@@ -184,7 +184,7 @@
           this.canComment=false,
           this.authority = res.data.auth;
           if(this.authority===1){
-            canSee = true;
+            this.canSee = true;
             return;
           }
           if(this.authority-8 >= 0){
