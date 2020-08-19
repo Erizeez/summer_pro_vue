@@ -303,10 +303,10 @@
             submitPassword() {
                 this.$refs.pwdformRef.validate(valid => {
                     if (!valid) {
-                        this.dialogFormVisible = false;
+                        
                         return this.$message.error("请输入正确格式");
                     }
-                    this.dialogFormVisible = false;
+                    
                     var oldpassword;
                     console.log(this.passwordform.old);
                     console.log(typeof this.passwordform.old)
@@ -314,7 +314,6 @@
                         //console.log(res);
                         oldpassword = res.data.password;
                         console.log(typeof oldpassword);
-
                         if (this.passwordform.old !== oldpassword) {
                             return this.$message.error("原密码不正确")
                         }
@@ -324,6 +323,7 @@
                             this.$http.get('/account/modifypwd?id=' + this.info.id + '&oldPwd=' + this.passwordform.old + '&newPwd=' + this.passwordform.new).then(res => {
                                 console.log(res);
                                 if (res.data === "success") {
+                                    this.dialogFormVisible = false;
                                     return this.$message.success("修改密码成功");
                                 } else {
                                     return this.$message.error("修改密码失败");
