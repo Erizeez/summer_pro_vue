@@ -71,6 +71,7 @@
               </p>
             </div>
           </el-col>
+
           <el-col :span="8">
             <div class="comment_time">
               <p>
@@ -78,6 +79,7 @@
               </p>
             </div>
           </el-col>
+
           <el-col :span="4">
             <div v-if="item.accountId==userId || docData.createId==userId">
               <el-button type="primary" icon="el-icon-edit" circle @click="editComment(i)"></el-button>
@@ -182,7 +184,7 @@
           this.canComment=false,
           this.authority = res.data.auth;
           if(this.authority===1){
-            canSee = true;
+            this.canSee = true;
             return;
           }
           if(this.authority-8 >= 0){

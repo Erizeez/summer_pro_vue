@@ -10,7 +10,7 @@
                 <el-col class="title-col" :span="12">
                     <el-tooltip class="seBtn" content="切换" placement="top">
                         <el-switch style="display: block" v-model="value" active-color="#13ce66"
-                            inactive-color="#13ce66" active-text="基础信息" inactive-text="文档编辑">
+                            inactive-color="#13ce66" active-text="基础信息" inactive-text="文档预览">
                         </el-switch>
                     </el-tooltip>
                 </el-col>
