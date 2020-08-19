@@ -67,7 +67,11 @@
               window.sessionStorage.setItem('token', res.data.token);
               window.localStorage.setItem('userid', res.data.account.id);
               //this.$local.set('user', {'name':this.loginForm.name, 'password':this.loginForm.password});
-              this.$router.push('/home');
+              if(typeof this.$route.query.redirect == "undefined"){
+                this.$router.push('/home');
+              }else{
+                this.$router.push(this.$route.query.redirect);
+              }
             }
           })
         })

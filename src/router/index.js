@@ -116,15 +116,35 @@ const router =  new Router({
 
 //路由卫士
 router.beforeEach((to, from, next) =>{
-  if(to.path === '/login' || to.path === '/register'){
-    return next();
-  }
-  //获取token
   const tokenStr = window.sessionStorage.getItem('token')
   if(!tokenStr){
-    return next('/login');
+    if(to.path === '/login' || to.path === '/register'){
+      console.log("444")
+      return next();
+    }else{
+      console.log("555")
+      return next({
+        path: "/login",
+        query: {redirect: to.fullPath}
+      })
+    }
+  }else {
+      return next()
   }
-  next();
+  
+  
+  
+  
+  
+  // if(to.path === '/login' || to.path === '/register'){
+  //   return next();
+  // }
+  // //获取token
+  // const tokenStr = window.sessionStorage.getItem('token')
+  // if(!tokenStr){
+  //   return next('/login');
+  // }
+  // next();
 })
 
 export default router
