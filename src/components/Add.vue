@@ -103,7 +103,8 @@ export default {
                     text: '',
                     status: '',
                     title: '',
-                    intro: ''
+                    intro: '',
+                    authority:0
                 },
                 value: false,
                 // ...

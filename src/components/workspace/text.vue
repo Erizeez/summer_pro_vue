@@ -55,7 +55,11 @@
       <div v-for="(item,i) in comments" :key="i" class="author-title">
         <el-row :gutter="20">
           <el-col :span="4">
-            <el-avatar class="header-img" :size="40" :src="item.photo"></el-avatar>
+            <a @click="toPersonalInfo(item.accountId)">
+              <el-tooltip class="item" effect="dark" content="查看个人信息" placement="bottom">
+                <el-avatar class="header-img" :size="40" :src="item.photo"></el-avatar>
+              </el-tooltip>
+            </a>
             <div class="author-info">
               <span class="author-name">{{item.name}}</span>
             </div>
@@ -294,6 +298,10 @@
           this.submitComment.content = ""
         })
       },
+      toPersonalInfo(acId) {
+        this.activeIndex = 3;
+        this.$router.push('/PersonalInfo?id='+acId);
+      },
       deleteComment(index) {
         this.submitComment.accountId = window.localStorage.getItem('userid');
         this.submitComment.id = this.comments[index].id;
@@ -437,6 +445,9 @@
     margin: 10px 0px 50px 0px;
     transition-duration: 0.5s;
     text-align: center;
+  }
+  a:hover {
+    filter: brightness(80%);
   }
   .sorryTitle{
     font-size: 30px;

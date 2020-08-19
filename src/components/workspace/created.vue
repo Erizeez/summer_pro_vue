@@ -91,7 +91,7 @@
                             <el-divider></el-divider>
                         </div>
                         </el-col>
-                        <el-col style="width: 18%; margin: -50px 0px 50px 0px;left:0px;" :span="5" v-if="brouseMode==false" v-for="(item,index) in createdlist" :key="item.id">
+                        <el-col style="width: 20%; margin: -50px 0px 50px 0px;left:0px;" :span="5" v-if="brouseMode==false" v-for="(item,index) in createdlist" :key="item.id">
                             <el-card :span="5" :body-style="{ padding: '0px' }" shadow="hover" class="card-box-s">
                                 <img src="../../assets/home/card-bg.jpg" class="image"
                                     style="width: 100%; height:200px; display: block">

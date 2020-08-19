@@ -133,7 +133,7 @@
         this.$http.get('/account/search', {
           params: { id: window.localStorage.getItem("userid") }
         }).then(res => {
-          console.log(res);
+          console.log("111");
           this.photo = res.data.photo;
           this.username = "欢迎，" + res.data.name;
         })
