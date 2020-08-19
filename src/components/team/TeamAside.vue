@@ -1,7 +1,7 @@
 <template>
 <el-container class="home">
         <el-aside width="18%" style="background-color: rgba(255,255,255,0.4);">
-            <el-menu default-active="2" class="el-menu-vertical-demo"
+            <el-menu :default-openeds="openArray" class="el-menu-vertical-demo"
                 style="background-color: rgba(255,255,255,0.4);" text-color="#888" active-text-color="#000">
                 <el-submenu index="1" style="background-color: rgba(255,255,255,0.4);">
                     <template slot="title">
@@ -40,13 +40,17 @@
             return {
                 createdTeams: [],
                 joinedTeams: [],
-                userID: ""
+                userID: "",
+                openArray:[]
             }
         },
-        mounted() {
+        created() {
             this.getTeams();
-        },
+        },  
         watch:{
+            $route() {
+                this.getTeams();
+            }
         },
         methods: {
             getTeams() {
@@ -62,6 +66,7 @@
                             this.joinedTeams.push(res.data[i]);
                         }
                     }
+                    this.$forceUpdate();
                 })
             },
             toTeamInfo(id){
