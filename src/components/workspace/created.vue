@@ -195,6 +195,7 @@
                 }
                 if (deleteComplete) {
                     this.$message.success('删除成功，你仍能在回收站找到它们');
+                    this.getcollectdoc();
                 }
                 else {
                     this.$message.success('删除失败');
