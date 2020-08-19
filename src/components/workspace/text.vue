@@ -149,7 +149,7 @@
         canEdit: false,
         canComment: false,
         uuid: '',
-        authority:1,
+        authority: 1,
       }
     },
     created() {
@@ -164,104 +164,60 @@
     methods: {
       addRecent() {
         this.$http.get('/doc/addlatest?DocId=' + this.textid + '&accountId=' + localStorage.getItem('userid')).then(res => {
-          
+
         })
       },
       goBack() {
         this.$router.go(-1);
       },
       getParams() {
-       
+
         this.textid = this.$route.query.textid;
-        // this.uuid=this.$route.query.uuid;
-        
-        if (this.$route.query.uuid != null) {
-          this.uuid = this.$route.query.uuid;
-           this.$http.get('/share/sharedoc?uuid='+this.uuid+'&accountId='+localStorage.getItem('userid')).then(res =>{
-         
-          this.canSee= false,
-          this.canEdit=false,
-          this.canComment=false,
-          this.authority = res.data.auth;
-          if(this.authority===1){
-            this.canSee = true;
+        this.$http.get('/share/getauth?receiverId=' + localStorage.getItem('userid') + '&DocId=' + this.$route.query.textid).then(res2 => {
+
+          this.canSee = false,
+            this.canEdit = false,
+            this.canComment = false,
+            this.authority = res2.data;
+
+          if (this.authority === 0) {
+            this.$message.error("您没有查看权限！");
+            return this.$router.push('/index');
+          }
+          if (this.authority === 1) {
+            canSee = true;
             return;
           }
-          if(this.authority-8 >= 0){
+          if (this.authority - 8 >= 0) {
             this.authority -= 8;
             this.canEdit = true;
             this.canSee = true;
           }
-          if(this.authority-4 >= 0){
+          if (this.authority - 4 >= 0) {
             this.authority -= 4;
             this.canComment = true;
           }
-          if(this.authority-2 >= 0){
-            this.authority -=2;
+          if (this.authority - 2 >= 0) {
+            this.authority -= 2;
             // this.canSee = true;
           }
-          if(this.authority === 1){
+          if (this.authority === 1) {
             this.canSee = true;
           }
-          if(this.authority === 0){
+          if (this.authority === 0) {
             this.canSee = false;
             this.canComment = false;
             this.canEdit = false;
             this.$message.error("您没有查看权限！");
-            this,$router.push('/index');
+            this.$router.push('/index');
           }
-         
+
         })
-        }
 
 
-        if(!this.$route.query.uuid){
-         
-          this.$http.get('/share/getauth?receiverId='+localStorage.getItem('userid')+'&DocId='+this.$route.query.textid).then(res2=>{
-                
-                  this.canSee= false,
-                  this.canEdit=false,
-                  this.canComment=false,
-                  this.authority = res2.data;
-
-                  if(this.authority === 0){
-                    this.$message.error("您没有查看权限！");
-                    return this.$router.push('/index');
-                  }
-                  if(this.authority===1){
-                    canSee = true;
-                    return;
-                  }
-                  if(this.authority-8 >= 0){
-                    this.authority -= 8;
-                    this.canEdit = true;
-                    this.canSee = true;
-                  }
-                  if(this.authority-4 >= 0){
-                    this.authority -= 4;
-                    this.canComment = true;
-                  }
-                  if(this.authority-2 >= 0){
-                    this.authority -=2;
-                    // this.canSee = true;
-                  }
-                  if(this.authority === 1){
-                    this.canSee = true;
-                  }
-                  if(this.authority === 0){
-                    this.canSee = false;
-                    this.canComment = false;
-                    this.canEdit = false;
-                    this.$message.error("您没有查看权限！");
-                    this,$router.push('/index');
-                  }
-                  
-              })
-          }
 
 
-        
-        
+
         this.$http.get('/doc/read?id=' + this.$route.query.textid).then(res => {
           this.docData.id = res.data.id;
           this.docData.createId = res.data.createId;
@@ -275,9 +231,9 @@
           this.$http.get('/account/search?id=' + res.data.createId).then(res1 => {
             this.userName = res1.data.name;
           })
-          
+
         })
-       
+
       },
       addComment() {
         this.submitComment.accountId = parseInt(window.localStorage.getItem('userid'));
@@ -300,7 +256,7 @@
       },
       toPersonalInfo(acId) {
         this.activeIndex = 3;
-        this.$router.push('/PersonalInfo?id='+acId);
+        this.$router.push('/PersonalInfo?id=' + acId);
       },
       deleteComment(index) {
         this.submitComment.accountId = window.localStorage.getItem('userid');
@@ -334,7 +290,7 @@
           }).then(({ value }) => {
             this.editcomment.content = value;
             this.$http.post('/comment/edit', this.editcomment).then(res => {
-              
+
             })
             location.reload(true);
             this.$message({
@@ -355,7 +311,7 @@
       },
       checkLike() {
         this.$http.get('/doc/iscollect?DocId=' + this.$route.query.textid + '&accountId=' + localStorage.getItem('userid')).then(res => {
-          
+
           if (res.data === 'Record exist') { //已收藏
             this.favor = true;
             this.nonfavor = false;
@@ -376,12 +332,12 @@
         this.favor = false;
         this.nonfavor = true;
         this.$http.get('/doc/discollect?DocId=' + this.textid + '&accountId=' + localStorage.getItem('userid')).then(res => {
-          
+
         })
       },
       like() {
         this.$http.get('/doc/collect?DocId=' + this.textid + '&accountId=' + localStorage.getItem('userid')).then(res => {
-          
+
         })
         this.favor = true;
         this.nonfavor = false;
@@ -446,13 +402,16 @@
     transition-duration: 0.5s;
     text-align: center;
   }
+
   a:hover {
     filter: brightness(80%);
   }
-  .sorryTitle{
+
+  .sorryTitle {
     font-size: 30px;
     color: #888;
   }
+
   .favorite {
     margin: 5px;
   }
