@@ -6,7 +6,7 @@
 
 
 
-        <el-button style="float: right" @click="dialogFormVisible = true">添加成员</el-button>
+        <el-button style="float: right" @click="dialogFormVisible = true" v-if="Admin">添加成员</el-button>
 
 
         <el-dialog title="添加成员" :visible.sync="dialogFormVisible" :append-to-body="true">
